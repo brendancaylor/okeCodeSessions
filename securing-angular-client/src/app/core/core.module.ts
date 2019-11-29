@@ -5,6 +5,7 @@ import { AuthService } from './auth-service.component';
 import { AccountService } from './account.service';
 import { ProjectService } from './project.service';
 import { AdminRouteGuard } from './admin-route-guard';
+import { DateParserInterceptor } from './date-parser.interceptor';
 
 @NgModule({
     imports: [],
@@ -15,7 +16,12 @@ import { AdminRouteGuard } from './admin-route-guard';
         AccountService,
         ProjectService,
         AdminRouteGuard,
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: DateParserInterceptor,
+            multi: true
+        }
     ],
 })
 export class CoreModule { }
