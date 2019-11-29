@@ -5,3 +5,4 @@ obj/
 BackEnd/SecuringAngularApps.STS/tempkey.rsa
 lib/
 node_modules/
+.vs/

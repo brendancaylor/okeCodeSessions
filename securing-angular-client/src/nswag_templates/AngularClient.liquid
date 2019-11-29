@@ -1,0 +1,52 @@
+{%- if HasOperations -%}
+export interface I{{ Class }} {
+{%- for operation in Operations -%}
+    {{ operation.MethodAccessModifier }}{{ operation.ActualOperationName }}({% for parameter in operation.Parameters %}{{ parameter.VariableName }}{% if parameter.IsOptional %}?{% endif %}: {{ parameter.Type }}{% if parameter.IsLast == false %}, {% endif %}{% endfor %}): Observable<{% if operation.IsFile %}Blob | null{% else %}{{ operation.ResultType }}{% endif %}>;
+{%- endfor -%}
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class {{ Class }} implements I{{ Class }} {
+    constructor(private readonly httpClient: HttpClient, private readonly config: ConfigurationService) {
+    }
+{%- for operation in Operations -%}
+
+    {% template Client.Method.Documentation %}
+    {{ operation.MethodAccessModifier }}{{ operation.ActualOperationName }}({% for parameter in operation.Parameters %}{{ parameter.VariableName }}{% if parameter.IsOptional %}?{% endif %}: {{ parameter.Type }}{% if parameter.IsLast == false %}, {% endif %}{% endfor %}): Observable<{% if operation.IsFile %}Blob | null{% else %}{{ operation.ResultType }}{% endif %}> {
+{%- if operation.HasQueryParameters -%}
+        const queryString = buildQueryString({
+{%- for parameter in operation.QueryParameters -%}
+            {{ parameter.VariableName }},
+{%- endfor -%}
+        });
+{%- endif -%}
+        const url = `${this.config.apiUrl}/{{ operation.Path | replace: "{", "${" }}{% if operation.HasQueryParameters %}${queryString}{% endif %}`;
+{%- if operation.HasHeaderParameters -%}
+        const headers = {
+{%- for parameter in operation.HeaderParameters -%}
+                "{{ parameter.Name }}": {{ parameter.VariableName }} || "",
+{%- endfor -%}
+        };
+{%- endif -%}
+
+{%- if operation.IsFile -%}
+        return this.httpClient.{{ operation.HttpMethodLower }}(url{% if operation.HasContent %}, {{ operation.ContentParameter.VariableName }}{% endif %}, { {% if operation.HasHeaderParameters %}headers, {% endif %}responseType: "blob" });
+{%- else -%}
+        return this.httpClient.{{ operation.HttpMethodLower }}<{% if operation.HasResultType %}any{% else %}void{% endif %}>(url{% if operation.HasContent %}, {{ operation.ContentParameter.VariableName }}{% endif %}, { {% if operation.HasHeaderParameters %}headers{% endif %} })
+{%- if operation.HasResultType -%}
+{%- if operation.UnwrappedResultType contains "[]" -%}
+            .pipe(map(result => result.map({{ operation.UnwrappedResultType | remove: "[]" }}.fromJS)))
+{%- elsif operation.UnwrappedResultType == "boolean" -%}
+{%- elsif operation.UnwrappedResultType == "number" -%}
+{%- elsif operation.UnwrappedResultType == "string" -%}
+{%- else -%}
+            .pipe(map({{ operation.UnwrappedResultType }}.fromJS))
+{%- endif -%}
+{%- endif -%}
+{%- endif -%}
+    }
+{%- endfor -%}
+}
+{%- endif -%}

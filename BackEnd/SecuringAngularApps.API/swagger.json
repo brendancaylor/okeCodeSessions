@@ -1,0 +1,35 @@
+﻿{
+  "x-generator": "NSwag v13.1.6.0 (NJsonSchema v10.0.28.0 (Newtonsoft.Json v11.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "My Title",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/Speach": {
+      "get": {
+        "tags": [
+          "Speach"
+        ],
+        "operationId": "Speach_GetSpeach",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "sentence",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    }
+  }
+}

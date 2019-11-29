@@ -13,9 +13,12 @@ namespace SecuringAngularApps.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class SpeachController : ControllerBase
     {
         [HttpGet]
+        [Produces("audio/mpeg")]
+        
         public ActionResult GetSpeach(string sentence)
         {
 

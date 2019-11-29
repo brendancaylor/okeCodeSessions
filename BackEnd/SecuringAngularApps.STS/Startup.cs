@@ -52,8 +52,6 @@ namespace SecuringAngularApps.STS
                 });
             });
 
-            services.AddScoped<IdentityServiceUserManager>();
-
             services.AddMvc();
             services.AddTransient<IProfileService, CustomProfileService>();
 
