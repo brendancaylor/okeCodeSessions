@@ -6,7 +6,6 @@
 //----------------------
 // ReSharper disable InconsistentNaming
 
-import { ConfigurationService } from 'app/core/services/configuration.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -15,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { isMoment } from 'moment';
 import * as moment from 'moment';
 import * as qs from 'qs';
+import { Constants } from 'src/app/constants';
 
 export function buildQueryString(queryParams: any): string {
     const params = Object.entries(queryParams || {}).reduce((params: any, [key, value]) => {
@@ -49,14 +49,14 @@ export interface ISpeachClient {
     providedIn: 'root'
 })
 export class SpeachClient implements ISpeachClient {
-    constructor(private readonly httpClient: HttpClient, private readonly config: ConfigurationService) {
+    constructor(private readonly httpClient: HttpClient) {
     }
 
     getSpeach(sentence?: string): Observable<Blob | null> {
         const queryString = buildQueryString({
             sentence,
         });
-        const url = `${this.config.apiUrl}/api/Speach${queryString}`;
+        const url = `${Constants.apiRoot}/api/Speach${queryString}`;
 
         return this.httpClient.get(url, { responseType: "blob" });
     }
