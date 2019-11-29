@@ -9,7 +9,7 @@ export interface I{{ Class }} {
     providedIn: 'root'
 })
 export class {{ Class }} implements I{{ Class }} {
-    constructor(private readonly httpClient: HttpClient, private readonly config: ConfigurationService) {
+    constructor(private readonly httpClient: HttpClient) {
     }
 {%- for operation in Operations -%}
 

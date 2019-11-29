@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using Google.Cloud.TextToSpeech.V1;
 using Microsoft.AspNetCore.Authorization;
+using System.Reflection;
+using Google.Apis.Auth.OAuth2;
+using Grpc.Auth;
 
 namespace SecuringAngularApps.API.Controllers
 {
@@ -18,12 +21,12 @@ namespace SecuringAngularApps.API.Controllers
     {
         [HttpGet]
         [Produces("audio/mpeg")]
-        
-        public ActionResult GetSpeach(string sentence)
+        public FileStreamResult GetSpeach(string sentence)
         {
-
-            // Instantiate a client
-            TextToSpeechClient client = TextToSpeechClient.Create();
+            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"SpellingApp-7fc0cf8b5885.json");
+            var credential = GoogleCredential.FromFile(path);
+            var channel = new Grpc.Core.Channel(TextToSpeechClient.DefaultEndpoint.ToString(), credential.ToChannelCredentials());
+            TextToSpeechClient client = TextToSpeechClient.Create(channel);
 
             // Set the text input to be synthesized.
             SynthesisInput input = new SynthesisInput
@@ -35,7 +38,7 @@ namespace SecuringAngularApps.API.Controllers
             // and the SSML voice gender ("neutral").
             VoiceSelectionParams voice = new VoiceSelectionParams
             {
-                LanguageCode = "en-US",
+                LanguageCode = "en-GB",
                 SsmlGender = SsmlVoiceGender.Neutral
             };
 
@@ -54,14 +57,11 @@ namespace SecuringAngularApps.API.Controllers
                 AudioConfig = config
             });
 
-
             // Write the binary AudioContent of the response to an MP3 file.
-            using (MemoryStream output = new MemoryStream())
-            {
-                response.AudioContent.WriteTo(output);
-                return File(output, "application/octet-stream");
-            }
-
+            MemoryStream output = new MemoryStream();
+            response.AudioContent.WriteTo(output);
+            output.Seek(0, SeekOrigin.Begin);
+            return File(output, "application/octet-stream");
         }
     }
 }
