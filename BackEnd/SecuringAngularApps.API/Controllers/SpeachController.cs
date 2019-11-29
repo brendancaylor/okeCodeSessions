@@ -20,6 +20,7 @@ namespace SecuringAngularApps.API.Controllers
     public class SpeachController : ControllerBase
     {
         [HttpGet]
+        [AllowAnonymous]
         [Produces("audio/mpeg")]
         public FileStreamResult GetSpeach(string sentence)
         {

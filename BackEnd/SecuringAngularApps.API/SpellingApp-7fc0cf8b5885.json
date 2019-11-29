@@ -1,12 +1,12 @@
 {
   "type": "service_account",
-  "project_id": "REPLACE-ME",
-  "private_key_id": "REPLACE-ME",
-  "private_key": "REPLACE-ME",
-  "client_email": "REPLACE-ME",
-  "client_id": "REPLACE-ME",
+  "project_id": "spellingapp",
+  "private_key_id": "7fc0cf8b5885e23a87626bffdd7099d0cf24b87b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD2uRPxk0nEqgVT\nIq9+UWLw4yng/qnnva0npNIdEu/+INDfuC5I3noF1gDJMUZeR1Mn+d3D90fqnigB\n5bdcbiBt5IvarO6oo7cftpkHnDp/R7P0dfglzNzXQ/YvFBIKbmQtW1vGylZNiNKX\n2RrVWFagr95bpeNyrARS5/JONTmq5yvOoDdZ0uVzMmnekHjsfAKXXoEpQfXbGJlX\n2PLAVVxaL8uKgamr2UJ1uSJI0iAfeIlq3gXlrWCBBA3U//AeXbWiZBTpeqfmGb5I\nbZPVeADhlRQM5cfF3maJlS5d2GZJlfa6ezZGTlIrk2rQKGa4t9KapP+ef71xHccg\nu2lKP8aZAgMBAAECggEACpykSyA1geQkOCgGRK3LI9Ge1ALFcREbTli3AYbL1Bzk\n5F0qKc/ej2YIgPQsctKo33p4+5GlF2YiZ2PSMq4OmVtwA9cAqY09IPvmx3PZ9O6I\nbXaDgVth5k+8hNgypx3faNoEml91PdQpkVwbsjB2ArxTGT213jv1haax/oN94v1a\nfqum5u1oa2bWB5J18svgEKa+Ddg+c+lntYUuAw2vccG/uH9VFyL4w+1+/QU7IfaH\nSCvs1RJyyV8FdoxG35RRa1cNR/15MybNlSU2278aJikX1RjP0AnmWoMPVxsetqHx\nkMeNOQscpLZrPGF8Fjb0Cxyt+MTxZuh51IMREQcyPwKBgQD/+S3HMnASzGk4Ifrl\nFdrhDHjqsebiBnwoaa/YRtVqYYiPrxqiMDyZ2+X3KLOWwfD0JC9OFyCqDGBK4rJ0\nFSy5A0ryyxGYSFAJF3kgCwp68WFTAFbgj/vq1PbrvqQSi7IuGFnVWzrk4Mz3xXlW\ngT4jY2d92BYNQk+L1tagu+dLBwKBgQD2v6cPdL/sx2WDUH84JlKlls+6ObGZh8MO\n1r1cRBigB1kh852eKtquTR7nJZvlgzgvqcatqnBzctNdc49VohDKw2mplbEETFbc\n1n0WU+YvG5suVLcFxONe9GFOASPI0Cj/xQoF6QhI57956qprYSwSiL55wej0JKUl\nLPZlGh7ZXwKBgFj1SCuKI9jkoUyYwpEK316G7x7hZNP4XP3OfQY018Z4zvTgbekf\nym/ONEWJJ6ClFhBC4w3Ii9mNI4ni7xHYqgpCUrG+UQcTWn1OYxH3xFSlvqUR4R95\n6praGFYlku+/DNVoMRAs/HK+jX0ua9TcZbP2v+jESCWjffGjYEPMCb3RAoGBALvm\nuJ6RhrIWKhy0iRzGOju1O90RoEhNVWIQb0U66hG7ZsnvDcFr2vnO6tCVGEHQClJp\nlE2dtGKGN6U7ohRRBT6TTvyAbLvcMm2bvMfq/igzepnuky2GgKtHqG3RemGq+v3D\nG93iVpfGO07pP/vjlL9MeNiZrP92hHhp4/ybxpA7AoGAQYxAraeFzZb1RQdho+h9\nWtN7Gh/k7EX1+KtMIsic6iUgvPncn0R8h+6nQaZWSLa/bjt2KSHVbihAfc6FqqS4\nAaFJR3CF16DPpuDA51ZKG0BLQgUSS35t5OBKe8t9+EhKW8uRkGaFOMz+wDdCVVkS\nxK2mznR9cO03wls8CnbmNpk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "okespellingserviceaccount@spellingapp.iam.gserviceaccount.com",
+  "client_id": "110881992988623228407",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "REPLACE-ME"
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/okespellingserviceaccount%40spellingapp.iam.gserviceaccount.com"
 }
