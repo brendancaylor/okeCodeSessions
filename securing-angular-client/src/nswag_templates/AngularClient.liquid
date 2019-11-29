@@ -22,7 +22,7 @@ export class {{ Class }} implements I{{ Class }} {
 {%- endfor -%}
         });
 {%- endif -%}
-        const url = `${this.config.apiUrl}/{{ operation.Path | replace: "{", "${" }}{% if operation.HasQueryParameters %}${queryString}{% endif %}`;
+        const url = `${Constants.apiRoot}/{{ operation.Path | replace: "{", "${" }}{% if operation.HasQueryParameters %}${queryString}{% endif %}`;
 {%- if operation.HasHeaderParameters -%}
         const headers = {
 {%- for parameter in operation.HeaderParameters -%}
