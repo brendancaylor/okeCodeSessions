@@ -1,0 +1,10 @@
+﻿delete from SubmittedHomeWork
+delete from CollegeAppUser
+delete from HomeWorkAssignmentItem
+delete from RoleClaim
+delete from HomeWorkAssignment
+delete from Claim
+delete from YearClass
+delete from College
+delete from AppUser
+delete from [Role]
