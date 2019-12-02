@@ -9,14 +9,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace SpellingApi
+namespace College.Api
 {
     public class Program
     {
-        public async static Task Main(string[] args)
+        public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
 
             using (var scope = host.Services.CreateScope())
             {
@@ -25,7 +24,7 @@ namespace SpellingApi
                 try
                 {
                     var collegeContext = services.GetRequiredService<CollegeContext>();
-                    await CollegeContextSeed.SeedAsync(collegeContext, loggerFactory);
+                    CollegeContextSeed.SeedAsync(collegeContext, loggerFactory).Wait();
                 }
                 catch (Exception ex)
                 {

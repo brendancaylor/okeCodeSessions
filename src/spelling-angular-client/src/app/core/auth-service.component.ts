@@ -20,7 +20,7 @@ export class AuthService {
       authority: Constants.stsAuthority,
       client_id: Constants.clientId,
       redirect_uri: `${Constants.clientRoot}signin-callback`,
-      scope: 'openid profile projects-api',
+      scope: 'openid profile spelling-api',
       response_type: 'code',
       post_logout_redirect_uri: `${Constants.clientRoot}signout-callback`,
       automaticSilentRenew: true,
@@ -96,16 +96,16 @@ export class AuthService {
   }
 
   loadSecurityContext() {
-    this._httpClient
-      .get<AuthContext>(`${Constants.apiRoot}Projects/AuthContext`)
-      .subscribe(
-        context => {
-          this.authContext = new AuthContext();
-          this.authContext.claims = context.claims;
-          this.authContext.userProfile = context.userProfile;
-        },
-        error => console.error(error)
-      );
+    // this._httpClient
+    //   .get<AuthContext>(`${Constants.apiRoot}Projects/AuthContext`)
+    //   .subscribe(
+    //     context => {
+    //       this.authContext = new AuthContext();
+    //       this.authContext.claims = context.claims;
+    //       this.authContext.userProfile = context.userProfile;
+    //     },
+    //     error => console.error(error)
+    //   );
   }
 
 }

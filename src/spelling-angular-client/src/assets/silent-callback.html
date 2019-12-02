@@ -12,9 +12,9 @@
 <body>
   <script>
     const stsSettings = {
-      authority: "http://localhost:4242/",
-      client_id: "spa-client",
-      scope: "openid profile projects-api",
+      authority: "https://localhost:44309/",
+      client_id: "spa-spelling-client",
+      scope: "openid profile spelling-api",
       response_type: "code"
     };
     new Oidc.UserManager(stsSettings).signinSilentCallback().catch(error => {

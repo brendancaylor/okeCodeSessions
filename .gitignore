@@ -6,6 +6,5 @@ BackEnd/SecuringAngularApps.STS/tempkey.rsa
 lib/
 node_modules/
 .vs/
-BackEnd/SecuringAngularApps.API/SpellingApp-7fc0cf8b5885.json
-src/SpellingApi/SpellingApp-7fc0cf8b5885.json
 src/IdentityServer/tempkey.rsa
+src/CollegeApi/SpellingApp-7fc0cf8b5885.json
