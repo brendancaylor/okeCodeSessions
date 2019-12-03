@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class InitialCreateCollege : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -89,7 +89,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    RowVersion = table.Column<byte[]>(nullable: true),
+                    RowVersion = table.Column<byte[]>(fixedLength: true, maxLength: 8, rowVersion: true, nullable: false),
                     CreatedByAppUserId = table.Column<Guid>(nullable: false),
                     UpdatedByAppUserId = table.Column<Guid>(nullable: true),
                     CollegeName = table.Column<string>(maxLength: 250, nullable: false)
@@ -143,7 +143,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    RowVersion = table.Column<byte[]>(nullable: true),
+                    RowVersion = table.Column<byte[]>(fixedLength: true, maxLength: 8, rowVersion: true, nullable: false),
                     CreatedByAppUserId = table.Column<Guid>(nullable: false),
                     UpdatedByAppUserId = table.Column<Guid>(nullable: true),
                     CollegeId = table.Column<Guid>(nullable: false),
@@ -181,7 +181,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    RowVersion = table.Column<byte[]>(nullable: true),
+                    RowVersion = table.Column<byte[]>(fixedLength: true, maxLength: 8, rowVersion: true, nullable: false),
                     CreatedByAppUserId = table.Column<Guid>(nullable: false),
                     UpdatedByAppUserId = table.Column<Guid>(nullable: true),
                     YearClassId = table.Column<Guid>(nullable: false),
@@ -217,7 +217,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    RowVersion = table.Column<byte[]>(nullable: true),
+                    RowVersion = table.Column<byte[]>(fixedLength: true, maxLength: 8, rowVersion: true, nullable: false),
                     CreatedByAppUserId = table.Column<Guid>(nullable: false),
                     UpdatedByAppUserId = table.Column<Guid>(nullable: true),
                     HomeWorkAssignmentId = table.Column<Guid>(nullable: false),
@@ -244,6 +244,28 @@ namespace Infrastructure.Migrations
                         name: "FK_HomeWorkAssignmentItem_AppUser_UpdatedByAppUserId",
                         column: x => x.UpdatedByAppUserId,
                         principalTable: "AppUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubmittedHomeWork",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
+                    HomeWorkAssignmentId = table.Column<Guid>(nullable: false),
+                    StudentName = table.Column<string>(maxLength: 150, nullable: false),
+                    Score = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubmittedHomeWork", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubmittedHomeWork_HomeWorkAssignment_HomeWorkAssignmentId",
+                        column: x => x.HomeWorkAssignmentId,
+                        principalTable: "HomeWorkAssignment",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -314,6 +336,11 @@ namespace Infrastructure.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SubmittedHomeWork_HomeWorkAssignmentId",
+                table: "SubmittedHomeWork",
+                column: "HomeWorkAssignmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_YearClass_CollegeId",
                 table: "YearClass",
                 column: "CollegeId");
@@ -341,10 +368,13 @@ namespace Infrastructure.Migrations
                 name: "RoleClaim");
 
             migrationBuilder.DropTable(
-                name: "HomeWorkAssignment");
+                name: "SubmittedHomeWork");
 
             migrationBuilder.DropTable(
                 name: "Claim");
+
+            migrationBuilder.DropTable(
+                name: "HomeWorkAssignment");
 
             migrationBuilder.DropTable(
                 name: "YearClass");

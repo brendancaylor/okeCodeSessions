@@ -8,10 +8,10 @@ namespace ApplicationCore.Interfaces
 {
     public interface IAsyncRepository<T> where T : BaseEntity
     {
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(Guid id);
         Task<IReadOnlyList<T>> ListAllAsync();
         Task<T> AddAsync(T entity, Guid appUserId);
-        Task UpdateAsync(T entity, Guid appUserId);
+        Task<T> UpdateAsync(T entity, Guid appUserId);
         Task DeleteAsync(T entity);
         Task<int> CountAsync();
     }

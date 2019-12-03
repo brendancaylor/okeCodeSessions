@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(CollegeContext))]
-    [Migration("20191201120317_InitialCreateCollege")]
-    partial class InitialCreateCollege
+    [Migration("20191203163903_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.1")
+                .HasAnnotation("ProductVersion", "3.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -102,7 +102,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("RowVersion")
-                        .HasColumnType("varbinary(max)");
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion")
+                        .IsFixedLength(true)
+                        .HasMaxLength(8);
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
@@ -156,7 +161,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<byte[]>("RowVersion")
-                        .HasColumnType("varbinary(max)");
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion")
+                        .IsFixedLength(true)
+                        .HasMaxLength(8);
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
@@ -194,7 +204,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("RowVersion")
-                        .HasColumnType("varbinary(max)");
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion")
+                        .IsFixedLength(true)
+                        .HasMaxLength(8);
 
                     b.Property<string>("Sentence")
                         .IsRequired()
@@ -268,6 +283,36 @@ namespace Infrastructure.Migrations
                     b.ToTable("RoleClaim");
                 });
 
+            modelBuilder.Entity("ApplicationCore.Entities.SubmittedHomeWork", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("HomeWorkAssignmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HomeWorkAssignmentId");
+
+                    b.ToTable("SubmittedHomeWork");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.YearClass", b =>
                 {
                     b.Property<Guid>("Id")
@@ -287,7 +332,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("RowVersion")
-                        .HasColumnType("varbinary(max)");
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion")
+                        .IsFixedLength(true)
+                        .HasMaxLength(8);
 
                     b.Property<string>("TeacherName")
                         .IsRequired()
@@ -405,6 +455,15 @@ namespace Infrastructure.Migrations
                     b.HasOne("ApplicationCore.Entities.Role", "Role")
                         .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.SubmittedHomeWork", b =>
+                {
+                    b.HasOne("ApplicationCore.Entities.HomeWorkAssignment", "HomeWorkAssignment")
+                        .WithMany("SubmittedHomeWorks")
+                        .HasForeignKey("HomeWorkAssignmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

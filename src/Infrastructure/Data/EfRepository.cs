@@ -18,7 +18,7 @@ namespace Infrastructure.Data
             _dbContext = dbContext;
         }
 
-        public virtual async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetByIdAsync(Guid id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
@@ -55,23 +55,23 @@ namespace Infrastructure.Data
             return entity;
         }
 
-        public async Task UpdateAsync(T entity, Guid appUserId)
+        public async Task<T> UpdateAsync(T entity, Guid appUserId)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
 
-            if (entity.GetType() == typeof(BaseEntityFull))
+            if (typeof(T).IsSubclassOf(typeof(BaseEntityFull)))
             {
                 var baseEntity = entity as BaseEntityFull;
                 baseEntity.SetUserUpdateProperties(appUserId);
             }
 
-            if (entity.GetType() == typeof(BaseEntityDateStamps))
+            if (typeof(T).IsSubclassOf(typeof(BaseEntityDateStamps)))
             {
                 var baseEntity = entity as BaseEntityDateStamps;
                 baseEntity.SetDateUpdateProperties();
             }
-
             await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
         public async Task DeleteAsync(T entity)

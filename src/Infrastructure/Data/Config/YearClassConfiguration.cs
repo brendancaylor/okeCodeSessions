@@ -16,6 +16,12 @@ namespace Infrastructure.Data.Config
             builder.Property(b => b.YearClassName)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            builder.Property(b => b.RowVersion)
+                .IsRequired()
+                .IsFixedLength()
+                .HasMaxLength(8)
+                .IsRowVersion();
         }
     }
 }

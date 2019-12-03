@@ -30,25 +30,43 @@ namespace College.Api.Controllers
             return data.Select(o => CollegeDto.From(o)).ToList();
         }
 
+        [HttpGet("{collegeId}")]
+        public async Task<ActionResult<CollegeDto>> GetCollegeAsync([FromRoute] Guid collegeId)
+        {
+            var college = await _collegeRepository.GetByIdAsync(collegeId);
+            return CollegeDto.From(college);
+        }
+
         [HttpPost]
-        public async Task<ActionResult<SimpleUpsertDto>> AddCollegeAsync([FromBody] AddCollegeDto dto)
+        public async Task<ActionResult<SimpleUpsertDto>> AddCollegeAsync([FromBody] NameOnlyUpsertDto dto)
         {
             var college = new ApplicationCore.Entities.College
             {
-                CollegeName = dto.CollegeName
+                CollegeName = dto.Name
             };
-            try
-            {
-                college = await _collegeRepository.AddAsync(college, this.AppUserId.Value);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-            
+            college = await _collegeRepository.AddAsync(college, this.AppUserId.Value);
             return SimpleUpsertDto.From(college);
         }
+
+        [HttpPut]
+        public async Task<ActionResult<SimpleUpsertDto>> UpdateCollegeAsync([FromBody] NameOnlyUpsertDto dto)
+        {
+            var college = await _collegeRepository.GetByIdAsync(dto.Id);
+            college.RowVersion = dto.RowVersion;
+            college.CollegeName = dto.Name;
+            college = await _collegeRepository.UpdateAsync(college, this.AppUserId.Value);
+            return SimpleUpsertDto.From(college);
+        }
+
+        //[HttpPut("update-users")]
+        //public async Task<ActionResult<SimpleUpsertDto>> UpdateCollegeUsersAsync([FromBody] CollegeDto dto)
+        //{
+        //    var college = await _collegeRepository.GetByIdAsync(dto.Id);
+        //    college.RowVersion = dto.RowVersion;
+        //    college.CollegeName = dto.CollegeName;
+        //    college = await _collegeRepository.UpdateAsync(college, this.AppUserId.Value);
+        //    return SimpleUpsertDto.From(college);
+        //}
 
     }
 }
