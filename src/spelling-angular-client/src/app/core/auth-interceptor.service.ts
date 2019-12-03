@@ -16,7 +16,16 @@ export class AuthInterceptorService implements HttpInterceptor {
       return from(this._authService.getAccessToken().then(token => {
         
         if(!token) {
-          return next.handle(req).toPromise();
+          return next.handle(req)
+          
+          .pipe(tap(_ => { }, error => {
+            var respError = error as HttpErrorResponse;
+            if (respError && (respError.status === 401 || respError.status === 403)) {
+              this._router.navigate(['/unauthorized']);
+            }
+          }))
+
+          .toPromise();
         }
 
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);;
