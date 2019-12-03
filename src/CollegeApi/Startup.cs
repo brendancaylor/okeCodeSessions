@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.Interfaces;
+using ApplicationCore.Services;
 using College.Api.Middleware;
 using IdentityServer4.AccessTokenValidation;
 using Infrastructure.Data;
@@ -86,6 +88,12 @@ namespace College.Api
                 .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
+
+
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+            services.AddScoped<ICollegeService, CollegeService>();
+            services.AddScoped<ICollegeRepository, CollegeRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

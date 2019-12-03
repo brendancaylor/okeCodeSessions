@@ -34,17 +34,43 @@ namespace Infrastructure.Data
             return await _dbContext.Set<T>().CountAsync();
         }
 
-        public async Task<T> AddAsync(T entity)
+        public async Task<T> AddAsync(T entity, Guid appUserId)
         {
             await _dbContext.Set<T>().AddAsync(entity);
+
+            if(typeof(T).IsSubclassOf(typeof(BaseEntityFull)))
+            {
+                var baseEntity = entity as BaseEntityFull;
+                baseEntity.SetUserAddProperties(appUserId);
+            }
+
+            if (typeof(T).IsSubclassOf(typeof(BaseEntityDateStamps)))
+            {
+                var baseEntity = entity as BaseEntityDateStamps;
+                baseEntity.SetDateAddProperties();
+            }
+
             await _dbContext.SaveChangesAsync();
 
             return entity;
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity, Guid appUserId)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
+
+            if (entity.GetType() == typeof(BaseEntityFull))
+            {
+                var baseEntity = entity as BaseEntityFull;
+                baseEntity.SetUserUpdateProperties(appUserId);
+            }
+
+            if (entity.GetType() == typeof(BaseEntityDateStamps))
+            {
+                var baseEntity = entity as BaseEntityDateStamps;
+                baseEntity.SetDateUpdateProperties();
+            }
+
             await _dbContext.SaveChangesAsync();
         }
 

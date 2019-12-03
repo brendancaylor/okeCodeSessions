@@ -12,6 +12,12 @@ namespace Infrastructure.Data.Config
             builder.Property(b => b.CollegeName)
                 .IsRequired()
                 .HasMaxLength(250);
+
+            builder.Property(b => b.RowVersion)
+                .IsRequired()
+                .IsFixedLength()
+                .HasMaxLength(8)
+                .IsRowVersion();
         }
     }
 }

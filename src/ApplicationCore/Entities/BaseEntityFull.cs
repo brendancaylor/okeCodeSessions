@@ -13,5 +13,15 @@ namespace ApplicationCore.Entities
         public Guid? UpdatedByAppUserId { get; set; }
 
         public AppUser UpdatedByAppUser { get; set; }
+
+        public void SetUserAddProperties(Guid appUserId)
+        {
+            this.CreatedByAppUserId = appUserId;
+        }
+
+        public void SetUserUpdateProperties(Guid appUserId)
+        {
+            this.UpdatedByAppUserId = appUserId;
+        }
     }
 }

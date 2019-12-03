@@ -10,8 +10,8 @@ namespace ApplicationCore.Interfaces
     {
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> ListAllAsync();
-        Task<T> AddAsync(T entity);
-        Task UpdateAsync(T entity);
+        Task<T> AddAsync(T entity, Guid appUserId);
+        Task UpdateAsync(T entity, Guid appUserId);
         Task DeleteAsync(T entity);
         Task<int> CountAsync();
     }

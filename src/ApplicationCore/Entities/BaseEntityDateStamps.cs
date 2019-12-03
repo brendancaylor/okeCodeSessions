@@ -9,5 +9,15 @@ namespace ApplicationCore.Entities
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
 
         public DateTimeOffset? UpdatedAt { get; set; }
+
+        public void SetDateAddProperties()
+        {
+            this.CreatedAt = DateTimeOffset.Now;
+        }
+
+        public void SetDateUpdateProperties()
+        {
+            this.UpdatedAt = DateTimeOffset.Now;
+        }
     }
 }

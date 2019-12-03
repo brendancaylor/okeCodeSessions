@@ -16,9 +16,9 @@ namespace ApplicationCore.Services
             _collegeRepository = collegeRepository;
         }
 
-        public Task AddCollege(string name)
-        {
-            return _collegeRepository.AddAsync(new College { CollegeName = name});
-        }
+        //public Task AddCollege(string name)
+        //{
+        //    return _collegeRepository.AddAsync(new College { CollegeName = name});
+        //}
     }
 }

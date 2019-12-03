@@ -8,6 +8,6 @@
         {
             this.Id = Guid.NewGuid();
         }
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
     }
 }

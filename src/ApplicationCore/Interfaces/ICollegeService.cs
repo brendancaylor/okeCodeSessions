@@ -5,6 +5,6 @@ namespace ApplicationCore.Interfaces
 {
     public interface ICollegeService
     {
-        Task AddCollege(string name);
+        //Task AddCollege(string name);
     }
 }

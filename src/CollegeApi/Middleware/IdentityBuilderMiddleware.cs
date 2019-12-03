@@ -85,7 +85,7 @@ namespace College.Api.Middleware
             {
                 result.Add(new Claim("role", claim));
             }
-            
+            result.Add(new Claim("appUserId", user?.Id.ToString()));
             return result;
         }
     }
