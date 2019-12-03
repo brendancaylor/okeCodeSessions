@@ -14,7 +14,6 @@ export class AuthInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.startsWith(Constants.apiRoot)) {
       return from(this._authService.getAccessToken().then(token => {
-        debugger;
         
         if(!token) {
           return next.handle(req).toPromise();

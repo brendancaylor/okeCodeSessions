@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SpeachClient } from '../core/services/clients';
+import { SpeachClient, TestClient } from '../core/services/clients';
 
 @Component({
     selector: 'app-home',
@@ -8,7 +8,8 @@ import { SpeachClient } from '../core/services/clients';
 
 export class HomeComponent implements OnInit {
     constructor(
-        private readonly speachClient: SpeachClient
+        private readonly speachClient: SpeachClient,
+        private readonly testClient: TestClient
     ) { }
 
     ngOnInit() {
@@ -17,10 +18,16 @@ export class HomeComponent implements OnInit {
     }
 
     playSound() {
-        debugger;
+        // this.testClient.getSomethigs('test').subscribe(
+        //     (result) => {
+        //         debugger;
+        //         const test = result.rowVersion;
+        //     }
+        // )
+
+        // debugger;
         this.speachClient.getSpeach('Home page').subscribe(
             (blob) => {
-                debugger;
                 var blobUrl = URL.createObjectURL(blob);
                 let audio = new Audio();
                 audio.src = blobUrl;

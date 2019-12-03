@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,14 @@ namespace College.Api.Middleware
         public async Task Invoke(HttpContext context, CollegeContext dbContext)
         {
             if (context.User is null || !context.User.Identity.IsAuthenticated)
+            {
+                await _next.Invoke(context);
+                return;
+            }
+
+            var identityId = context.User.Claims.FirstOrDefault(o => o.Type.ToLower() == "sub")?.Value;
+
+            if(identityId == null)
             {
                 await _next.Invoke(context);
                 return;
@@ -52,7 +61,7 @@ namespace College.Api.Middleware
             }
 
 
-            var claims = GetClaims(dbContext);
+            var claims = GetClaims(dbContext, identityId);
             foreach (var claim in claims)
             {
                 claimIdentity.AddClaim(claim);
@@ -60,19 +69,23 @@ namespace College.Api.Middleware
             await _next.Invoke(context);
         }
 
-        List<Claim> GetClaims(CollegeContext dbContext)
+        List<Claim> GetClaims(CollegeContext dbContext, string identityId)
         {
-            //var claims = dbContext.AppUsers
-            //return dbContext.RoleClaims
-            //    .AsNoTracking()
-            //    .Where(roleClaim => roleClaim.Role.Id == roleId)
-            //    .Select(roleClaim => GetClaim(roleClaim.Claim))
-            //    .ToListAsync();
+            var result = new List<Claim>();
+            var user = dbContext
+                .AppUsers
+                .AsNoTracking()
+                    .Include(o => o.Role.RoleClaims)
+                        .ThenInclude(rc => rc.Claim)
+                .SingleOrDefault(o => o.IdentityId == identityId);
 
-            var result = new List<Claim>
+            var claims = user?.Role.RoleClaims.Select(o => o.Claim.ClaimName).ToList();
+
+            foreach (var claim in claims)
             {
-                new Claim("role", "Admin")
-            };
+                result.Add(new Claim("role", claim));
+            }
+            
             return result;
         }
     }

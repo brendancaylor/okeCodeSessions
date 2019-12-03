@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpellingApi", "src\SpellingApi\SpellingApi.csproj", "{A07A0BDD-7A36-4AF9-82B1-742621909D98}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E787109A-CAF0-4F55-A0B5-B783BE7B99AA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "src\ApplicationCore\ApplicationCore.csproj", "{8D419013-9024-4633-BB9A-E350781FA33B}"
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A07A0BDD-7A36-4AF9-82B1-742621909D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A07A0BDD-7A36-4AF9-82B1-742621909D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A07A0BDD-7A36-4AF9-82B1-742621909D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A07A0BDD-7A36-4AF9-82B1-742621909D98}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8D419013-9024-4633-BB9A-E350781FA33B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8D419013-9024-4633-BB9A-E350781FA33B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D419013-9024-4633-BB9A-E350781FA33B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -46,7 +40,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A07A0BDD-7A36-4AF9-82B1-742621909D98} = {E787109A-CAF0-4F55-A0B5-B783BE7B99AA}
 		{8D419013-9024-4633-BB9A-E350781FA33B} = {E787109A-CAF0-4F55-A0B5-B783BE7B99AA}
 		{57095000-F581-43BE-8BDC-CF5ED89F3B24} = {E787109A-CAF0-4F55-A0B5-B783BE7B99AA}
 		{E8C6C520-0595-4DB9-B736-BAF1FA2F1457} = {E787109A-CAF0-4F55-A0B5-B783BE7B99AA}

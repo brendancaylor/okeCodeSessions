@@ -36,7 +36,7 @@ namespace IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IpdConnection")));
 
@@ -60,6 +60,8 @@ namespace IdentityServer
                     .AllowCredentials();
                 });
             });
+
+            services.AddControllersWithViews();
 
             var builder = services.AddIdentityServer(options =>
             {
@@ -91,6 +93,7 @@ namespace IdentityServer
                 app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
+            app.UseCors("CorsPolicy");
             app.UseRouting();
             app.UseIdentityServer();
             app.UseAuthorization();

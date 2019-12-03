@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using College.Api.Middleware;
 using IdentityServer4.AccessTokenValidation;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,8 +38,6 @@ namespace College.Api
 
             services.AddDbContext<CollegeContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("CollegeConnection")));
-
-            services.AddControllersWithViews();
 
             services.AddSwaggerDocument(document =>
             {
@@ -74,11 +74,18 @@ namespace College.Api
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                                    .AddIdentityServerAuthentication(options =>
                                    {
-                                       options.Authority = "http://localhost:4242";
-                                       options.ApiName = "projects-api";
-                                       options.RequireHttpsMetadata = false;
+                                       options.Authority = _otherConfirguration.IdentityBaseUrl;
+                                       options.ApiName = "spelling-api";
+                                       options.RequireHttpsMetadata = true;
                                    });
 
+            services.AddControllersWithViews(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,21 +103,22 @@ namespace College.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+            app.UseAuthorization();
+            app.UseCors("AllRequests");
+            app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
+            app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseAuthorization();
-
+            app.UseIdentityBuilder();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            app.UseIdentityBuilder();
         }
     }
 }
