@@ -7,9 +7,12 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
+using ApplicationCore.Services;
 using IdentityServer4;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
+using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -75,6 +78,11 @@ namespace IdentityServer
             .AddInMemoryApiResources(Config.Apis)
             .AddInMemoryClients(Config.GetClients(_otherConfirguration.SpaSpellingClientBaseUrl))
             .AddAspNetIdentity<ApplicationUser>();
+
+
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+            services.AddScoped<ICollegeService, CollegeService>();
+            services.AddScoped<ICollegeRepository, CollegeRepository>();
 
             if (Environment.IsDevelopment())
             {
