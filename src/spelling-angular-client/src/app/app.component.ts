@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './core/auth-service.component';
+import { AuthService } from './core/auth-service';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +12,13 @@ export class AppComponent implements OnInit {
   constructor(private _authService: AuthService) {
     this._authService.loginChanged.subscribe(loggedIn => {
       this.isLoggedIn = loggedIn;
-    })
+    });
   }
 
   ngOnInit() {
     this._authService.isLoggedIn().then(loggedIn => {
       this.isLoggedIn = loggedIn;
-    })
+    });
   }
 
   login() {
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
     this._authService.logout();
   }
 
-  isAdmin() {
-    return this._authService.authContext && this._authService.authContext.isAdmin;
+  hasClaims(claims: string[]) {
+    return this._authService.authContext && this._authService.authContext.hasClaims(...claims);
   }
 }

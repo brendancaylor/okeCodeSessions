@@ -17,7 +17,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class DateParserInterceptor implements HttpInterceptor {
-    intercept(request: HttpRequest<any>, next: HttpHandler): 
+    intercept(request: HttpRequest<any>, next: HttpHandler):
         Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
         return next.handle(request)
             .pipe(map(response => {

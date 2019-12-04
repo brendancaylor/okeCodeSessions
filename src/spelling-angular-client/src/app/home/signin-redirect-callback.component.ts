@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../core/auth-service.component';
+import { AuthService } from '../core/auth-service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,6 +14,6 @@ export class SigninRedirectCallbackComponent implements OnInit {
   ngOnInit() {
     this._authService.completeLogin().then(user => {
       this._router.navigate(['/'], { replaceUrl: true });
-    })
+    });
   }
 }

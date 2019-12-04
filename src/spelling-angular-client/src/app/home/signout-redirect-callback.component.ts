@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../core/auth-service.component';
+import { AuthService } from '../core/auth-service';
 
 @Component({
   selector: 'app-signout-callback',
@@ -14,6 +14,6 @@ export class SignoutRedirectCallbackComponent implements OnInit {
   ngOnInit() {
     this._authService.completeLogout().then(_ => {
       this._router.navigate(['/'], { replaceUrl: true });
-    })
+    });
   }
 }

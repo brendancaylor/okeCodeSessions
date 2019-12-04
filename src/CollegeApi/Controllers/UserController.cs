@@ -16,7 +16,7 @@ namespace College.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "v1")]
-    [Authorize(Roles = "AdminisiterAllUsers")]
+    
     public class UserController : BaseController
     {
 
@@ -28,8 +28,17 @@ namespace College.Api.Controllers
             _userRepository = userRepository;
         }
 
+        [HttpGet("get-current-user-claims")]
+        [Authorize]
+        public CurrentUsersClaimsDto GetCurrentUserClaims()
+        {
+            var dto = new CurrentUsersClaimsDto();
+            dto.Claims = User.Claims.Where(s => s.Type == "role").Select(s => s.Value).ToList();
+            return dto;
+        }
 
         [HttpPost]
+        [Authorize(Roles = "AdminisiterAllUsers")]
         public async Task<SimpleUpsertDto> AddUserAsync([FromBody] AddUserDto dto)
         {
             var appUser = AddUserDto.GetAddUserFrom(dto);

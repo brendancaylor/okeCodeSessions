@@ -27,16 +27,16 @@ export class HomeComponent implements OnInit {
 
     playSound() {
 
-        const addUserDto: AddUserDto = new AddUserDto();
-        addUserDto.email = 'test@builditloveit.com';
-        addUserDto.firstName = 'firstName';
-        addUserDto.lastName = 'lastName';
-        addUserDto.roleId = '6ed6abf8-8e4e-45c4-ad90-0987906e75a4';
-        this.userClient.addUser(addUserDto).subscribe(
-            (test) => {
-                debugger;
-            }
-        );
+        // const addUserDto: AddUserDto = new AddUserDto();
+        // addUserDto.email = 'test@builditloveit.com';
+        // addUserDto.firstName = 'firstName';
+        // addUserDto.lastName = 'lastName';
+        // addUserDto.roleId = '6ed6abf8-8e4e-45c4-ad90-0987906e75a4';
+        // this.userClient.addUser(addUserDto).subscribe(
+        //     (test) => {
+        //         debugger;
+        //     }
+        // );
 
         // this.collegeClient.getCollege('baf9c688-d079-4a89-8fd7-8754b973174c')
         // .subscribe(

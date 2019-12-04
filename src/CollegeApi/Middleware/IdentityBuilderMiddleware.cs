@@ -53,7 +53,7 @@ namespace College.Api.Middleware
 
             var claimIdentity = context.User.Identity as ClaimsIdentity;
 
-            if (claimIdentity.Claims.Any(o => o.Type == ClaimTypes.Role))
+            if (claimIdentity.Claims.Any(o => o.Type == "role"))
             {
                 // roles have already been set so we can ignore below
                 await _next.Invoke(context);

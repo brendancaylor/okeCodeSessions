@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { from, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Constants } from '../constants';
-import { AuthService } from './auth-service.component';
+import { AuthService } from './auth-service';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
@@ -14,12 +14,12 @@ export class AuthInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.startsWith(Constants.apiRoot)) {
       return from(this._authService.getAccessToken().then(token => {
-        
-        if(!token) {
+
+        if (!token) {
           return next.handle(req)
-          
+
           .pipe(tap(_ => { }, error => {
-            var respError = error as HttpErrorResponse;
+            const respError = error as HttpErrorResponse;
             if (respError && (respError.status === 401 || respError.status === 403)) {
               this._router.navigate(['/unauthorized']);
             }
@@ -28,22 +28,20 @@ export class AuthInterceptorService implements HttpInterceptor {
           .toPromise();
         }
 
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);;
-        
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
         const authReq = req.clone({ headers });
         return next.handle(authReq)
           .pipe(tap(_ => { }, error => {
-            var respError = error as HttpErrorResponse;
+            const respError = error as HttpErrorResponse;
             if (respError && (respError.status === 401 || respError.status === 403)) {
               this._router.navigate(['/unauthorized']);
             }
           }
         ))
         .toPromise();
-      
       }));
-    }
-    else {
+    } else {
       return next.handle(req);
     }
   }
