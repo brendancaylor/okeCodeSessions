@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Services;
 using College.Api.Middleware;
@@ -25,7 +26,7 @@ namespace College.Api
 {
     public class Startup
     {
-        public IOtherConfirguration _otherConfirguration = new OtherConfirguration();
+        public ICollegeApiConfirguration _collegeApiConfirguration = new CollegeApiConfirguration();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,7 +37,7 @@ namespace College.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            Configuration.GetSection("OtherConfirguration").Bind(_otherConfirguration);
+            Configuration.GetSection("CollegeApiConfirguration").Bind(_collegeApiConfirguration);
 
             services.AddDbContext<CollegeContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("CollegeConnection")));
@@ -68,7 +69,7 @@ namespace College.Api
                 {
                     builder.AllowAnyHeader()
                     .AllowAnyMethod()
-                    .SetIsOriginAllowed(origin => origin == _otherConfirguration.SpaSpellingClientBaseUrl)
+                    .SetIsOriginAllowed(origin => origin == _collegeApiConfirguration.SpaSpellingClientBaseUrl)
                     .AllowCredentials();
                 });
             });
@@ -76,7 +77,7 @@ namespace College.Api
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                                    .AddIdentityServerAuthentication(options =>
                                    {
-                                       options.Authority = _otherConfirguration.IdentityBaseUrl;
+                                       options.Authority = _collegeApiConfirguration.IdentityBaseUrl;
                                        options.ApiName = "spelling-api";
                                        options.RequireHttpsMetadata = true;
                                    });
@@ -96,7 +97,7 @@ namespace College.Api
 
             services.AddHttpClient("identityClient", client =>
             {
-                client.BaseAddress = new Uri(_otherConfirguration.IdentityBaseUrl);
+                client.BaseAddress = new Uri(_collegeApiConfirguration.IdentityBaseUrl);
             });
 
         }

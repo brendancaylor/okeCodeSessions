@@ -6,7 +6,9 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using ApplicationCore;
 using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
 using IdentityServer4;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
@@ -24,7 +26,7 @@ namespace IdentityServer
 {
     public class Startup
     {
-        public IOtherConfirguration _otherConfirguration = new OtherConfirguration();
+        public IIdentityApiConfirguration _identityApiConfirguration = new IdentityApiConfirguration();
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
 
@@ -40,10 +42,10 @@ namespace IdentityServer
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IpdConnection")));
 
-            Configuration.GetSection("OtherConfirguration").Bind(_otherConfirguration);
+            Configuration.GetSection("IdentityApiConfirguration").Bind(_identityApiConfirguration);
 
-            services.Configure<IOtherConfirguration>(
-                Configuration.GetSection("OtherConfirguration")
+            services.Configure<IIdentityApiConfirguration>(
+                Configuration.GetSection("IdentityApiConfirguration")
             );
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -56,7 +58,7 @@ namespace IdentityServer
                 {
                     corsBuilder.AllowAnyHeader()
                     .AllowAnyMethod()
-                    .SetIsOriginAllowed(origin => origin == _otherConfirguration.SpaSpellingClientBaseUrl)
+                    .SetIsOriginAllowed(origin => origin == _identityApiConfirguration.SpaSpellingClientBaseUrl)
                     .AllowCredentials();
                 });
             });
@@ -73,7 +75,7 @@ namespace IdentityServer
             })
             .AddInMemoryIdentityResources(Config.Ids)
             .AddInMemoryApiResources(Config.Apis)
-            .AddInMemoryClients(Config.GetClients(_otherConfirguration.SpaSpellingClientBaseUrl))
+            .AddInMemoryClients(Config.GetClients(_identityApiConfirguration.SpaSpellingClientBaseUrl))
             .AddAspNetIdentity<ApplicationUser>();
 
             if (Environment.IsDevelopment())
@@ -128,7 +130,7 @@ namespace IdentityServer
         async Task EnsureUsersFromConfigurationAsync(IServiceScope scope)
         {
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            foreach (var user in _otherConfirguration.InitialUsers)
+            foreach (var user in _identityApiConfirguration.InitialUsers)
             {
                 await EnsureUserFromConfiguration(userManager, user);
             }
