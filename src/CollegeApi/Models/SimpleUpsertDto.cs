@@ -17,6 +17,13 @@ namespace College.Api.Models
             return dto;
         }
 
+        public static SimpleUpsertDto From(ApplicationCore.Entities.BaseEntityDateStamps baseClass)
+        {
+            var dto = new SimpleUpsertDto();
+            dto.Id = baseClass.Id;
+            return dto;
+        }
+
     }
 
     

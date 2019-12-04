@@ -50,7 +50,16 @@ namespace Infrastructure.Data
                 baseEntity.SetDateAddProperties();
             }
 
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
 
             return entity;
         }

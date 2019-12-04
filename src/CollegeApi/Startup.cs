@@ -94,6 +94,11 @@ namespace College.Api
             services.AddScoped<ICollegeService, CollegeService>();
             services.AddScoped<ICollegeRepository, CollegeRepository>();
 
+            services.AddHttpClient("identityClient", client =>
+            {
+                client.BaseAddress = new Uri(_otherConfirguration.IdentityBaseUrl);
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

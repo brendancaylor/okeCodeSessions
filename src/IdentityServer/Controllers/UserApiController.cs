@@ -25,12 +25,12 @@ namespace IdentityServer.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] IdentityServiceApiAddUserDto dto)
+        public async Task<string> Add([FromBody] IdentityServiceApiAddUserDto dto)
         {
             if (!ModelState.IsValid)
             {
                 Response.StatusCode = StatusCodes.Status400BadRequest;
-                return Json(string.Empty);
+                return string.Empty;
             }
 
             var user = new ApplicationUser
@@ -42,15 +42,16 @@ namespace IdentityServer.Controllers
             };
 
             var result = await _userManager.CreateAsync(user);
-            //var result2 = await _userManager.ResetPasswordAsync(user, password);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            await _userManager.ResetPasswordAsync(user, token, "Password123!");
             if (!result.Succeeded)
             {
                 Response.StatusCode = StatusCodes.Status400BadRequest;
-                return Json(string.Empty);
+                return string.Empty;
             }
 
             Response.StatusCode = StatusCodes.Status201Created;
-            return Json(user.Id);
+            return user.Id;
         }
 
         [HttpGet]
