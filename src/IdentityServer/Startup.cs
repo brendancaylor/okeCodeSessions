@@ -13,6 +13,7 @@ using IdentityServer4;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using Infrastructure.Identity;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -43,6 +44,7 @@ namespace IdentityServer
                 options.UseSqlServer(Configuration.GetConnectionString("IpdConnection")));
 
             Configuration.GetSection("IdentityApiConfirguration").Bind(_identityApiConfirguration);
+            services.Configure<IdentityApiConfirguration>(this.Configuration.GetSection("IdentityApiConfirguration"));
 
             services.Configure<IIdentityApiConfirguration>(
                 Configuration.GetSection("IdentityApiConfirguration")
@@ -77,6 +79,8 @@ namespace IdentityServer
             .AddInMemoryApiResources(Config.Apis)
             .AddInMemoryClients(Config.GetClients(_identityApiConfirguration.SpaSpellingClientBaseUrl))
             .AddAspNetIdentity<ApplicationUser>();
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             if (Environment.IsDevelopment())
             {
