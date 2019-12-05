@@ -2,6 +2,7 @@
 body {
     width: 90%;
     margin-left: 5%;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .globo-logo {
@@ -17,4 +18,8 @@ body {
 .list-action {
   width: 40px;
   text-align: center;
+}
+
+.table-container{
+  margin: 20px 0;
 }

@@ -2,20 +2,17 @@
     <mat-toolbar >
         <!--color="primary"-->
         <a routerLink="/">
-            Home
-            <!-- <span>
+            
+            <span>
                 <img src="/assets/images/Globo_logo.png" alt="Globomantics" title="Globomantics" class="globo-logo">
-            </span> -->
+            </span>
         </a>
-        <span class="navbar-fill" *ngIf="isLoggedIn">
+        <span class="navbar-fill">
             
             <button *ngIf="hasClaims(['AdminisiterColleges'])" mat-button routerLink="/admin/manage-colleges">Manage Colleges</button>
             <button *ngIf="hasClaims(['AdminisiterCollegeUsers'])" mat-button routerLink="/admin/my-colleges">My Colleges</button>
             <button *ngIf="hasClaims(['AdminisiterHomework'])" mat-button routerLink="/admin/manage-homework">Manage Homework</button>
             
-        </span>
-        <span class="navbar-fill" >
-            <button mat-button routerLink="/homework">Homework</button>
         </span>
         <span>
             <button *ngIf="!isLoggedIn" mat-button (click)="login()">Login</button>

@@ -1,1 +1,23 @@
-<p>manage-colleges works!</p>
+
+<h2>Manage colleges</h2>
+
+<div class="table-container mat-elevation-z8">
+    <mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="collegeName">
+            <mat-header-cell *matHeaderCellDef>College</mat-header-cell>
+            <mat-cell *matCellDef="let college" [style.flex]="'flex'">
+                <div class="college-name">
+                    <strong>{{college.collegeName}}</strong>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>
+
+<button title="Add College" mat-mini-fab color="primary" (click)="addCollege()">
+    <i class="material-icons">add</i>
+</button>
