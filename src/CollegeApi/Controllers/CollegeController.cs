@@ -27,7 +27,7 @@ namespace College.Api.Controllers
         public async Task<ActionResult<List<CollegeDto>>> GetAllCollegesAsync()
         {
             var data = await _collegeRepository.ListAllAsync();
-            return data.Select(o => CollegeDto.From(o)).ToList();
+            return data.Select(o => CollegeDto.From(o)).OrderBy(o => o.CollegeName).ToList();
         }
 
         [HttpGet("{collegeId}")]
@@ -52,7 +52,7 @@ namespace College.Api.Controllers
         public async Task<ActionResult<SimpleUpsertDto>> UpdateCollegeAsync([FromBody] NameOnlyUpsertDto dto)
         {
             var college = await _collegeRepository.GetByIdAsync(dto.Id);
-            college.RowVersion = dto.RowVersion;
+            _collegeRepository.SetRowVersion(college, dto.RowVersion);
             college.CollegeName = dto.Name;
             college = await _collegeRepository.UpdateAsync(college, this.AppUserId.Value);
             return SimpleUpsertDto.From(college);

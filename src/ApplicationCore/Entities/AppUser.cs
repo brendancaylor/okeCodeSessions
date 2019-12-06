@@ -17,11 +17,15 @@ namespace ApplicationCore.Entities
         private readonly List<CollegeAppUser> _collegeAppUsers = new List<CollegeAppUser>();
         public IReadOnlyCollection<CollegeAppUser> CollegeAppUsers => _collegeAppUsers.AsReadOnly();
 
-        public void AddCollegeAppUser(CollegeAppUser collegeAppUser)
+        public void AddCollegeAppUsers(List<CollegeAppUser> collegeAppUsers)
         {
-            collegeAppUser.AppUser = this;
-            collegeAppUser.AppUserId = this.Id;
-            this._collegeAppUsers.Add(collegeAppUser);
+            this._collegeAppUsers.Clear();
+            foreach (var collegeAppUser in collegeAppUsers)
+            {
+                collegeAppUser.AppUser = this;
+                collegeAppUser.AppUserId = this.Id;
+                this._collegeAppUsers.Add(collegeAppUser);
+            }
         }
     }
 }

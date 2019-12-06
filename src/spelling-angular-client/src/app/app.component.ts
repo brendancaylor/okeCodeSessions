@@ -12,6 +12,9 @@ export class AppComponent implements OnInit {
   constructor(private _authService: AuthService) {
     this._authService.loginChanged.subscribe(loggedIn => {
       this.isLoggedIn = loggedIn;
+      if (!this.isLoggedIn && this._authService.authContext) {
+        this._authService.authContext.claims = [];
+      }
     });
   }
 

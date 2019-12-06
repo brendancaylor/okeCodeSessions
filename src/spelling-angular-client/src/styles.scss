@@ -5,21 +5,22 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-.globo-logo {
+.spelling-logo {
   width: 200px;
-  margin-top: 10px;
-  margin-left: -20px;
+  margin: 10px;
 }
 
 .navbar-fill {
   flex: 1 1 auto;
 }
 
-.list-action {
-  width: 40px;
-  text-align: center;
+.action-button-wrapper button,
+.action-button-wrapper a {
+  margin: 0 8px;
 }
 
+
 .table-container{
+  clear: both;
   margin: 20px 0;
 }

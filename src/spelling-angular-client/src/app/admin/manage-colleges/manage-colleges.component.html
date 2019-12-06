@@ -1,3 +1,8 @@
+<div class="error-text">{{error}}</div>
+
+<button title="Add College" class="add-button" mat-mini-fab color="primary" (click)="addCollege()">
+    <i class="material-icons">add</i>
+</button>
 
 <h2>Manage colleges</h2>
 
@@ -13,11 +18,25 @@
             </mat-cell>
         </ng-container>
 
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let college" [style.flex]="'0 0 200px'">
+                <div class="action-button-wrapper">
+                    <button title="Edit" mat-mini-fab color="primary" class="list-action" (click)="editCollege(college)">
+                        <i class="material-icons">edit</i>
+                    </button>
+                    <button title="Users" mat-mini-fab color="primary" class="list-action" routerLink="/admin/college-users/{{college.id}}">
+                        <i class="material-icons">people</i>
+                    </button>
+                    <button title="Year classes" mat-mini-fab color="primary" class="list-action"  routerLink="/admin/college-yearclass/{{college.id}}">
+                        <i class="material-icons">face</i>
+                    </button>
+                </div>
+            </mat-cell>
+        </ng-container>
+
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
 </div>
-
-<button title="Add College" mat-mini-fab color="primary" (click)="addCollege()">
-    <i class="material-icons">add</i>
-</button>

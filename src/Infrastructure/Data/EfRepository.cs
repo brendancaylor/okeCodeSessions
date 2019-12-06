@@ -18,6 +18,11 @@ namespace Infrastructure.Data
             _dbContext = dbContext;
         }
 
+        public void SetRowVersion(T objectToSet, byte[] rowVersion)
+        {
+            _dbContext.Entry(objectToSet).Property("RowVersion").OriginalValue = rowVersion;
+        }
+
         public virtual async Task<T> GetByIdAsync(Guid id)
         {
             return await _dbContext.Set<T>().FindAsync(id);

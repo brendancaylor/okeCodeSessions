@@ -15,8 +15,9 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { DeleteDialogComponent } from './delete-dialog.component';
 import { CoreModule } from '../core/core.module';
 import { ManageCollegesComponent } from './manage-colleges/manage-colleges.component';
-import { MyCollegesComponent } from './my-colleges/my-colleges.component';
 import { ManageHomeworkComponent } from './manage-homework/manage-homework.component';
+import { CollegeYearclassComponent } from './college-yearclass/college-yearclass.component';
+import { ManagUsersComponent } from './manag-users/manag-users.component';
 
 @NgModule({
   imports: [
@@ -36,8 +37,9 @@ import { ManageHomeworkComponent } from './manage-homework/manage-homework.compo
   declarations: [
     DeleteDialogComponent,
     ManageCollegesComponent,
-    MyCollegesComponent,
-    ManageHomeworkComponent
+    ManageHomeworkComponent,
+    CollegeYearclassComponent,
+    ManagUsersComponent
   ],
   providers: [],
   entryComponents: [

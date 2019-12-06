@@ -4,15 +4,15 @@
         <a routerLink="/">
             
             <span>
-                <img src="/assets/images/Globo_logo.png" alt="Globomantics" title="Globomantics" class="globo-logo">
+                <img src="/assets/images/SpellingLogo.svg" alt="Spelling Homework" title="SpellingLogo" class="spelling-logo">
             </span>
         </a>
         <span class="navbar-fill">
             
             <button *ngIf="hasClaims(['AdminisiterColleges'])" mat-button routerLink="/admin/manage-colleges">Manage Colleges</button>
-            <button *ngIf="hasClaims(['AdminisiterCollegeUsers'])" mat-button routerLink="/admin/my-colleges">My Colleges</button>
+            <button *ngIf="hasClaims(['AdminisiterAllUsers'])" mat-button routerLink="/admin/manage-users">Manage Users</button>
             <button *ngIf="hasClaims(['AdminisiterHomework'])" mat-button routerLink="/admin/manage-homework">Manage Homework</button>
-            
+        
         </span>
         <span>
             <button *ngIf="!isLoggedIn" mat-button (click)="login()">Login</button>

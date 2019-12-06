@@ -22,6 +22,7 @@ import { SigninRedirectCallbackComponent } from './home/signin-redirect-callback
 import { SignoutRedirectCallbackComponent } from './home/signout-redirect-callback.component';
 import { UnauthorizedComponent } from './home/unauthorized.component';
 import { HomeWorkAssignmentComponent } from './do-homework/home-work-assignment/home-work-assignment.component';
+import { UpsertCollegeDialogComponent } from './dialogs/upsert-college-dialog/upsert-college-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { HomeWorkAssignmentComponent } from './do-homework/home-work-assignment/
     SigninRedirectCallbackComponent,
     SignoutRedirectCallbackComponent,
     UnauthorizedComponent,
-    HomeWorkAssignmentComponent
+    HomeWorkAssignmentComponent,
+    UpsertCollegeDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +55,7 @@ import { HomeWorkAssignmentComponent } from './do-homework/home-work-assignment/
   ],
   bootstrap: [AppComponent],
   entryComponents: [
+    UpsertCollegeDialogComponent
   ]
 })
 export class AppModule { }

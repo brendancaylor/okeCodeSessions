@@ -8,6 +8,7 @@ namespace ApplicationCore.Interfaces
 {
     public interface IAsyncRepository<T> where T : BaseEntity
     {
+        void SetRowVersion(T objectToSet, byte[] rowVersion);
         Task<T> GetByIdAsync(Guid id);
         Task<IReadOnlyList<T>> ListAllAsync();
         Task<T> AddAsync(T entity, Guid appUserId);

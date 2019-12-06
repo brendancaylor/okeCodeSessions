@@ -37,6 +37,14 @@ namespace College.Api.Controllers
             return dto;
         }
 
+        [HttpGet]
+        [Authorize(Roles = "AdminisiterAllUsers")]
+        public async Task<ActionResult<List<UserDto>>> GetAllUsersAsync()
+        {
+            var data = await _userRepository.ListAllAsync();
+            return data.Select(o => UserDto.From(o)).OrderBy(o => o.LastName).ToList();
+        }
+
         [HttpPost]
         [Authorize(Roles = "AdminisiterAllUsers")]
         public async Task<SimpleUpsertDto> AddUserAsync([FromBody] AddUserDto dto)
@@ -55,6 +63,16 @@ namespace College.Api.Controllers
             appUser.IdentityId = identityId;
             appUser = await _userRepository.UpdateAsync(appUser, this.AppUserId.Value);
             return SimpleUpsertDto.From(appUser);
+        }
+
+        [HttpPut]
+        [Authorize(Roles = "AdminisiterAllUsers")]
+        public async Task<ActionResult<SimpleUpsertDto>> UpdateUserAsync([FromBody] UpdateUserDto dto)
+        {
+            var user = await _userRepository.GetByIdAsync(dto.Id);
+            UpdateUserDto.SetAppUserFromDto(dto, user);
+            user = await _userRepository.UpdateAsync(user, this.AppUserId.Value);
+            return SimpleUpsertDto.From(user);
         }
     }
 }
