@@ -1,7 +1,9 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,12 +15,14 @@ namespace Infrastructure.Data
         {
         }
 
-        //public Task<Order> GetByIdWithItemsAsync(int id)
-        //{
-        //    return _dbContext.Orders
-        //        .Include(o => o.OrderItems)
-        //        .Include($"{nameof(Order.OrderItems)}.{nameof(OrderItem.ItemOrdered)}")
-        //        .FirstOrDefaultAsync(x => x.Id == id);
-        //}
+        public Task<List<College>> GetCollegesFromNonAdmin(Guid appUserId)
+        {
+            return _dbContext
+                .CollegeAppUsers
+                    .Include(o => o.College)
+                .Where(o => o.AppUserId == appUserId)
+                .Select(s => s.College)
+                .ToListAsync();
+        }
     }
 }

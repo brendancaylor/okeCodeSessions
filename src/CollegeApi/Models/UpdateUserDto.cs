@@ -18,12 +18,9 @@ namespace College.Api.Models
 
         public static void SetAppUserFromDto(UpdateUserDto dto, AppUser appUser)
         {
-            var collegeUsers = dto.CollegeIds.Select(s => new CollegeAppUser { AppUserId = dto.Id, CollegeId = s }).ToList();
-            appUser.AddCollegeAppUsers(collegeUsers);
+            appUser.AddCollegeAppUsers(dto.CollegeIds);
             appUser.Email = dto.Email;
             appUser.FirstName = dto.FirstName;
-            appUser.Id = dto.Id;
-            appUser.IdentityId = dto.IdentityId;
             appUser.LastName = dto.LastName;
             appUser.RoleId = dto.RoleId;
         }

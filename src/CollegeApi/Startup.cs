@@ -94,6 +94,7 @@ namespace College.Api
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
             services.AddScoped<ICollegeService, CollegeService>();
             services.AddScoped<ICollegeRepository, CollegeRepository>();
+            services.AddScoped<IAppUserRepository, AppUserRepository>();
 
             services.AddHttpClient("identityClient", client =>
             {

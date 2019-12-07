@@ -18,7 +18,7 @@ const routes: Routes = [
     path: 'admin/manage-users',
     component: ManageUsersComponent,
     canActivate: [ClaimsRouteGuard],
-    data: { requiredClaims: ['AdminisiterAllUsers'] }
+    data: { requiredClaims: ['AdminisiterCollegeUsers'] }
   },
   {
     path: 'admin/college-yearclass/:collegeId',

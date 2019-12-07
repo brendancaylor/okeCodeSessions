@@ -14,16 +14,17 @@ namespace ApplicationCore.Entities
         public Guid RoleId { get; set; }
         public Role Role { get; set; }
 
-        private readonly List<CollegeAppUser> _collegeAppUsers = new List<CollegeAppUser>();
+        readonly List<CollegeAppUser> _collegeAppUsers = new List<CollegeAppUser>();
         public IReadOnlyCollection<CollegeAppUser> CollegeAppUsers => _collegeAppUsers.AsReadOnly();
 
-        public void AddCollegeAppUsers(List<CollegeAppUser> collegeAppUsers)
+        public void AddCollegeAppUsers(List<Guid> collegeIds)
         {
             this._collegeAppUsers.Clear();
-            foreach (var collegeAppUser in collegeAppUsers)
+            foreach (var collegeId in collegeIds)
             {
+                var collegeAppUser = new CollegeAppUser();
                 collegeAppUser.AppUser = this;
-                collegeAppUser.AppUserId = this.Id;
+                collegeAppUser.CollegeId = collegeId;
                 this._collegeAppUsers.Add(collegeAppUser);
             }
         }

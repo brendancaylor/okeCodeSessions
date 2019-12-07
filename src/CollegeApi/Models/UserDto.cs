@@ -18,6 +18,7 @@ namespace College.Api.Models
         public static UserDto From(AppUser appUser)
         {
             var dto = new UserDto();
+            dto.Id = appUser.Id;
             dto.CollegeIds = appUser.CollegeAppUsers.Select(s => s.CollegeId).ToList();
             dto.Email = appUser.Email;
             dto.FirstName = appUser.FirstName;

@@ -27,7 +27,7 @@ describe('UpsertUserDialogComponent', () => {
   let fixture: ComponentFixture<UpsertUserDialogComponent>;
   const matDialogRefMock = jasmine.createSpy('MatDialogRef');
   const user: UpdateUserDto = new UpdateUserDto({
-      roleId: null,
+      roleId: '',
       id: 'test1',
       lastName: '',
       firstName: '',

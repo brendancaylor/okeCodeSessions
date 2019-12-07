@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace College.Api.Models
 {
-    public class AddUserDto
+    public class AddUserDto : BaseDto
     {
         public string Email { get; set; }
         public string FirstName { get; set; }
@@ -17,8 +17,7 @@ namespace College.Api.Models
         public static AppUser GetAddUserFrom(AddUserDto dto)
         {
             var appUser = new AppUser();
-            var collegeUsers = dto.CollegeIds.Select(s => new CollegeAppUser { AppUserId = appUser.Id, CollegeId = s }).ToList();
-            appUser.AddCollegeAppUsers(collegeUsers);
+            appUser.AddCollegeAppUsers(dto.CollegeIds);
             appUser.Email = dto.Email;
             appUser.FirstName = dto.FirstName;
             appUser.IdentityId = Guid.Empty.ToString();

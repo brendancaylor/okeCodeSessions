@@ -55,23 +55,13 @@ namespace Infrastructure.Data
                 baseEntity.SetDateAddProperties();
             }
 
-            try
-            {
-                await _dbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-            
-
+            await _dbContext.SaveChangesAsync();
             return entity;
         }
 
         public async Task<T> UpdateAsync(T entity, Guid appUserId)
         {
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            //_dbContext.Entry(entity).State = EntityState.Modified;
 
             if (typeof(T).IsSubclassOf(typeof(BaseEntityFull)))
             {
@@ -84,7 +74,16 @@ namespace Infrastructure.Data
                 var baseEntity = entity as BaseEntityDateStamps;
                 baseEntity.SetDateUpdateProperties();
             }
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
             return entity;
         }
 

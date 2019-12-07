@@ -47,16 +47,6 @@ export class ManageUsersComponent implements OnInit {
 
 
   private setupDialog(userdto: AddUserDto | UpdateUserDto): void {
-
-    debugger;
-    if (userdto instanceof AddUserDto) {
-      debugger;
-    } else if (userdto instanceof UpdateUserDto) {
-      debugger;
-    } else {
-      debugger;
-    }
-
     const dialogRef = this.dialog.open(UpsertUserDialogComponent, {
       width: '348px',
       data: userdto
@@ -65,32 +55,20 @@ export class ManageUsersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogObject => {
       const typedObject = dialogObject as AddUserDto | UpdateUserDto;
       if (typedObject) {
-
         if (typedObject instanceof AddUserDto) {
-
+          this.doAdd(typedObject);
         } else if (typedObject instanceof UpdateUserDto) {
-
+          this.doUpdate(typedObject);
         }
-
-      //   const dto: NameOnlyUpsertDto = new NameOnlyUpsertDto();
-      //   dto.id = typedObject.id;
-      //   dto.name = typedObject.userName;
-      //   dto.rowVersion = typedObject.rowVersion;
-      //   if (typedObject.id) {
-      //     this.doUpdate(dto, typedObject);
-      //   } else  {
-      //     this.doAdd(dto);
-      //   }
       }
     });
   }
 
-  private doUpdate(dto: UpdateUserDto, user: UserDto): void {
+  private doUpdate(dto: UpdateUserDto): void {
     this._userClient.updateUser(dto)
     .subscribe(
       (savedUser) => {
-        // this.editedUser.userName = user.userName;
-        // this.editedUser.rowVersion = savedUser.rowVersion;
+        this.loadUsers();
        }
       , error => this.error = Utils.formatError(error)
     );
@@ -100,19 +78,7 @@ export class ManageUsersComponent implements OnInit {
     this._userClient.addUser(dto)
         .subscribe(
           (savedUser) => {
-            // const newUser: UserDto = new UserDto({
-            //     userName: dto.name,
-            //     id: savedUser.id,
-            //     rowVersion: savedUser.rowVersion,
-            //     createdAt: null,
-            //     createdByAppUserId: null
-            //   }
-            // );
-
-            // let data = this.dataSource.data;
-            // data.push(newUser);
-            // data = data.sort(Utils.compareUserName);
-            // this.dataSource.data = data;
+            this.loadUsers();
           }
           , error => this.error = Utils.formatError(error)
         );

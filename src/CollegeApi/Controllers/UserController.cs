@@ -19,13 +19,20 @@ namespace College.Api.Controllers
     
     public class UserController : BaseController
     {
-
-        private readonly IAsyncRepository<AppUser> _userRepository;
+        private readonly IAppUserRepository _userRepository;
+        private readonly ICollegeRepository _collegeRepository;
+        private readonly IAsyncRepository<Role> _roleRepository;
         private HttpClient _httpClient;
-        public UserController(IAsyncRepository<AppUser> userRepository, IHttpClientFactory httpClientFactory)
+        public UserController(
+            IAppUserRepository userRepository,
+            ICollegeRepository collegeRepository,
+            IAsyncRepository<Role> roleRepository,
+            IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient("identityClient");
             _userRepository = userRepository;
+            _collegeRepository = collegeRepository;
+            _roleRepository = roleRepository;
         }
 
         [HttpGet("get-current-user-claims")]
@@ -36,17 +43,64 @@ namespace College.Api.Controllers
             dto.Claims = User.Claims.Where(s => s.Type == "role").Select(s => s.Value).ToList();
             return dto;
         }
+        [HttpGet("user-lookups")]
+        [Authorize]
+        public async Task<UserLookupsDto> GetUserLookupsAsync()
+        {
+            var dto = new UserLookupsDto();
+            var claims = User.Claims.Where(s => s.Type == "role").Select(s => s.Value).ToList();
+            var canAdminisiterAllUsers = claims.Any(o => o.ToLower() == Constaints.ClaimAdminisiterAllUsers.ToLower());
+            if (canAdminisiterAllUsers)
+            {
+                var collegeData = await _collegeRepository.ListAllAsync();
+                dto.Colleges = collegeData
+                    .Select(o => new LookupDto { Id = o.Id, DisplayName = o.CollegeName})
+                    .OrderBy(o => o.DisplayName)
+                    .ToList();
+                
+                var roleData = await this._roleRepository.ListAllAsync();
+                dto.Roles = roleData
+                    .Select(o => new LookupDto { Id = o.Id, DisplayName = o.DisplayName })
+                    .OrderBy(o => o.DisplayName)
+                    .ToList();
+            }
+            else
+            {
+                var collegeData = await _collegeRepository
+                    .GetCollegesFromNonAdmin(this.AppUserId.Value);
+                dto.Colleges = collegeData
+                    .Select(o => new LookupDto { Id = o.Id, DisplayName = o.CollegeName })
+                    .OrderBy(o => o.DisplayName)
+                    .ToList();
+                
+                var roleData = await this._roleRepository.ListAllAsync();
+                dto.Roles = roleData
+                    .Where(o => o.RoleName != Constaints.RoleFullAdmin)
+                    .Select(o => new LookupDto { Id = o.Id, DisplayName = o.DisplayName })
+                    .OrderBy(o => o.DisplayName)
+                    .ToList();
+            }
+
+            return dto;
+        }
 
         [HttpGet]
-        [Authorize(Roles = "AdminisiterAllUsers")]
+        [Authorize(Roles = "AdminisiterCollegeUsers")]
         public async Task<ActionResult<List<UserDto>>> GetAllUsersAsync()
         {
-            var data = await _userRepository.ListAllAsync();
+            Guid? appUserId = null;
+            var claims = User.Claims.Where(s => s.Type == "role").Select(s => s.Value).ToList();
+            var canAdminisiterAllUsers = claims.Any(o => o.ToLower() == Constaints.ClaimAdminisiterAllUsers.ToLower());
+            if(!canAdminisiterAllUsers)
+            {
+                appUserId = this.AppUserId;
+            }
+            var data = await _userRepository.GetAppUsersWithChildrenAsync(appUserId);
             return data.Select(o => UserDto.From(o)).OrderBy(o => o.LastName).ToList();
         }
 
         [HttpPost]
-        [Authorize(Roles = "AdminisiterAllUsers")]
+        [Authorize(Roles = "AdminisiterCollegeUsers")]
         public async Task<SimpleUpsertDto> AddUserAsync([FromBody] AddUserDto dto)
         {
             var appUser = AddUserDto.GetAddUserFrom(dto);
@@ -66,13 +120,18 @@ namespace College.Api.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "AdminisiterAllUsers")]
+        [Authorize(Roles = "AdminisiterCollegeUsers")]
         public async Task<ActionResult<SimpleUpsertDto>> UpdateUserAsync([FromBody] UpdateUserDto dto)
         {
-            var user = await _userRepository.GetByIdAsync(dto.Id);
-            UpdateUserDto.SetAppUserFromDto(dto, user);
-            user = await _userRepository.UpdateAsync(user, this.AppUserId.Value);
-            return SimpleUpsertDto.From(user);
+            var appUser = await _userRepository.GetAppUserWithChildrenAsync(dto.Id);
+            //UpdateUserDto.SetAppUserFromDto(dto, user);
+            //appUser.AddCollegeAppUsers(dto.CollegeIds);
+            appUser.Email = dto.Email;
+            appUser.FirstName = dto.FirstName;
+            appUser.LastName = dto.LastName;
+            appUser.RoleId = dto.RoleId;
+            await _userRepository.UpdateWithChildrenAsync(appUser, dto.CollegeIds);
+            return SimpleUpsertDto.From(appUser);
         }
     }
 }

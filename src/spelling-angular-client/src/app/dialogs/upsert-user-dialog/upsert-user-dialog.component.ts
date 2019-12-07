@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { UserViewmodel } from './user-viewmodel';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { UpdateUserDto, AddUserDto } from 'src/app/core/services/clients';
+import { UpdateUserDto, AddUserDto, UserClient, UserLookupsDto } from 'src/app/core/services/clients';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -12,14 +12,31 @@ import { FormBuilder } from '@angular/forms';
 export class UpsertUserDialogComponent implements OnInit {
 
   userViewmodel: UserViewmodel;
-
+  userLookupsDto: UserLookupsDto = new UserLookupsDto();
   constructor(public _dialogRef: MatDialogRef<UpsertUserDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: AddUserDto | UpdateUserDto,
-      private fb: FormBuilder) {
+      private _userClient: UserClient,
+      private fb: FormBuilder
+      ) {
         this.userViewmodel = new UserViewmodel(data, fb);
   }
 
   ngOnInit() {
+    this._userClient.getUserLookups()
+    .subscribe(
+      (lookupData) => {
+        this.userLookupsDto = lookupData;
+      }
+    );
+  }
+
+  cancel() {
+    this._dialogRef.close();
+  }
+
+  edit() {
+    const dto = this.userViewmodel.getDto();
+    this._dialogRef.close(dto);
   }
 
 }

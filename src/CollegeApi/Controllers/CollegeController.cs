@@ -57,16 +57,5 @@ namespace College.Api.Controllers
             college = await _collegeRepository.UpdateAsync(college, this.AppUserId.Value);
             return SimpleUpsertDto.From(college);
         }
-
-        //[HttpPut("update-users")]
-        //public async Task<ActionResult<SimpleUpsertDto>> UpdateCollegeUsersAsync([FromBody] CollegeDto dto)
-        //{
-        //    var college = await _collegeRepository.GetByIdAsync(dto.Id);
-        //    college.RowVersion = dto.RowVersion;
-        //    college.CollegeName = dto.CollegeName;
-        //    college = await _collegeRepository.UpdateAsync(college, this.AppUserId.Value);
-        //    return SimpleUpsertDto.From(college);
-        //}
-
     }
 }
