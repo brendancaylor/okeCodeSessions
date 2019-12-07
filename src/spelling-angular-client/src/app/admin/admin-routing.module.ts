@@ -4,7 +4,7 @@ import { ManageCollegesComponent } from './manage-colleges/manage-colleges.compo
 import { ClaimsRouteGuard } from '../core/claims-route-guard';
 import { ManageHomeworkComponent } from './manage-homework/manage-homework.component';
 import { CollegeYearclassComponent } from './college-yearclass/college-yearclass.component';
-import { ManagUsersComponent } from './manag-users/manag-users.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 const routes: Routes = [
 
@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'admin/manage-users',
-    component: ManagUsersComponent,
+    component: ManageUsersComponent,
     canActivate: [ClaimsRouteGuard],
     data: { requiredClaims: ['AdminisiterAllUsers'] }
   },

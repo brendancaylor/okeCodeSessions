@@ -12,7 +12,6 @@ import { UpsertCollegeDialogComponent } from 'src/app/dialogs/upsert-college-dia
 export class ManageCollegesComponent implements OnInit {
   displayedColumns = ['collegeName', 'actions'];
   dataSource = new MatTableDataSource<CollegeDto>();
-  //colleges: Array<CollegeDto>;
   editedCollege: CollegeDto;
   error: string;
 
@@ -29,7 +28,6 @@ export class ManageCollegesComponent implements OnInit {
     this._collegeClient.getAllColleges()
     .subscribe(
       (data) => {
-        //this.colleges = data;
         this.dataSource.data = data;
       }
     );
@@ -100,7 +98,6 @@ export class ManageCollegesComponent implements OnInit {
             data.push(newCollege);
             data = data.sort(Utils.compareCollegeName);
             this.dataSource.data = data;
-            //this.colleges.push(newCollege);
           }
           , error => this.error = Utils.formatError(error)
         );

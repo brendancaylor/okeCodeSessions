@@ -1,7 +1,7 @@
 <nav>
     <mat-toolbar >
         <!--color="primary"-->
-        <a routerLink="/">
+        <a routerLink="/" class="logo-link">
             
             <span>
                 <img src="/assets/images/SpellingLogo.svg" alt="Spelling Homework" title="SpellingLogo" class="spelling-logo">
@@ -9,9 +9,9 @@
         </a>
         <span class="navbar-fill">
             
-            <button *ngIf="hasClaims(['AdminisiterColleges'])" mat-button routerLink="/admin/manage-colleges">Manage Colleges</button>
-            <button *ngIf="hasClaims(['AdminisiterAllUsers'])" mat-button routerLink="/admin/manage-users">Manage Users</button>
-            <button *ngIf="hasClaims(['AdminisiterHomework'])" mat-button routerLink="/admin/manage-homework">Manage Homework</button>
+            <button *ngIf="hasClaims(['AdminisiterColleges'])" mat-button routerLink="/admin/manage-colleges">Colleges</button>
+            <button *ngIf="hasClaims(['AdminisiterAllUsers'])" mat-button routerLink="/admin/manage-users">Users</button>
+            <button *ngIf="hasClaims(['AdminisiterHomework'])" mat-button routerLink="/admin/manage-homework">Homework</button>
         
         </span>
         <span>

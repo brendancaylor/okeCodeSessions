@@ -10,7 +10,7 @@
 
 <div mat-dialog-content>
     <mat-form-field style="width:300px">
-        <input matInput [(ngModel)]="college.collegeName" cdkFocusInitial required>
+        <input matInput [(ngModel)]="college.collegeName" placeholder="College Name" cdkFocusInitial required>
         <mat-error *ngIf="error">{{error}}</mat-error>
     </mat-form-field>
 </div>

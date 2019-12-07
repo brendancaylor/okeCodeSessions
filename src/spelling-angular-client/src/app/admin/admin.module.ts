@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatDialogModule,
@@ -17,12 +17,13 @@ import { CoreModule } from '../core/core.module';
 import { ManageCollegesComponent } from './manage-colleges/manage-colleges.component';
 import { ManageHomeworkComponent } from './manage-homework/manage-homework.component';
 import { CollegeYearclassComponent } from './college-yearclass/college-yearclass.component';
-import { ManagUsersComponent } from './manag-users/manag-users.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatDialogModule,
     MatButtonModule,
@@ -39,7 +40,7 @@ import { ManagUsersComponent } from './manag-users/manag-users.component';
     ManageCollegesComponent,
     ManageHomeworkComponent,
     CollegeYearclassComponent,
-    ManagUsersComponent
+    ManageUsersComponent
   ],
   providers: [],
   entryComponents: [

@@ -5,6 +5,12 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+@media only screen and (max-width: 600px) {
+  .logo-link{
+    display: none;
+  }
+}
+
 .spelling-logo {
   width: 200px;
   margin: 10px;
@@ -23,4 +29,14 @@ body {
 .table-container{
   clear: both;
   margin: 20px 0;
+}
+
+.generic-form-full {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.generic-full-width {
+  width: 100%;
 }

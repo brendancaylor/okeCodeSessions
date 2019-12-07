@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatDialogModule,
@@ -23,6 +23,7 @@ import { SignoutRedirectCallbackComponent } from './home/signout-redirect-callba
 import { UnauthorizedComponent } from './home/unauthorized.component';
 import { HomeWorkAssignmentComponent } from './do-homework/home-work-assignment/home-work-assignment.component';
 import { UpsertCollegeDialogComponent } from './dialogs/upsert-college-dialog/upsert-college-dialog.component';
+import { UpsertUserDialogComponent } from './dialogs/upsert-user-dialog/upsert-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,12 +34,14 @@ import { UpsertCollegeDialogComponent } from './dialogs/upsert-college-dialog/up
     SignoutRedirectCallbackComponent,
     UnauthorizedComponent,
     HomeWorkAssignmentComponent,
-    UpsertCollegeDialogComponent
+    UpsertCollegeDialogComponent,
+    UpsertUserDialogComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatToolbarModule,
@@ -55,7 +58,8 @@ import { UpsertCollegeDialogComponent } from './dialogs/upsert-college-dialog/up
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    UpsertCollegeDialogComponent
+    UpsertCollegeDialogComponent,
+    UpsertUserDialogComponent
   ]
 })
 export class AppModule { }
