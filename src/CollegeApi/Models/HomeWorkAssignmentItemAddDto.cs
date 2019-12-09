@@ -1,0 +1,19 @@
+﻿using ApplicationCore.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace College.Api.Models
+{
+    public class HomeWorkAssignmentItemAddDto : HomeWorkAssignmentItemBaseDto
+    {
+        public static HomeWorkAssignmentItem GetDomainObjectFrom(HomeWorkAssignmentItemAddDto dto)
+        {
+            var domainObject = new HomeWorkAssignmentItem();
+            domainObject.Sentence = dto.Sentence;
+            domainObject.Word = dto.Word;
+            return domainObject;
+        }
+    }
+}
