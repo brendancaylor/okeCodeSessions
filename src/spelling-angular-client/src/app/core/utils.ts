@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { CollegeDto } from './services/clients';
+import * as moment from 'moment';
 
 export class Utils {
   public static formatError(error: HttpErrorResponse): string {
@@ -27,5 +28,15 @@ export class Utils {
       return 1;
     }
     return 0;
+  }
+
+  public static getAcademicYear(): number {
+    const now = moment();
+    let year = now.year();
+    const month = now.month();
+    if (month < 8) {
+      year--;
+    }
+    return year;
   }
 }

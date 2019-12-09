@@ -12,12 +12,12 @@ import { ClaimsRouteGuard } from './claims-route-guard';
     providers: [
         AuthService,
         ClaimsRouteGuard,
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: DateParserInterceptor,
             multi: true
-        }
+        },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
     ],
 })
 export class CoreModule { }

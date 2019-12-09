@@ -1,6 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageHomeworkComponent } from './manage-homework.component';
+import { YearClassClient } from 'src/app/core/services/clients';
+import { FormsModule } from '@angular/forms';
+import {
+  MatButtonModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+  MatTableModule,
+  MatToolbarModule,
+  MatDialog,
+} from '@angular/material';
+
+import { BrowserModule } from '@angular/platform-browser';
+import { CoreModule } from 'src/app/core/core.module';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ManageHomeworkComponent', () => {
   let component: ManageHomeworkComponent;
@@ -8,7 +26,24 @@ describe('ManageHomeworkComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageHomeworkComponent ]
+      imports: [
+        BrowserAnimationsModule,
+        HttpClientTestingModule,
+        BrowserModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatTableModule,
+        MatInputModule,
+        MatSelectModule,
+        CoreModule,
+        RouterTestingModule
+
+      ],
+      declarations: [ ManageHomeworkComponent ],
+      providers: [YearClassClient, MatDialog]
     })
     .compileComponents();
   }));

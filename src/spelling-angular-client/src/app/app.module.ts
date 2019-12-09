@@ -24,6 +24,7 @@ import { UnauthorizedComponent } from './home/unauthorized.component';
 import { HomeWorkAssignmentComponent } from './do-homework/home-work-assignment/home-work-assignment.component';
 import { UpsertCollegeDialogComponent } from './dialogs/upsert-college-dialog/upsert-college-dialog.component';
 import { UpsertUserDialogComponent } from './dialogs/upsert-user-dialog/upsert-user-dialog.component';
+import { UpsertYearClassDialogComponent } from './dialogs/upsert-year-class-dialog/upsert-year-class-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { UpsertUserDialogComponent } from './dialogs/upsert-user-dialog/upsert-u
     UnauthorizedComponent,
     HomeWorkAssignmentComponent,
     UpsertCollegeDialogComponent,
-    UpsertUserDialogComponent
+    UpsertUserDialogComponent,
+    UpsertYearClassDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,8 @@ import { UpsertUserDialogComponent } from './dialogs/upsert-user-dialog/upsert-u
   bootstrap: [AppComponent],
   entryComponents: [
     UpsertCollegeDialogComponent,
-    UpsertUserDialogComponent
+    UpsertUserDialogComponent,
+    UpsertYearClassDialogComponent
   ]
 })
 export class AppModule { }

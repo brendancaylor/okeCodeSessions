@@ -9,11 +9,13 @@ import { HomeWorkAssignmentComponent } from './do-homework/home-work-assignment/
 
 
 const routes: Routes = [
-    { path: '', component: HomeComponent },
+    { path: '', component: HomeComponent},
+    { path: 'admin',
+          loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    },
     { path: 'contact-us', component: ContactUsComponent },
     { path: 'homework', component: HomeWorkAssignmentComponent },
-    // { path: 'projects', component: ProjectListComponent},
-    // { path: 'project/:projectId', component: ProjectComponent },
+    { path: 'homework/:homeworkId', component: HomeWorkAssignmentComponent },
     { path: 'signin-callback', component: SigninRedirectCallbackComponent },
     { path: 'signout-callback', component: SignoutRedirectCallbackComponent },
     { path: 'unauthorized', component: UnauthorizedComponent }

@@ -7,7 +7,6 @@ import { CollegeYearclassComponent } from './college-yearclass/college-yearclass
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 const routes: Routes = [
-
   {
     path: 'admin/manage-colleges',
     component: ManageCollegesComponent,

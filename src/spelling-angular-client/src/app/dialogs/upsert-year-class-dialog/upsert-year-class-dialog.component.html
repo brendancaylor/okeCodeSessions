@@ -1,0 +1,27 @@
+<form class="generic-form-full">
+
+    <div [formGroup]="this.yearClassViewmodel.yearClassForm">
+        <mat-form-field class="generic-full-width">
+            <input matInput placeholder="Teacher's Name" formControlName="teacherName">
+            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('teacherName').hasError('required')">
+                Teacher's Name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="generic-full-width">
+            <input matInput placeholder="Year Class Name" formControlName="yearClassName">
+            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('yearClassName').hasError('required')">
+                Year Class Name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+    </div>
+
+    <div mat-dialog-actions layout="row">
+        <button mat-button (click)="cancel()" color="accent">Cancel</button>
+        <span style="flex: 1 1 auto"></span>
+        <button mat-button (click)="edit()" color="primary"
+            [disabled]="!this.yearClassViewmodel.yearClassForm.valid">Save</button>
+    </div>
+
+</form>

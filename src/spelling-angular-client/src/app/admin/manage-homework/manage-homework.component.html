@@ -1,1 +1,36 @@
-<p>manage-homework works!</p>
+<div *ngIf="this.collegeOptions.length > 1">
+
+    <mat-form-field style="width: 300px;">
+        <mat-label>Colleges</mat-label>
+        <mat-select [(value)]="selectedCollege" (selectionChange)="collegeSelected()">
+            <mat-option *ngFor="let college of this.collegeOptions" [value]="college">
+                {{college.displayName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+</div>
+
+<div *ngIf="this.selectedCollege">
+
+    
+    <button title="Add Year Class" class="add-button" mat-mini-fab color="primary" (click)="addYearClass()">
+        <i class="material-icons">add</i>
+    </button>
+    <h3>Year Classes</h3>
+
+<div style="clear: both;" *ngIf="this.yearClassOptions.length > 0">
+
+    <mat-form-field style="width: 300px;">
+        <mat-label>Year Classes</mat-label>
+        <mat-select [(value)]="selectedYearClass" (selectionChange)="this.yearClassSelected()">
+            <mat-option *ngFor="let yearClass of this.yearClassOptions" [value]="yearClass">
+                    {{yearClass.teacherName}}, {{yearClass.yearClassName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+</div>
+
+
+</div>

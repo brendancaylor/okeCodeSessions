@@ -11,7 +11,7 @@
 
         <ng-container matColumnDef="collegeName">
             <mat-header-cell *matHeaderCellDef>College</mat-header-cell>
-            <mat-cell *matCellDef="let college" [style.flex]="'flex'">
+            <mat-cell *matCellDef="let college">
                 <div class="college-name">
                     <strong>{{college.collegeName}}</strong>
                 </div>
@@ -20,15 +20,15 @@
 
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let college" [style.flex]="'0 0 200px'">
+            <mat-header-cell *matHeaderCellDef [style.flex]="'0 0 50px'">Actions</mat-header-cell>
+            <mat-cell *matCellDef="let college" [style.flex]="'0 0 50px'">
                 <div class="action-button-wrapper">
                     <button title="Edit" mat-mini-fab color="primary" class="list-action" (click)="editCollege(college)">
                         <i class="material-icons">edit</i>
                     </button>
-                    <button title="Year classes" mat-mini-fab color="primary" class="list-action"  routerLink="/admin/college-yearclass/{{college.id}}">
+                    <!-- <button title="Year classes" mat-mini-fab color="primary" class="list-action"  routerLink="/admin/college-yearclass/{{college.id}}">
                         <i class="material-icons">face</i>
-                    </button>
+                    </button> -->
                 </div>
             </mat-cell>
         </ng-container>

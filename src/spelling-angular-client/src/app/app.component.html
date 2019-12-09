@@ -9,10 +9,10 @@
         </a>
         <span class="navbar-fill">
             
-            <button *ngIf="hasClaims(['AdminisiterColleges'])" mat-button routerLink="/admin/manage-colleges">Colleges</button>
-            <button *ngIf="hasClaims(['AdminisiterCollegeUsers'])" mat-button routerLink="/admin/manage-users">Users</button>
-            <button *ngIf="hasClaims(['AdminisiterHomework'])" mat-button routerLink="/admin/manage-homework">Homework</button>
-        
+            <button *ngIf="hasClaims(['AdminisiterColleges'])" mat-button routerLink="admin/manage-colleges">Colleges</button>
+            <button *ngIf="hasClaims(['AdminisiterCollegeUsers'])" mat-button routerLink="admin/manage-users">Users</button>
+            <button *ngIf="hasClaims(['AdminisiterHomework'])" mat-button routerLink="admin/manage-homework">Manage Homework</button>
+            <button *ngIf="!isLoggedIn" mat-button routerLink="/homework">Homework</button>
         </span>
         <span>
             <button *ngIf="!isLoggedIn" mat-button (click)="login()">Login</button>
