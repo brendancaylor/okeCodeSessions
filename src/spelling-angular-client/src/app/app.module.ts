@@ -25,6 +25,8 @@ import { HomeWorkAssignmentComponent } from './do-homework/home-work-assignment/
 import { UpsertCollegeDialogComponent } from './dialogs/upsert-college-dialog/upsert-college-dialog.component';
 import { UpsertUserDialogComponent } from './dialogs/upsert-user-dialog/upsert-user-dialog.component';
 import { UpsertYearClassDialogComponent } from './dialogs/upsert-year-class-dialog/upsert-year-class-dialog.component';
+import { UpsertHomeWorkAssignmentComponent } from './dialogs/upsert-home-work-assignment/upsert-home-work-assignment-dialog.component';
+import { UpsertHomeWorkAssignmentItemComponent } from './dialogs/upsert-home-work-assignment-item/upsert-home-work-assignment-item-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { UpsertYearClassDialogComponent } from './dialogs/upsert-year-class-dial
     HomeWorkAssignmentComponent,
     UpsertCollegeDialogComponent,
     UpsertUserDialogComponent,
-    UpsertYearClassDialogComponent
+    UpsertYearClassDialogComponent,
+    UpsertHomeWorkAssignmentComponent,
+    UpsertHomeWorkAssignmentItemComponent
   ],
   imports: [
     BrowserModule,

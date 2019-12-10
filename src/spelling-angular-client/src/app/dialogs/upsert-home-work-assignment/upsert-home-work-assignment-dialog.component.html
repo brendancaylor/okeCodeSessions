@@ -1,0 +1,20 @@
+<form class="generic-form-full">
+
+    <div [formGroup]="this.homeWorkAssignmentViewmodel.homeWorkAssignmentForm">
+        <mat-form-field class="generic-full-width">
+            <input matInput placeholder="Teacher's Name" formControlName="teacherName">
+            <mat-error *ngIf="this.homeWorkAssignmentViewmodel.homeWorkAssignmentForm.get('teacherName').hasError('required')">
+                Teacher's Name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+    </div>
+
+    <div mat-dialog-actions layout="row">
+        <button mat-button (click)="cancel()" color="accent">Cancel</button>
+        <span style="flex: 1 1 auto"></span>
+        <button mat-button (click)="edit()" color="primary"
+            [disabled]="!this.homeWorkAssignmentViewmodel.homeWorkAssignmentForm.valid">Save</button>
+    </div>
+
+</form>
