@@ -16,7 +16,7 @@ import {
 
 import { BrowserModule } from '@angular/platform-browser';
 import { CoreModule } from 'src/app/core/core.module';
-import { HomeWorkAssignmentItemClient, HomeWorkAssignmentItemUpdateDto } from 'src/app/core/services/clients';
+import { HomeWorkAssignmentItemUpdateDto } from 'src/app/core/services/clients';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,9 +27,8 @@ describe('UpsertHomeWorkAssignmentItemDialogComponent', () => {
   let fixture: ComponentFixture<UpsertHomeWorkAssignmentItemDialogComponent>;
   const matDialogRefMock = jasmine.createSpy('MatDialogRef');
   const yearClass: HomeWorkAssignmentItemUpdateDto = new HomeWorkAssignmentItemUpdateDto({
-    academicYear: 2019,
-    collegeId: '',
-      id: 'test1',
+    homeWorkAssignmentId: '',
+    id: 'test1'
     }
   );
 
@@ -54,7 +53,6 @@ describe('UpsertHomeWorkAssignmentItemDialogComponent', () => {
       declarations: [ UpsertHomeWorkAssignmentItemDialogComponent ],
       providers: [
         FormBuilder,
-        HomeWorkAssignmentItemClient,
         { provide: MatDialogRef, useValue: { } },
         { provide: MAT_DIALOG_DATA, useValue: yearClass}
       ]
