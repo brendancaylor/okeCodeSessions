@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ApplicationCore.Entities
 {
-    public class SubmittedHomeWork : BaseEntityDateStamps
+    public class SubmittedHomeWork : BaseEntity
     {
         public Guid HomeWorkAssignmentId { get; set; }
         public HomeWorkAssignment HomeWorkAssignment { get; set; }

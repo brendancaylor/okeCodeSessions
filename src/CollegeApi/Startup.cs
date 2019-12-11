@@ -88,6 +88,8 @@ namespace College.Api
                 .RequireAuthenticatedUser()
                 .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
+
+                //options.OutputFormatters
             });
 
 
@@ -95,11 +97,13 @@ namespace College.Api
             services.AddScoped<ICollegeService, CollegeService>();
             services.AddScoped<ICollegeRepository, CollegeRepository>();
             services.AddScoped<IAppUserRepository, AppUserRepository>();
+            services.AddScoped<IHomeWorkRepository, HomeWorkRepository>();
+
 
             services.AddHttpClient("identityClient", client =>
-            {
-                client.BaseAddress = new Uri(_collegeApiConfirguration.IdentityBaseUrl);
-            });
+                {
+                    client.BaseAddress = new Uri(_collegeApiConfirguration.IdentityBaseUrl);
+                });
 
         }
 

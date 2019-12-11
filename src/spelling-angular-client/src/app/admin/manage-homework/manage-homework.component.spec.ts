@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageHomeworkComponent } from './manage-homework.component';
-import { YearClassClient } from 'src/app/core/services/clients';
+import { YearClassClient, HomeworkClient } from 'src/app/core/services/clients';
 import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule,
@@ -12,6 +12,7 @@ import {
   MatTableModule,
   MatToolbarModule,
   MatDialog,
+  MatListModule,
 } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -38,12 +39,13 @@ describe('ManageHomeworkComponent', () => {
         MatTableModule,
         MatInputModule,
         MatSelectModule,
+        MatListModule,
         CoreModule,
         RouterTestingModule
 
       ],
       declarations: [ ManageHomeworkComponent ],
-      providers: [YearClassClient, MatDialog]
+      providers: [YearClassClient, HomeworkClient, MatDialog]
     })
     .compileComponents();
   }));

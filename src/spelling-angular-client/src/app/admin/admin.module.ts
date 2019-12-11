@@ -8,6 +8,7 @@ import {
   MatSelectModule,
   MatTableModule,
   MatToolbarModule,
+  MatListModule,
 } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -31,6 +32,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
     MatTableModule,
     MatInputModule,
     MatSelectModule,
+    MatListModule,
     AdminRoutingModule,
     CoreModule
   ],

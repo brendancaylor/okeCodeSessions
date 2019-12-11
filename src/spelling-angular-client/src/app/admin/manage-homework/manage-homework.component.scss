@@ -1,8 +1,22 @@
-h3 {
+h3.left {
     float: left;
   }
   
   .add-button {
     margin: 20px 20px 20px 0;
     float: left;
+  }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    line-height: 40px;
+}
+
+.grid-container > div {
+    margin: 10px;
+}
+
+  .home-work-assignmen-selected {
+      background-color: #e7e5e5;
   }

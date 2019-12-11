@@ -16,7 +16,6 @@ export class UpsertYearClassDialogComponent implements OnInit {
       @Inject(MAT_DIALOG_DATA) public data: YearClassAddDto | YearClassUpdateDto,
       private fb: FormBuilder
       ) {
-        debugger;
         this.yearClassViewmodel = new YearClassViewmodel(data, fb);
   }
 

@@ -1,1 +1,30 @@
-<p>upsert-home-work-assignment-item works!</p>
+<form class="generic-form-full">
+
+    <div [formGroup]="this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm">
+
+        <mat-form-field class="generic-full-width">
+            <input matInput placeholder="Word" formControlName="word">
+            <mat-error
+                *ngIf="this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm.get('word').hasError('required')">
+                Word is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="generic-full-width">
+            <input matInput placeholder="Sentence" formControlName="sentence">
+            <mat-error
+                *ngIf="this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm.get('sentence').hasError('required')">
+                Sentence is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+    </div>
+
+    <div mat-dialog-actions layout="row">
+        <button mat-button (click)="cancel()" color="accent">Cancel</button>
+        <span style="flex: 1 1 auto"></span>
+        <button mat-button (click)="edit()" color="primary"
+            [disabled]="!this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm.valid">Save</button>
+    </div>
+
+</form>

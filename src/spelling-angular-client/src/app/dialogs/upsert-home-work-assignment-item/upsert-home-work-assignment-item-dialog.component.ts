@@ -11,12 +11,12 @@ import { FormBuilder } from '@angular/forms';
 })
 export class UpsertHomeWorkAssignmentItemDialogComponent implements OnInit {
 
-  homeWorkAssignmentItemItemViewmodel: HomeWorkAssignmentItemViewmodel;
+  homeWorkAssignmentItemViewmodel: HomeWorkAssignmentItemViewmodel;
   constructor(public _dialogRef: MatDialogRef<UpsertHomeWorkAssignmentItemDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: HomeWorkAssignmentItemAddDto | HomeWorkAssignmentItemUpdateDto,
       private fb: FormBuilder
       ) {
-        this.homeWorkAssignmentItemItemViewmodel = new HomeWorkAssignmentItemViewmodel(data, fb);
+        this.homeWorkAssignmentItemViewmodel = new HomeWorkAssignmentItemViewmodel(data, fb);
   }
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export class UpsertHomeWorkAssignmentItemDialogComponent implements OnInit {
   }
 
   edit() {
-    const dto = this.homeWorkAssignmentItemItemViewmodel.getDto();
+    const dto = this.homeWorkAssignmentItemViewmodel.getDto();
     this._dialogRef.close(dto);
   }
 

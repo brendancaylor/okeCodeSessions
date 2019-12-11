@@ -1,7 +1,7 @@
 <div *ngIf="this.collegeOptions.length > 1">
-
+    <h3>Colleges</h3>
     <mat-form-field style="width: 300px;">
-        <mat-label>Colleges</mat-label>
+        <mat-label>Select a College</mat-label>
         <mat-select [(value)]="selectedCollege" (selectionChange)="collegeSelected()">
             <mat-option *ngFor="let college of this.collegeOptions" [value]="college">
                 {{college.displayName}}
@@ -13,24 +13,131 @@
 
 <div *ngIf="this.selectedCollege">
 
-    
     <button title="Add Year Class" class="add-button" mat-mini-fab color="primary" (click)="addYearClass()">
         <i class="material-icons">add</i>
     </button>
-    <h3>Year Classes</h3>
+    <h3 class="left">Year Classes</h3>
 
-<div style="clear: both;" *ngIf="this.yearClassOptions.length > 0">
+    <div style="clear: both;" *ngIf="this.yearClassOptions.length > 0">
 
-    <mat-form-field style="width: 300px;">
-        <mat-label>Year Classes</mat-label>
-        <mat-select [(value)]="selectedYearClass" (selectionChange)="this.yearClassSelected()">
-            <mat-option *ngFor="let yearClass of this.yearClassOptions" [value]="yearClass">
+        <mat-form-field style="width: 300px;">
+            <mat-label>Select a Year Classes</mat-label>
+            <mat-select [(value)]="selectedYearClass" (selectionChange)="this.yearClassSelected()">
+                <mat-option *ngFor="let yearClass of this.yearClassOptions" [value]="yearClass">
                     {{yearClass.teacherName}}, {{yearClass.yearClassName}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
-</div>
+    </div>
 
+    <div *ngIf="this.selectedYearClass">
+        <button title="Add homework assignment" class="add-button" mat-mini-fab color="primary"
+            (click)="addHomeWorkAssignment()">
+            <i class="material-icons">add</i>
+        </button>
+        <h3 class="left">HomeWork Assignments</h3>
+    </div>
 
+    <div style="clear: both;" *ngIf="homeWorkAssignments.length > 0">
+
+        <div class="grid-container">
+
+            <div class="table-container_ mat-elevation-z8_">
+
+                <div *ngFor="let homeWorkAssignment of homeWorkAssignments"
+                [ngClass]="isHomeWorkAssignmentSelected(homeWorkAssignment.id)">
+
+                    <div class="grid-container">
+
+                        <div>
+                            <strong>{{homeWorkAssignment.dueDate.format('LL')}}</strong>
+                        </div>
+                        
+                        <div>
+
+                            <div style="float: right;" class="action-button-wrapper">
+                                
+                                <button title="Copy homework Link" mat-mini-fab color="primary" class="list-action"
+                                    (click)="copyLinkHomeWorkAssignment(homeWorkAssignment)">
+                                    <i class="material-icons">file_copy</i>
+                                </button>
+
+                                <button title="Edit" mat-mini-fab color="primary" class="list-action"
+                                    (click)="editHomeWorkAssignment(homeWorkAssignment)">
+                                    <i class="material-icons">edit</i>
+                                </button>
+
+        
+                                <button title="Edit Words" mat-mini-fab color="primary" class="list-action"
+                                    (click)="viewWords(homeWorkAssignment)">
+                                    <i class="material-icons">assignment</i>
+                                </button>
+        
+                                <button title="Submitted homework" mat-mini-fab color="primary" class="list-action"
+                                    (click)="viewSubmissions(homeWorkAssignment)">
+                                    <i class="material-icons">face</i>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+            </div>
+
+            <div *ngIf="selectedHomeWorkAssignment">
+
+                <div *ngIf="showWords">
+                    
+                    <button title="Add word" class="add-button" mat-mini-fab color="primary"
+                        (click)="addHomeWorkAssignmentItem()"    
+                    >
+                        <i class="material-icons">add</i>
+                    </button>
+
+                    <h3 class="left">Words</h3>
+
+                    <div style="clear: both;" *ngFor="let homeWorkAssignmentItem of selectedHomeWorkAssignment.homeWorkAssignmentItems">
+                        
+                        <p>
+                            <strong>{{homeWorkAssignmentItem.word}}</strong>
+                            "{{homeWorkAssignmentItem.sentence}}"
+                            <br />
+                            <span class="action-button-wrapper">
+
+                                <button title="Edit" mat-mini-fab color="primary" class="list-action"
+                                    (click)="editHomeWorkAssignmentItem(homeWorkAssignmentItem)"
+                                >
+                                    <i class="material-icons">edit</i>
+                                </button>
+        
+                                <button title="Delete" mat-mini-fab color="primary" class="list-action"
+                                    (click)="deleteHomeWorkAssignmentItem(homeWorkAssignmentItem)">
+                                    <i class="material-icons">delete</i>
+                                </button>
+                            </span>
+                        </p>
+                        
+                        <hr />
+                    </div>
+                    
+                </div>
+
+                <div *ngIf="showSubmittedWork">
+
+                    <h3 class="left">Submitted homework</h3>
+
+                    <div style="clear: both;" *ngFor="let submission of selectedHomeWorkAssignment.submittedHomeWorks">
+                        {{submission.studentName}} &#40;{{submission.score}}&#41;
+                        <hr />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>

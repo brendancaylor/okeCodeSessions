@@ -26,7 +26,7 @@ describe('UpsertHomeWorkAssignmentItemDialogComponent', () => {
   let component: UpsertHomeWorkAssignmentItemDialogComponent;
   let fixture: ComponentFixture<UpsertHomeWorkAssignmentItemDialogComponent>;
   const matDialogRefMock = jasmine.createSpy('MatDialogRef');
-  const yearClass: HomeWorkAssignmentItemUpdateDto = new HomeWorkAssignmentItemUpdateDto({
+  const homeWorkAssignmentItemUpdateDto: HomeWorkAssignmentItemUpdateDto = new HomeWorkAssignmentItemUpdateDto({
     homeWorkAssignmentId: '',
     id: 'test1'
     }
@@ -54,7 +54,7 @@ describe('UpsertHomeWorkAssignmentItemDialogComponent', () => {
       providers: [
         FormBuilder,
         { provide: MatDialogRef, useValue: { } },
-        { provide: MAT_DIALOG_DATA, useValue: yearClass}
+        { provide: MAT_DIALOG_DATA, useValue: homeWorkAssignmentItemUpdateDto}
       ]
     })
     .compileComponents();

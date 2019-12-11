@@ -4,7 +4,8 @@ import { HomeWorkAssignmentItemAddDto, HomeWorkAssignmentItemUpdateDto } from 's
 export class HomeWorkAssignmentItemViewmodel {
 
     homeWorkAssignmentItemForm = this.fb.group({
-        dueDate: ['', [Validators.required]]
+        word: ['', [Validators.required]],
+        sentence: ['', Validators.required]
       });
 
 
@@ -27,7 +28,7 @@ export class HomeWorkAssignmentItemViewmodel {
 
     public getDto(): HomeWorkAssignmentItemAddDto | HomeWorkAssignmentItemUpdateDto {
         this.homeWorkAssignmentItemDto.word = this.homeWorkAssignmentItemForm.value.word;
-        this.homeWorkAssignmentItemDto.word = this.homeWorkAssignmentItemForm.value.word;
+        this.homeWorkAssignmentItemDto.sentence = this.homeWorkAssignmentItemForm.value.sentence;
         return this.homeWorkAssignmentItemDto;
     }
 }

@@ -11,6 +11,7 @@ namespace College.Api.Models
         public static HomeWorkAssignmentItem GetDomainObjectFrom(HomeWorkAssignmentItemAddDto dto)
         {
             var domainObject = new HomeWorkAssignmentItem();
+            domainObject.HomeWorkAssignmentId = dto.HomeWorkAssignmentId;
             domainObject.Sentence = dto.Sentence;
             domainObject.Word = dto.Word;
             return domainObject;

@@ -15,14 +15,14 @@ namespace College.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "v1")]
-    [Authorize(Roles = "AdminisiterHomework")]
+    //[Authorize(Roles = "AdminisiterHomework")]
+    [AllowAnonymous]
     public class HomeworkController : BaseController
     {
         private readonly IHomeWorkRepository _homeWorkRepository;
         private readonly IAsyncRepository<HomeWorkAssignment> _homeWorkAssignmentRepository;
         private readonly IAsyncRepository<HomeWorkAssignmentItem> _homeWorkAssignmentItemRepository;
         private readonly IAsyncRepository<SubmittedHomeWork> _submittedHomeWorkRepository;
-        private readonly ICollegeRepository _collegeRepository;
         public HomeworkController(
             IHomeWorkRepository homeWorkRepository,
             IAsyncRepository<HomeWorkAssignment> homeWorkAssignmentRepository,
@@ -35,14 +35,21 @@ namespace College.Api.Controllers
             _submittedHomeWorkRepository = submittedHomeWorkRepository;
         }
 
-        [HttpGet("get-homeWork-assignment")]
-        public async Task<ActionResult<HomeWorkAssignmentDto>> GetHomeWorkAssignmentAsync([FromQuery] Guid homeWorkAssignmentId)
+        [HttpGet("get-home-work-assignment")]
+        public async Task<HomeWorkAssignmentDto> GetHomeWorkAssignmentAsync([FromQuery] Guid homeWorkAssignmentId)
         {
             var data = await _homeWorkRepository.GetHomeWorkAssignmentWithChildren(homeWorkAssignmentId);
-            return HomeWorkAssignmentDto.From(data);
+            var dto = HomeWorkAssignmentDto.From(data);
+            return dto;
         }
 
-        
+        [HttpGet("get-home-work-assignments")]
+        public async Task<ActionResult<List<HomeWorkAssignmentDto>>> GetHomeWorkAssignmentsAsync([FromQuery] Guid yearClassId)
+        {
+            var data = await _homeWorkAssignmentRepository.ListAsync(o => o.YearClassId == yearClassId);
+            return data.Select(s => HomeWorkAssignmentDto.From(s)).ToList();
+        }
+
         [HttpPost("add-homeWork-assignment")]
         [Authorize(Roles = "AdminisiterHomework")]
         public async Task<SimpleUpsertDto> AddHomeWorkAssignmentAsync([FromBody] HomeWorkAssignmentAddDto dto)
@@ -83,5 +90,12 @@ namespace College.Api.Controllers
             return SimpleUpsertDto.From(domainObject);
         }
 
+        [HttpDelete("delete-homeWork-assignment-item")]
+        [Authorize(Roles = "AdminisiterHomework")]
+        public async Task DeleteHomeWorkAssignmentItemAsync([FromQuery] Guid HomeWorkAssignmentItemUpdateId)
+        {
+            var domainObject = await _homeWorkAssignmentItemRepository.GetByIdAsync(HomeWorkAssignmentItemUpdateId);
+            await _homeWorkAssignmentItemRepository.DeleteAsync(domainObject);
+        }
     }
 }

@@ -8,7 +8,9 @@ import {
   MatInputModule,
   MatSelectModule,
   MatTableModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatDatepickerModule,
+  MAT_DATE_LOCALE
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,6 +33,8 @@ import {
 import {
   UpsertHomeWorkAssignmentItemDialogComponent
 } from './dialogs/upsert-home-work-assignment-item/upsert-home-work-assignment-item-dialog.component';
+
+import {MomentDateModule, MatMomentDateModule} from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -62,15 +66,21 @@ import {
     MatSelectModule,
     AdminModule,
     CoreModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MomentDateModule,
+    MatDatepickerModule,
+    MatMomentDateModule
   ],
   providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
   ],
   bootstrap: [AppComponent],
   entryComponents: [
     UpsertCollegeDialogComponent,
     UpsertUserDialogComponent,
-    UpsertYearClassDialogComponent
+    UpsertYearClassDialogComponent,
+    UpsertHomeWorkAssignmentDialogComponent,
+    UpsertHomeWorkAssignmentItemDialogComponent
   ]
 })
 export class AppModule { }
