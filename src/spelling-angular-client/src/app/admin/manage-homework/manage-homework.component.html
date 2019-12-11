@@ -98,7 +98,7 @@
                         <i class="material-icons">add</i>
                     </button>
 
-                    <h3 class="left">Words</h3>
+                    <h3 class="left">Words for homework due {{selectedHomeWorkAssignment.dueDate.format('LL')}}</h3>
 
                     <div style="clear: both;" *ngFor="let homeWorkAssignmentItem of selectedHomeWorkAssignment.homeWorkAssignmentItems">
                         
@@ -127,8 +127,8 @@
                 </div>
 
                 <div *ngIf="showSubmittedWork">
-
-                    <h3 class="left">Submitted homework</h3>
+                    
+                    <h3 class="left">Submitted homework for {{selectedHomeWorkAssignment.dueDate.format('LL')}}</h3>
 
                     <div style="clear: both;" *ngFor="let submission of selectedHomeWorkAssignment.submittedHomeWorks">
                         {{submission.studentName}} &#40;{{submission.score}}&#41;
