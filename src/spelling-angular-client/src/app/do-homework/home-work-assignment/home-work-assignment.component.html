@@ -1,1 +1,26 @@
-<p>do home-work-assignment works!</p>
+<mat-form-field style="width: 300px;">
+        
+    <input autocomplete="off" matInput [(ngModel)]="this.viewmodel.studentName"
+        placeholder="Enter your name" cdkFocusInitial required>    
+</mat-form-field>
+
+<div *ngFor="let homeworkItem of this.viewmodel.homeworkItems">
+
+    <mat-form-field style="width: 300px;">
+        
+        <input autocomplete="off" matInput [(ngModel)]="homeworkItem.attempt"
+            placeholder="Type the word you hear" cdkFocusInitial required
+            (keyup.enter)="try(homeworkItem)"
+            >
+        
+    </mat-form-field>
+    <span>{{homeworkItem.snapshotHint}}</span> <br />
+    <span>{{homeworkItem.word}}</span> <br />
+    <span>{{homeworkItem.isCorrect}}</span> <br />
+    <span>{{homeworkItem.score}}</span> <br />
+    <button (click)="try(homeworkItem)">try</button>
+</div>
+
+canSubmit: {{this.canSubmit}} <br />
+{{this.viewmodel.totalScore}} <br />
+allCorrect: {{this.viewmodel.allCorrect}}
