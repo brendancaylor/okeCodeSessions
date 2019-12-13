@@ -6,6 +6,7 @@ import { SigninRedirectCallbackComponent } from './home/signin-redirect-callback
 import { SignoutRedirectCallbackComponent } from './home/signout-redirect-callback.component';
 import { UnauthorizedComponent } from './home/unauthorized.component';
 import { HomeWorkAssignmentComponent } from './do-homework/home-work-assignment/home-work-assignment.component';
+import { HomeworkResolverService } from './core/services/homeork-resolver-service';
 
 
 const routes: Routes = [
@@ -15,7 +16,7 @@ const routes: Routes = [
     },
     { path: 'contact-us', component: ContactUsComponent },
     { path: 'homework', component: HomeWorkAssignmentComponent },
-    { path: 'homework/:homeworkId', component: HomeWorkAssignmentComponent },
+    { path: 'homework/:homeworkId', component: HomeWorkAssignmentComponent, resolve: {homeworkData: HomeworkResolverService} },
     { path: 'signin-callback', component: SigninRedirectCallbackComponent },
     { path: 'signout-callback', component: SignoutRedirectCallbackComponent },
     { path: 'unauthorized', component: UnauthorizedComponent }

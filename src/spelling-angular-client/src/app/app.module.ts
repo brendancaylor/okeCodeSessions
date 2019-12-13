@@ -35,6 +35,7 @@ import {
 } from './dialogs/upsert-home-work-assignment-item/upsert-home-work-assignment-item-dialog.component';
 
 import {MomentDateModule, MatMomentDateModule} from '@angular/material-moment-adapter';
+import { HomeworkResolverService } from './core/services/homeork-resolver-service';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import {MomentDateModule, MatMomentDateModule} from '@angular/material-moment-ad
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    HomeworkResolverService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

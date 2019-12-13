@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeWorkAssignmentDto } from 'src/app/core/services/clients';
 import { HomeWorkAssignmentViewmodel, HomeworkItemViewmodel } from './home-work-assignment-viewmodel';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home-work-assignment',
@@ -11,17 +12,26 @@ export class HomeWorkAssignmentComponent implements OnInit {
 
   viewmodel: HomeWorkAssignmentViewmodel = new HomeWorkAssignmentViewmodel();
   canSubmit = false;
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const homeworkItem1: HomeworkItemViewmodel = new HomeworkItemViewmodel();
-    homeworkItem1.word = 'something';
+    this.route.data.forEach(
+      (data) => {
+    if (data.homeworkData) {
+      const dto = data.homeworkData as HomeWorkAssignmentDto;
+      this.viewmodel.id = dto.id;
+      this.viewmodel.homeworkItems = dto.homeWorkAssignmentItems.map(
+        (homeWorkAssignmentItem) => {
+          const homeworkItem: HomeworkItemViewmodel = new HomeworkItemViewmodel();
+          homeworkItem.id = homeWorkAssignmentItem.id;
+          homeworkItem.sentence = homeWorkAssignmentItem.sentence;
+          homeworkItem.word = homeWorkAssignmentItem.word;
+          return homeworkItem;
+        }
+      );
+    }
+  });
 
-    const homeworkItem2: HomeworkItemViewmodel = new HomeworkItemViewmodel();
-    homeworkItem2.word = 'another';
-
-    this.viewmodel.homeworkItems.push(homeworkItem1);
-    this.viewmodel.homeworkItems.push(homeworkItem2);
   }
 
   try(homeworkItem: HomeworkItemViewmodel): void {
