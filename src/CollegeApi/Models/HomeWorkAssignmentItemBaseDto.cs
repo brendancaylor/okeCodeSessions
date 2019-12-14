@@ -10,5 +10,8 @@ namespace College.Api.Models
         public Guid HomeWorkAssignmentId { get; set; }
         public string Sentence { get; set; }
         public string Word { get; set; }
+
+        public string SentenceLanguage { get; set; }
+        public string WordLanguage { get; set; }
     }
 }

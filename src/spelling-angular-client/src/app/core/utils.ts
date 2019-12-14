@@ -3,6 +3,7 @@ import { CollegeDto } from './services/clients';
 import * as moment from 'moment';
 
 export class Utils {
+
   public static formatError(error: HttpErrorResponse): string {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -39,4 +40,30 @@ export class Utils {
     }
     return year;
   }
+
+  public static getLanguages(): Array<Language> {
+    return [
+      {
+      displayName: 'English',
+      code: 'en-GB'
+      },
+      {
+        displayName: 'French',
+        code: 'fr-FR'
+      },
+      {
+        displayName: 'German',
+        code: 'de-DE'
+      },
+      {
+        displayName: 'Spanish',
+        code: 'es-ES'
+      }
+    ];
+  }
+}
+
+export class Language {
+  displayName: string;
+  code: string;
 }

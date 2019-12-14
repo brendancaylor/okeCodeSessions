@@ -12,6 +12,9 @@ namespace ApplicationCore.Entities
         public string YearClassName { get; set; }
         public string TeacherName { get; set; }
 
+        public string DefaultWordLanguage { get; set; }
+        public string DefaultSentenceLanguage { get; set; }
+
         private readonly List<HomeWorkAssignment> _homeWorkAssignments = new List<HomeWorkAssignment>();
         public IReadOnlyCollection<HomeWorkAssignment> HomeWorkAssignments => _homeWorkAssignments.AsReadOnly();
 

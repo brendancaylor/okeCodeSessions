@@ -16,6 +16,8 @@ namespace College.Api.Models
             domainObject.HomeWorkAssignmentId = dto.HomeWorkAssignmentId;
             domainObject.Sentence = dto.Sentence;
             domainObject.Word = dto.Word;
+            domainObject.SentenceLanguage = dto.SentenceLanguage;
+            domainObject.WordLanguage = dto.WordLanguage;
         }
     }
 }

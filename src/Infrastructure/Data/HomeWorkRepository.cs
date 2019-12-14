@@ -29,6 +29,7 @@ namespace Infrastructure.Data
         {
             return await _dbContext
                 .HomeWorkAssignments
+                    .Include(o => o.YearClass)
                     .Include(o => o.HomeWorkAssignmentItems)
                     .Include(o => o.SubmittedHomeWorks)
                 .SingleAsync(o => o.Id == homeWorkAssignmentId);

@@ -9,6 +9,7 @@ namespace College.Api.Models
     public class HomeWorkAssignmentDto: BaseDtoVersion
     {
         public Guid YearClassId { get; set; }
+        public string YearClassDisplay { get; set; }
         public DateTimeOffset DueDate { get; set; }
 
         public ICollection<HomeWorkAssignmentItemDto> HomeWorkAssignmentItems { get; set; } = new List<HomeWorkAssignmentItemDto>();
@@ -22,6 +23,7 @@ namespace College.Api.Models
             dto.RowVersion = domainObject.RowVersion;
             dto.UpdatedAt = domainObject.UpdatedAt;
             dto.DueDate = domainObject.DueDate;
+            dto.YearClassDisplay = $"{domainObject.YearClass?.TeacherName} {domainObject.YearClass?.YearClassName}";
             dto.YearClassId = domainObject.YearClassId;
             dto.HomeWorkAssignmentItems = domainObject.HomeWorkAssignmentItems.Select(s => HomeWorkAssignmentItemDto.From(s)).OrderBy(o => o.Word).ToList();
             dto.SubmittedHomeWorks = domainObject.SubmittedHomeWorks.Select(s => SubmittedHomeWorkDto.From(s)).OrderBy(o => o.StudentName).ToList();
@@ -33,6 +35,8 @@ namespace College.Api.Models
     {
         public string Sentence { get; set; }
         public string Word { get; set; }
+        public string SentenceLanguage { get; set; }
+        public string WordLanguage { get; set; }
         public byte[] SpokenWordAsMp3 { get; set; }
         public byte[] SpokenSentenceAsMp3 { get; set; }
         
@@ -45,6 +49,8 @@ namespace College.Api.Models
             dto.UpdatedAt = domainObject.UpdatedAt;
             dto.Sentence = domainObject.Sentence;
             dto.Word = domainObject.Word;
+            dto.SentenceLanguage = domainObject.SentenceLanguage;
+            dto.WordLanguage = domainObject.WordLanguage;
             dto.SpokenWordAsMp3 = domainObject.SpokenWordAsMp3;
             dto.SpokenSentenceAsMp3 = domainObject.SpokenSentenceAsMp3;
             return dto;

@@ -13,6 +13,7 @@ import {
   MatToolbarModule,
   MatDialogRef,
   MAT_DIALOG_DATA,
+  MatIconModule,
 } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,19 +21,33 @@ import { CoreModule } from 'src/app/core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SpeachClient, HomeworkClient } from 'src/app/core/services/clients';
 describe('HomeWorkAssignmentComponent', () => {
   let component: HomeWorkAssignmentComponent;
   let fixture: ComponentFixture<HomeWorkAssignmentComponent>;
+  const fakeActivatedRoute = {
+    data: null
+  } as ActivatedRoute;
+
+  const fakeRouter = {} as Router;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ HomeWorkAssignmentComponent ],
+      providers: [
+        {provide: ActivatedRoute, useValue: fakeActivatedRoute},
+        {provide: Router, useValue: fakeRouter},
+        SpeachClient,
+        HomeworkClient
+      ],
       imports: [
         HttpClientTestingModule,
         BrowserAnimationsModule,
         BrowserModule,
         FormsModule,
         MatFormFieldModule,
+        MatIconModule,
         MatDialogModule,
         MatButtonModule,
         MatToolbarModule,

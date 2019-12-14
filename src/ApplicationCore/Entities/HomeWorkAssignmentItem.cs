@@ -13,5 +13,7 @@ namespace ApplicationCore.Entities
         public string Word { get; set; }
         public byte[] SpokenWordAsMp3 { get; set; }
         public byte[] SpokenSentenceAsMp3 { get; set; }
+        public string WordLanguage { get; set; }
+        public string SentenceLanguage { get; set; }
     }
 }

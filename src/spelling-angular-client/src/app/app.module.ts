@@ -10,7 +10,8 @@ import {
   MatTableModule,
   MatToolbarModule,
   MatDatepickerModule,
-  MAT_DATE_LOCALE
+  MAT_DATE_LOCALE,
+  MatIconModule
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -55,6 +56,7 @@ import { HomeworkResolverService } from './core/services/homeork-resolver-servic
   imports: [
     BrowserModule,
     HttpClientModule,
+    MatIconModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

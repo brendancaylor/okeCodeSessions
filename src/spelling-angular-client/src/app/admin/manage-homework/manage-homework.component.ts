@@ -231,6 +231,9 @@ export class ManageHomeworkComponent implements OnInit {
 
   addHomeWorkAssignmentItem(): void {
     const homeWorkAssignmentItemToAdd: HomeWorkAssignmentItemAddDto = new HomeWorkAssignmentItemAddDto();
+    homeWorkAssignmentItemToAdd.wordLanguage = this.selectedYearClass.defaultWordLanguage;
+    homeWorkAssignmentItemToAdd.sentenceLanguage = this.selectedYearClass.defaultSentenceLanguage;
+
     this.setupHomeWorkAssignmentItemDialog(homeWorkAssignmentItemToAdd);
   }
 

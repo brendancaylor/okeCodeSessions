@@ -1,26 +1,77 @@
-<mat-form-field style="width: 300px;">
-        
-    <input autocomplete="off" matInput [(ngModel)]="this.viewmodel.studentName"
-        placeholder="Enter your name" cdkFocusInitial required>    
-</mat-form-field>
+<div *ngIf="this.viewmodel && !isSubmitted">
 
-<div *ngFor="let homeworkItem of this.viewmodel.homeworkItems">
+    <p style="float: right;">
+        <button mat-raised-button color="primary" (click)="reset()">
+            Restart again
+        </button>
+    </p>
+    
+    <h1>{{this.viewmodel.yearClassDisplay}}</h1>
+    <h2>Spelling homework due {{this.viewmodel.dueDate.format('ll')}}</h2>
+    
+    <p>
+        In order to use this you must have the sound switched on and loud enough to hear
+    </p>
+
+    <h2>Score ({{this.viewmodel.totalScore}})</h2>
 
     <mat-form-field style="width: 300px;">
-        
-        <input autocomplete="off" matInput [(ngModel)]="homeworkItem.attempt"
-            placeholder="Type the word you hear" cdkFocusInitial required
-            (keyup.enter)="try(homeworkItem)"
-            >
-        
+
+        <input id="studentName" autocomplete="off" matInput [(ngModel)]="this.viewmodel.studentName" placeholder="Enter your name"
+            cdkFocusInitial required>
+
     </mat-form-field>
-    <span>{{homeworkItem.snapshotHint}}</span> <br />
-    <span>{{homeworkItem.word}}</span> <br />
-    <span>{{homeworkItem.isCorrect}}</span> <br />
-    <span>{{homeworkItem.score}}</span> <br />
-    <button (click)="try(homeworkItem)">try</button>
+
+    <div *ngFor="let homeworkItem of this.viewmodel.homeworkItems" class="homework-item"
+        [ngClass]="{ 'homework-item-correct': homeworkItem.correctTry, 'homework-item-incorrect': !homeworkItem.correctTry}">
+
+        <mat-form-field *ngIf="!homeworkItem.correctTry" style="width: 300px;">
+
+            <input id="{{homeworkItem.id}}" autocomplete="off" matInput [(ngModel)]="homeworkItem.attempt"
+                placeholder="Type the word you hear" cdkFocusInitial required (keyup.enter)="try(homeworkItem)">
+
+        </mat-form-field>
+
+        <div *ngIf="homeworkItem.correctTry">
+            <mat-icon  class="font-massive">check_circle</mat-icon>
+            <span class="font-massive" style="padding-left: 30px;">{{homeworkItem.word}}</span>
+        </div>
+
+        <div *ngIf="!homeworkItem.correctTry">
+
+            <p>
+                <span>{{homeworkItem.snapshotHint}}</span>
+            </p>
+
+            <button mat-raised-button color="primary" (click)="try(homeworkItem)">Try</button>
+
+            <button *ngIf="homeworkItem.wordAsMp3" [disabled]="soundIsBeingPlayed" mat-stroked-button
+                aria-label="Play sound" (click)="playSound(homeworkItem, SpeechTypeEnum.Word)">
+                <mat-icon>hearing</mat-icon>
+                Word
+            </button>
+
+            <button *ngIf="homeworkItem.sentenceAsMp3" [disabled]="soundIsBeingPlayed" mat-stroked-button
+                aria-label="Play sound" (click)="playSound(homeworkItem, this.SpeechTypeEnum.Sentence)">
+                <mat-icon>hearing</mat-icon>
+                Definition
+            </button>
+
+        </div>
+
+    </div>
+
+    <div>
+        <button [disabled]="!this.submittEnabled()" mat-raised-button color="primary" (click)="submit()">
+            Submit your homework
+        </button>
+    </div>
+
+
 </div>
 
-canSubmit: {{this.canSubmit}} <br />
-{{this.viewmodel.totalScore}} <br />
-allCorrect: {{this.viewmodel.allCorrect}}
+<div *ngIf="isSubmitted">
+
+    <h1>Spelling homework due {{this.viewmodel.dueDate.format('ll')}}</h1>
+    <p>Your homework has been recorded as submitted</p>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeWorkAssignmentDto } from 'src/app/core/services/clients';
+import { HomeWorkAssignmentDto, SpeachClient, SpeechType, HomeworkClient, SubmittedHomeWorkAddDto } from 'src/app/core/services/clients';
 import { HomeWorkAssignmentViewmodel, HomeworkItemViewmodel } from './home-work-assignment-viewmodel';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,38 +10,130 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class HomeWorkAssignmentComponent implements OnInit {
 
-  viewmodel: HomeWorkAssignmentViewmodel = new HomeWorkAssignmentViewmodel();
-  canSubmit = false;
-  constructor(private route: ActivatedRoute) { }
+  viewmodel: HomeWorkAssignmentViewmodel = null;
+  isSubmitted = false;
+  SpeechTypeEnum = SpeechType;
+  soundIsBeingPlayed = false;
+  private originalData: HomeWorkAssignmentDto;
+
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private router: Router,
+    private _speachClient: SpeachClient,
+    private _homeworkClient: HomeworkClient
+    ) { }
 
   ngOnInit() {
-    this.route.data.forEach(
-      (data) => {
-    if (data.homeworkData) {
-      const dto = data.homeworkData as HomeWorkAssignmentDto;
-      this.viewmodel.id = dto.id;
-      this.viewmodel.homeworkItems = dto.homeWorkAssignmentItems.map(
-        (homeWorkAssignmentItem) => {
-          const homeworkItem: HomeworkItemViewmodel = new HomeworkItemViewmodel();
-          homeworkItem.id = homeWorkAssignmentItem.id;
-          homeworkItem.sentence = homeWorkAssignmentItem.sentence;
-          homeworkItem.word = homeWorkAssignmentItem.word;
-          return homeworkItem;
-        }
-      );
+    if (!this.activeRoute.data) {
+      return;
     }
-  });
+
+    this.activeRoute.data.forEach(
+      (data) => {
+        if (data.homeworkData) {
+          const dto = data.homeworkData as HomeWorkAssignmentDto;
+          this.originalData = dto;
+          this.viewmodel = new HomeWorkAssignmentViewmodel();
+          this.viewmodel.id = dto.id;
+          this.viewmodel.dueDate = dto.dueDate;
+          this.viewmodel.yearClassDisplay = dto.yearClassDisplay;
+          this.reset();
+        } else {
+          this.router.navigate(['/']);
+        }
+    });
+  }
+
+  reset(): void {
+    this.viewmodel.homeworkItems = this.originalData.homeWorkAssignmentItems.map(
+      (homeWorkAssignmentItem) => {
+        const homeworkItem: HomeworkItemViewmodel = new HomeworkItemViewmodel();
+        homeworkItem.id = homeWorkAssignmentItem.id;
+        homeworkItem.sentence = homeWorkAssignmentItem.sentence;
+        homeworkItem.word = homeWorkAssignmentItem.word;
+        this.loadSound(homeworkItem);
+        return homeworkItem;
+      }
+    );
+  }
+
+  private loadSound(homeworkItem: HomeworkItemViewmodel) {
+    this._speachClient.getSpeach(homeworkItem.id, SpeechType.Word)
+    .subscribe(
+      (blob) => {
+        homeworkItem.wordAsMp3 = blob;
+      }
+    );
+
+    this._speachClient.getSpeach(homeworkItem.id, SpeechType.Sentence)
+    .subscribe(
+      (blob) => {
+        homeworkItem.sentenceAsMp3 = blob;
+      }
+    );
 
   }
 
+  playSound(homeworkItem: HomeworkItemViewmodel, speechType: SpeechType): void {
+    this.soundIsBeingPlayed = true;
+    let blobUrl = '';
+    if (speechType === SpeechType.Word) {
+      blobUrl = URL.createObjectURL(homeworkItem.wordAsMp3);
+    } else if (speechType === SpeechType.Sentence) {
+      blobUrl = URL.createObjectURL(homeworkItem.sentenceAsMp3);
+    }
+    const audio = new Audio();
+    audio.src = blobUrl;
+    audio.load();
+    audio.play();
+    audio.onended = () => {
+        this.soundIsBeingPlayed = false;
+        document.getElementById(homeworkItem.id).focus();
+      };
+  }
+
+  playCorrect(): void {
+    const audio = new Audio();
+    audio.src = '/assets/correct.mp3';
+    audio.load();
+    audio.play();
+  }
+
+
   try(homeworkItem: HomeworkItemViewmodel): void {
-    if (!homeworkItem.isCorrect) {
-      homeworkItem.snapshotHint = homeworkItem.hint;
+    let indexOfItem = this.viewmodel.homeworkItems.indexOf(homeworkItem);
+    indexOfItem ++;
+    homeworkItem.snapshotHint = homeworkItem.hint;
+    if (homeworkItem.isCorrect) {
+      homeworkItem.correctTry = true;
+      this.playCorrect();
+      if (indexOfItem < this.viewmodel.homeworkItems.length) {
+        document.getElementById(this.viewmodel.homeworkItems[indexOfItem].id).focus();
+      }
+
+    } else {
       homeworkItem.score --;
     }
 
-    if (this.viewmodel.allCorrect) {
-      this.canSubmit = true;
+    if (!this.submittEnabled()) {
+      document.getElementById('studentName').focus();
     }
+  }
+
+  submittEnabled(): boolean {
+    return this.viewmodel.allCorrectTry && this.viewmodel.studentName && this.viewmodel.studentName.length > 3;
+  }
+
+  submit() {
+    const dto: SubmittedHomeWorkAddDto = new SubmittedHomeWorkAddDto();
+    dto.homeWorkAssignmentId = this.viewmodel.id;
+    dto.score = this.viewmodel.totalScore;
+    dto.studentName = this.viewmodel.studentName;
+    this._homeworkClient.addSubmittedHomeWork(dto)
+    .subscribe(
+      () => {
+        this.isSubmitted = true;
+      }
+    );
   }
 }

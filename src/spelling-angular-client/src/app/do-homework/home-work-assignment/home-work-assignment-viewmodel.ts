@@ -1,8 +1,13 @@
+import * as moment from 'moment';
+
 export class HomeWorkAssignmentViewmodel {
 
     id = '';
     homeworkItems: Array<HomeworkItemViewmodel> = [];
     studentName = '';
+    dueDate: moment.Moment = moment();
+    yearClassDisplay = '';
+
     get totalScore(): number {
         return this.homeworkItems.reduce((a, b) => a + b.score, 0);
     }
@@ -13,6 +18,19 @@ export class HomeWorkAssignmentViewmodel {
         this.homeworkItems.forEach(
             (homeworkItem) => {
                 if (!homeworkItem.isCorrect) {
+                    result = false;
+                }
+            }
+        );
+        return result;
+    }
+
+    get allCorrectTry(): boolean {
+        let result = true;
+
+        this.homeworkItems.forEach(
+            (homeworkItem) => {
+                if (!homeworkItem.correctTry) {
                     result = false;
                 }
             }
@@ -31,6 +49,8 @@ export class HomeworkItemViewmodel {
     sentenceAsMp3: Blob = null;
     snapshotHint = '';
     score = 10;
+    correctTry = false;
+
     get isCorrect(): boolean {
         return this.word.toLowerCase() === this.attempt.toLowerCase();
     }

@@ -19,6 +19,8 @@ namespace College.Api.Models
             domainObject.CollegeId = dto.CollegeId;
             domainObject.TeacherName = dto.TeacherName;
             domainObject.YearClassName = dto.YearClassName;
+            domainObject.DefaultWordLanguage = dto.DefaultWordLanguage;
+            domainObject.DefaultSentenceLanguage = dto.DefaultSentenceLanguage;
         }
     }
 }

@@ -12,6 +12,8 @@ namespace College.Api.Models
         public int AcademicYear { get; set; }
         public string YearClassName { get; set; }
         public string TeacherName { get; set; }
+        public string DefaultWordLanguage { get; set; }
+        public string DefaultSentenceLanguage { get; set; }
 
         public static YearClassDto From(YearClass yearClass)
         {
@@ -27,6 +29,9 @@ namespace College.Api.Models
             dto.CollegeId = yearClass.CollegeId;
             dto.TeacherName = yearClass.TeacherName;
             dto.YearClassName = yearClass.YearClassName;
+
+            dto.DefaultWordLanguage = yearClass.DefaultWordLanguage;
+            dto.DefaultSentenceLanguage = yearClass.DefaultSentenceLanguage;
             return dto;
         }
     }

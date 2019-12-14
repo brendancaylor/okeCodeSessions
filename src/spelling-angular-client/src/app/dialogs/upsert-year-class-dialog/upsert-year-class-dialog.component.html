@@ -15,6 +15,34 @@
             </mat-error>
         </mat-form-field>
 
+        <mat-form-field>
+            <mat-label>Default Word Language</mat-label>
+            <mat-select formControlName="defaultWordLanguage">
+                <mat-option *ngFor="let language of this.languages" [value]="language.code">
+                {{language.displayName}}
+                </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('defaultWordLanguage').hasError('required')">
+                Default Word Language is <strong>required</strong>
+            </mat-error>
+
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Default Sentence Language</mat-label>
+            <mat-select formControlName="defaultSentenceLanguage">
+                <mat-option *ngFor="let language of this.languages" [value]="language.code">
+                {{language.displayName}}
+                </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('defaultSentenceLanguage').hasError('required')">
+                Default Sentence Language is <strong>required</strong>
+            </mat-error>
+
+        </mat-form-field>
+
     </div>
 
     <div mat-dialog-actions layout="row">

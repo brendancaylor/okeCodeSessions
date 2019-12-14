@@ -18,6 +18,34 @@
             </mat-error>
         </mat-form-field>
 
+        <mat-form-field>
+            <mat-label>Word Language</mat-label>
+            <mat-select formControlName="wordLanguage">
+                <mat-option *ngFor="let language of this.languages" [value]="language.code">
+                {{language.displayName}}
+                </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm.get('wordLanguage').hasError('required')">
+                Word Language is <strong>required</strong>
+            </mat-error>
+
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Sentence Language</mat-label>
+            <mat-select formControlName="sentenceLanguage">
+                <mat-option *ngFor="let language of this.languages" [value]="language.code">
+                {{language.displayName}}
+                </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm.get('sentenceLanguage').hasError('required')">
+                Sentence Language is <strong>required</strong>
+            </mat-error>
+
+        </mat-form-field>
+
     </div>
 
     <div mat-dialog-actions layout="row">
