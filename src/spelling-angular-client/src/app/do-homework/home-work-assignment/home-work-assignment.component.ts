@@ -99,6 +99,24 @@ export class HomeWorkAssignmentComponent implements OnInit {
     audio.play();
   }
 
+  playIncorrect(): void {
+    const audio = new Audio();
+    audio.src = '/assets/wrong.mp3';
+    audio.load();
+    audio.play();
+  }
+
+  getNextUnCompletedWord(): HomeworkItemViewmodel {
+    const foundItems = this.viewmodel.homeworkItems.filter(
+      (homeworkItem) => !homeworkItem.correctTry
+    );
+    debugger;
+    if (foundItems.length > 0) {
+      return foundItems[0];
+    } else {
+      return null;
+    }
+  }
 
   try(homeworkItem: HomeworkItemViewmodel): void {
     let indexOfItem = this.viewmodel.homeworkItems.indexOf(homeworkItem);
@@ -107,21 +125,28 @@ export class HomeWorkAssignmentComponent implements OnInit {
     if (homeworkItem.isCorrect) {
       homeworkItem.correctTry = true;
       this.playCorrect();
-      if (indexOfItem < this.viewmodel.homeworkItems.length) {
-        document.getElementById(this.viewmodel.homeworkItems[indexOfItem].id).focus();
+
+      const lastItem = this.getNextUnCompletedWord();
+      if (lastItem) {
+        document.getElementById(lastItem.id).focus();
+        setTimeout(
+          () => {
+            this.playSound(lastItem, SpeechType.Word);
+          }, 2000
+        );
+      } else if (this.viewmodel.studentName.length < 1) {
+        document.getElementById('studentName').focus();
       }
 
     } else {
+      homeworkItem.correctTry = false;
       homeworkItem.score --;
-    }
-
-    if (!this.submittEnabled()) {
-      document.getElementById('studentName').focus();
+      this.playIncorrect();
     }
   }
 
   submittEnabled(): boolean {
-    return this.viewmodel.allCorrectTry && this.viewmodel.studentName && this.viewmodel.studentName.length > 3;
+    return this.viewmodel.allCorrectTry && this.viewmodel.studentName && this.viewmodel.studentName.length > 1;
   }
 
   submit() {

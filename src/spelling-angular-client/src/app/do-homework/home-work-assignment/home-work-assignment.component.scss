@@ -7,16 +7,29 @@ button, a {
     margin: 20px 0;
 }
 
-.homework-item-incorrect{
+.homework-item-not-attempted {
     background-color: #f2f2f2;
+}
 
+.homework-item-incorrect{
+    background-color: #ffe6e6;
 }
 
 .homework-item-correct{
     background-color: #d1ffdf;
-
 }
 
 .font-massive {
     font-size: 2rem;
+}
+
+.mat-icon-massive {
+    color: rebeccapurple;
+    float: left;
+    margin-right: 50px;
+    font-size: 50px;
+  }
+
+.snapshot-hint{
+    font-weight: bold;
 }

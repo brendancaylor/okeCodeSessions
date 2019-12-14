@@ -23,7 +23,7 @@
     </mat-form-field>
 
     <div *ngFor="let homeworkItem of this.viewmodel.homeworkItems" class="homework-item"
-        [ngClass]="{ 'homework-item-correct': homeworkItem.correctTry, 'homework-item-incorrect': !homeworkItem.correctTry}">
+        [ngClass]="{ 'homework-item-not-attempted': homeworkItem.correctTry === undefined, 'homework-item-correct': homeworkItem.correctTry, 'homework-item-incorrect': homeworkItem.correctTry !== undefined && !homeworkItem.correctTry}">
 
         <mat-form-field *ngIf="!homeworkItem.correctTry" style="width: 300px;">
 
@@ -39,7 +39,8 @@
 
         <div *ngIf="!homeworkItem.correctTry">
 
-            <p>
+            <p class="snapshot-hint">
+                <span *ngIf="homeworkItem.snapshotHint" style="padding-right: 20px;">Hint: </span> 
                 <span>{{homeworkItem.snapshotHint}}</span>
             </p>
 
@@ -71,7 +72,13 @@
 </div>
 
 <div *ngIf="isSubmitted">
-
-    <h1>Spelling homework due {{this.viewmodel.dueDate.format('ll')}}</h1>
-    <p>Your homework has been recorded as submitted</p>
+    <h1>{{this.viewmodel.yearClassDisplay}}</h1>
+    <h2>Spelling homework due {{this.viewmodel.dueDate.format('ll')}}</h2>
+    
+    <h3>
+        <mat-icon class="mat-icon-massive">sentiment_satisfied_alt</mat-icon>
+        Thank you {{this.viewmodel.studentName}}. Your homework has been submitted
+    </h3>
 </div>
+
+

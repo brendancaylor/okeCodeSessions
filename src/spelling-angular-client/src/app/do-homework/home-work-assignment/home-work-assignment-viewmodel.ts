@@ -49,7 +49,7 @@ export class HomeworkItemViewmodel {
     sentenceAsMp3: Blob = null;
     snapshotHint = '';
     score = 10;
-    correctTry = false;
+    correctTry?: boolean | undefined;
 
     get isCorrect(): boolean {
         return this.word.toLowerCase() === this.attempt.toLowerCase();
@@ -72,7 +72,14 @@ export class HomeworkItemViewmodel {
                     result += '?';
                 }
             } else {
-                result += '?';
+
+                if (numberOfSneakPeaksUsed < numberOfSneakPeaks) {
+                    numberOfSneakPeaksUsed ++;
+                    result += letterWord;
+                } else {
+                    result += '?';
+                }
+
             }
         }
         return result;

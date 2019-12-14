@@ -2,12 +2,31 @@
 body {
     width: 90%;
     margin-left: 5%;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato';
+}
+
+a:active, a:hover {
+  color: rgb(85, 26, 139);
+  opacity: 0.8;
+}
+.logo-link {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.logo-link span {
+  font-size: 3rem;
+}
+
+.logo-link mat-icon {
+  font-size: 3rem;
+  float: left;
+  margin: -5px 23px 0 0;
 }
 
 @media only screen and (max-width: 600px) {
   .logo-link{
-    display: none;
+    font-size: 1rem;
   }
 }
 
