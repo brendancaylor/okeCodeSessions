@@ -44,7 +44,7 @@
                 <span>{{homeworkItem.snapshotHint}}</span>
             </p>
 
-            <button mat-raised-button color="primary" (click)="try(homeworkItem)">Try</button>
+            
 
             <button *ngIf="homeworkItem.wordAsMp3" [disabled]="soundIsBeingPlayed" mat-stroked-button
                 aria-label="Play sound" (click)="playSound(homeworkItem, SpeechTypeEnum.Word)">
@@ -58,6 +58,8 @@
                 Definition
             </button>
 
+            <button mat-raised-button color="primary" (click)="try(homeworkItem)">Try</button>
+            
         </div>
 
     </div>

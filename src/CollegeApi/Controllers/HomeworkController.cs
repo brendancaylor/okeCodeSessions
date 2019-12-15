@@ -85,11 +85,12 @@ namespace College.Api.Controllers
         [Authorize(Roles = "AdminisiterHomework")]
         public async Task<SimpleUpsertDto> AddHomeWorkAssignmentItemAsync([FromBody] HomeWorkAssignmentItemAddDto dto)
         {
-            var homeWorkAssignmentItem = HomeWorkAssignmentItemAddDto.GetDomainObjectFrom(dto);
-            homeWorkAssignmentItem.SpokenWordAsMp3 = this.GetGoogleSpeech(homeWorkAssignmentItem.Word, homeWorkAssignmentItem.WordLanguage);
-            homeWorkAssignmentItem.SpokenSentenceAsMp3 = this.GetGoogleSpeech(homeWorkAssignmentItem.Sentence, homeWorkAssignmentItem.SentenceLanguage);
-            homeWorkAssignmentItem = await _homeWorkAssignmentItemRepository.AddAsync(homeWorkAssignmentItem, this.AppUserId.Value);
-            return SimpleUpsertDto.From(homeWorkAssignmentItem);
+            var domainObject = HomeWorkAssignmentItemAddDto.GetDomainObjectFrom(dto);
+            //homeWorkAssignmentItem.SpokenWordAsMp3 = this.GetGoogleSpeech(homeWorkAssignmentItem.Word, homeWorkAssignmentItem.WordLanguage);
+            //homeWorkAssignmentItem.SpokenSentenceAsMp3 = this.GetGoogleSpeech(homeWorkAssignmentItem.Sentence, homeWorkAssignmentItem.SentenceLanguage);
+            domainObject.AddGoogleSpeechApiRequest();
+            domainObject = await _homeWorkAssignmentItemRepository.AddAsync(domainObject, this.AppUserId.Value);
+            return SimpleUpsertDto.From(domainObject);
         }
 
         [HttpPut("update-homeWork-assignment-item")]
@@ -101,13 +102,15 @@ namespace College.Api.Controllers
 
             if (domainObject.Word != dto.Word)
             {
-                domainObject.SpokenWordAsMp3 = this.GetGoogleSpeech(dto.Word, dto.WordLanguage);
+                //domainObject.SpokenWordAsMp3 = this.GetGoogleSpeech(dto.Word, dto.WordLanguage);
             }
 
             if (domainObject.Sentence != dto.Sentence)
             {
-                domainObject.SpokenSentenceAsMp3 = this.GetGoogleSpeech(dto.Sentence, dto.SentenceLanguage);
+                //domainObject.SpokenSentenceAsMp3 = this.GetGoogleSpeech(dto.Sentence, dto.SentenceLanguage);
             }
+
+            domainObject.AddGoogleSpeechApiRequest();
 
             HomeWorkAssignmentItemUpdateDto.SetDomainObjectFrom(dto, domainObject);
             await _homeWorkAssignmentItemRepository.UpdateAsync(domainObject, this.AppUserId.Value);

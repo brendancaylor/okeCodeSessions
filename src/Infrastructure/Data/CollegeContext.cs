@@ -24,6 +24,8 @@ namespace Infrastructure.Data
         public DbSet<SubmittedHomeWork> SubmittedHomeWorks { get; set; }
         public DbSet<YearClass> YearClasses { get; set; }
 
+        public DbSet<GoogleSpeechApiRequest> GoogleSpeechApiRequests { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

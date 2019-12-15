@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Projections;
 using College.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +36,14 @@ namespace College.Api.Controllers
             _roleRepository = roleRepository;
         }
 
+        [HttpGet("usage-report")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<CollegeUsage>>> GetUsageReportAsync()
+        {
+            var data = await _collegeRepository.GetCollegesUsage();
+            return data.OrderBy(o => o.CollegeName).ToList();
+        }
+
         [HttpGet("get-current-user-claims")]
         [Authorize]
         public CurrentUsersClaimsDto GetCurrentUserClaims()
@@ -43,6 +52,7 @@ namespace College.Api.Controllers
             dto.Claims = User.Claims.Where(s => s.Type == "role").Select(s => s.Value).ToList();
             return dto;
         }
+
         [HttpGet("user-lookups")]
         [Authorize]
         public async Task<UserLookupsDto> GetUserLookupsAsync()

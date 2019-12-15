@@ -15,5 +15,17 @@ namespace ApplicationCore.Entities
         public byte[] SpokenSentenceAsMp3 { get; set; }
         public string WordLanguage { get; set; }
         public string SentenceLanguage { get; set; }
+
+        private readonly List<GoogleSpeechApiRequest> _googleSpeechApiRequests = new List<GoogleSpeechApiRequest>();
+        public IReadOnlyCollection<GoogleSpeechApiRequest> GoogleSpeechApiRequests => _googleSpeechApiRequests.AsReadOnly();
+
+        public void AddGoogleSpeechApiRequest()
+        {
+            var googleSpeechApiRequest = new GoogleSpeechApiRequest();
+            googleSpeechApiRequest.WordCount = this.Word.Length;
+            googleSpeechApiRequest.SentenceCount = this.Sentence.Length;
+            this._googleSpeechApiRequests.Add(googleSpeechApiRequest);
+        }
+
     }
 }

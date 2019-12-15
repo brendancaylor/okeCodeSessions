@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Projections;
 using College.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +29,14 @@ namespace College.Api.Controllers
         {
             var data = await _collegeRepository.ListAllAsync();
             return data.Select(o => CollegeDto.From(o)).OrderBy(o => o.CollegeName).ToList();
+        }
+
+        [HttpGet("usage-report")]
+        public async Task<ActionResult<List<CollegeUsage>>> GetUsageReportAsync()
+        {
+            var data = await _collegeRepository.GetCollegesUsage();
+            return data.OrderBy(o => o.CollegeName).ToList();
+
         }
 
         [HttpGet("{collegeId}")]

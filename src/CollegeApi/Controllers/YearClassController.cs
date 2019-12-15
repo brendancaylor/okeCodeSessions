@@ -29,7 +29,6 @@ namespace College.Api.Controllers
             _collegeRepository = collegeRepository;
         }
 
-
         [HttpGet("college-lookups")]
         [Authorize]
         public async Task<List<LookupDto>> GetCollegeLookupsAsync()
