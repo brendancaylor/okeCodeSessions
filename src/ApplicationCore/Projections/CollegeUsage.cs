@@ -8,6 +8,7 @@ namespace ApplicationCore.Projections
     {
         public int WordSum { get; set; }
         public int SentenceSum { get; set; }
+        public int TotalSum => this.SentenceSum + WordSum;
         public string TeacherName { get; set; }
         public string YearClassName { get; set; }
         public int AcademicYear { get; set; }

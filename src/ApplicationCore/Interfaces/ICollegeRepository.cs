@@ -10,6 +10,6 @@ namespace ApplicationCore.Interfaces
     public interface ICollegeRepository : IAsyncRepository<College>
     {
         Task<List<ApplicationCore.Entities.College>> GetCollegesFromNonAdmin(Guid appUserId);
-        Task<List<CollegeUsage>> GetCollegesUsage();
+        Task<List<CollegeUsage>> GetCollegesUsage(Guid? collegeId);
     }
 }

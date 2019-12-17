@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserClient, CollegeUsage } from 'src/app/core/services/clients';
+import { UserClient, CollegeUsage, YearClassClient, LookupDto } from 'src/app/core/services/clients';
 
 @Component({
   selector: 'app-usage-report',
@@ -8,16 +8,36 @@ import { UserClient, CollegeUsage } from 'src/app/core/services/clients';
 })
 export class UsageReportComponent implements OnInit {
 
-  constructor(private _userClient: UserClient) { }
+  reportData: Array<CollegeUsage> = [];
+  collegeOptions: Array<LookupDto> = [];
+  selectedCollege: LookupDto;
 
-  reportData: Array<CollegeUsage> = []
+  constructor(
+    private _userClient: UserClient,
+    private _yearClassClient: YearClassClient) {
+
+     }
+
   ngOnInit() {
-    this._userClient.getUsageReport().subscribe
+
+    this._yearClassClient.getCollegeLookups()
+    .subscribe(
+      (data) => {
+        this.collegeOptions = data;
+        if (data.length === 1) {
+          this.selectedCollege = data[0];
+          this.collegeSelected();
+        }
+      }
+    );
+  }
+
+  collegeSelected() {
+    this._userClient.getUsageReport(this.selectedCollege.id).subscribe
     (
       (data) => {
         this.reportData = data;
       }
     );
   }
-
 }

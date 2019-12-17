@@ -1,6 +1,98 @@
 <h1>Usage report</h1>
 
-<div *ngFor="let item of this.reportData">
+<div *ngIf="this.collegeOptions.length > 1">
+    <h3>Colleges</h3>
+    <mat-form-field style="width: 300px;">
+        <mat-label>Select a College</mat-label>
+        <mat-select [(value)]="selectedCollege" (selectionChange)="collegeSelected()">
+            <mat-option *ngFor="let college of this.collegeOptions" [value]="college">
+                {{college.displayName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 
-    {{item.collegeName}} {{item.academicYear}} {{item.yearClassName}} {{item.sentenceSum}} {{item.wordSum}}
 </div>
+
+<h2 *ngIf="this.selectedCollege">{{this.selectedCollege.displayName}}</h2>
+
+<div *ngIf="this.reportData.length > 0">
+
+        <table class="costs">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Monthly tier</th>
+                    <th>Paid usage</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+                <tr>
+                    <td>Voices</td>
+                    <td>0 to 1 million characters</td>
+                    <td>$16.00 USD / 1 million characters</td>
+                </tr>
+            </tbody>
+        </table>
+    
+    
+        <div style="margin: 20px;">
+            <h3>
+            Used so far
+            {{this.reportData[this.reportData.length - 1].totalSum}}
+            </h3>
+        </div>
+    </div>
+    
+<div class="grid-container">
+
+    <div class="grid-item header">
+        Academic Year
+    </div>
+
+    <div class="grid-item header">
+        Year Class
+    </div>
+
+    <div class="grid-item header">
+        Sentence sum of characters
+    </div>
+
+    <div class="grid-item header">
+        Word sum of characters
+    </div>
+
+    <div class="grid-item header">
+        Total
+    </div>
+
+    <ng-container *ngFor="let item of this.reportData">
+
+        <div class="grid-item">
+            <span *ngIf="item.academicYear !== 0">
+                {{item.academicYear}}
+            </span>
+
+        </div>
+
+        <div class="grid-item">
+            {{item.yearClassName}}
+        </div>
+
+        <div class="grid-item">
+            {{item.sentenceSum}}
+        </div>
+
+        <div class="grid-item">
+            {{item.wordSum}}
+        </div>
+
+        <div class="grid-item">
+            {{item.totalSum}}
+        </div>
+
+    </ng-container>
+
+
+</div>
+

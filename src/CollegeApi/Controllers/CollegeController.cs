@@ -32,10 +32,10 @@ namespace College.Api.Controllers
         }
 
         [HttpGet("usage-report")]
-        public async Task<ActionResult<List<CollegeUsage>>> GetUsageReportAsync()
+        public async Task<ActionResult<List<CollegeUsage>>> GetUsageReportAsync(Guid? collegeId)
         {
-            var data = await _collegeRepository.GetCollegesUsage();
-            return data.OrderBy(o => o.CollegeName).ToList();
+            var data = await _collegeRepository.GetCollegesUsage(collegeId);
+            return data.OrderBy(o => o.WordSum).ThenByDescending(o => o.AcademicYear).ToList();
 
         }
 

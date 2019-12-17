@@ -26,11 +26,17 @@ namespace Infrastructure.Data
                 .ToListAsync();
         }
 
-        public Task<List<CollegeUsage>> GetCollegesUsage()
+        public async Task<List<CollegeUsage>> GetCollegesUsage(Guid? collegeId)
         {
-            return _dbContext
+            var qry = _dbContext
                 .GoogleSpeechApiRequests
                     .Include(o => o.HomeWorkAssignmentItem.HomeWorkAssignment.YearClass.College)
+                    .Where(o => o.SentenceCount > 0);
+            if (collegeId.HasValue)
+            {
+                qry = qry.Where(o => o.HomeWorkAssignmentItem.HomeWorkAssignment.YearClass.CollegeId == collegeId);
+            }
+            var data = await qry
                 .GroupBy(o =>
                     new {
                         o.HomeWorkAssignmentItem.HomeWorkAssignment.YearClass.YearClassName,
@@ -52,6 +58,16 @@ namespace Infrastructure.Data
                     }
                 )
                 .ToListAsync();
+
+            var totals = new CollegeUsage
+            {
+                YearClassName = "TOTALS",
+                SentenceSum = data.Sum(o => o.SentenceSum),
+                WordSum = data.Sum(o => o.WordSum)
+            };
+
+            data.Add(totals);
+            return data;
         }
     }
 }
