@@ -86,8 +86,8 @@ namespace College.Api.Controllers
         public async Task<SimpleUpsertDto> AddHomeWorkAssignmentItemAsync([FromBody] HomeWorkAssignmentItemAddDto dto)
         {
             var domainObject = HomeWorkAssignmentItemAddDto.GetDomainObjectFrom(dto);
-            //homeWorkAssignmentItem.SpokenWordAsMp3 = this.GetGoogleSpeech(homeWorkAssignmentItem.Word, homeWorkAssignmentItem.WordLanguage);
-            //homeWorkAssignmentItem.SpokenSentenceAsMp3 = this.GetGoogleSpeech(homeWorkAssignmentItem.Sentence, homeWorkAssignmentItem.SentenceLanguage);
+            domainObject.SpokenWordAsMp3 = this.GetGoogleSpeech(domainObject.Word, domainObject.WordLanguage);
+            domainObject.SpokenSentenceAsMp3 = this.GetGoogleSpeech(domainObject.Sentence, domainObject.SentenceLanguage);
             domainObject.AddGoogleSpeechApiRequest();
             domainObject = await _homeWorkAssignmentItemRepository.AddAsync(domainObject, this.AppUserId.Value);
             return SimpleUpsertDto.From(domainObject);
@@ -102,12 +102,12 @@ namespace College.Api.Controllers
 
             if (domainObject.Word != dto.Word)
             {
-                //domainObject.SpokenWordAsMp3 = this.GetGoogleSpeech(dto.Word, dto.WordLanguage);
+                domainObject.SpokenWordAsMp3 = this.GetGoogleSpeech(dto.Word, dto.WordLanguage);
             }
 
             if (domainObject.Sentence != dto.Sentence)
             {
-                //domainObject.SpokenSentenceAsMp3 = this.GetGoogleSpeech(dto.Sentence, dto.SentenceLanguage);
+                domainObject.SpokenSentenceAsMp3 = this.GetGoogleSpeech(dto.Sentence, dto.SentenceLanguage);
             }
 
             domainObject.AddGoogleSpeechApiRequest();

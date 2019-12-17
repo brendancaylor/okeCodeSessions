@@ -110,7 +110,6 @@ export class HomeWorkAssignmentComponent implements OnInit {
     const foundItems = this.viewmodel.homeworkItems.filter(
       (homeworkItem) => !homeworkItem.correctTry
     );
-    debugger;
     if (foundItems.length > 0) {
       return foundItems[0];
     } else {

@@ -6,9 +6,14 @@ import { AuthService } from './auth-service';
 export class ClaimsRouteGuard implements CanActivate {
     constructor(private _authService: AuthService) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        const isLoggedIn = await this._authService.isLoggedIn();
+        if (!isLoggedIn) {
+            return false;
+        }
         const requiredClaims = route.data.requiredClaims || [];
-        return !!this._authService.authContext &&
+        const isValid =  !!this._authService.authContext &&
         this._authService.authContext.hasClaims(...requiredClaims);
+        return isValid;
     }
 }

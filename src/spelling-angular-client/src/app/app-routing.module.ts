@@ -10,7 +10,6 @@ import { HomeworkResolverService } from './core/services/homeork-resolver-servic
 
 
 const routes: Routes = [
-    { path: '', component: HomeComponent},
     { path: 'admin',
           loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
     },
@@ -19,7 +18,10 @@ const routes: Routes = [
     { path: 'homework/:homeworkId', component: HomeWorkAssignmentComponent, resolve: {homeworkData: HomeworkResolverService} },
     { path: 'signin-callback', component: SigninRedirectCallbackComponent },
     { path: 'signout-callback', component: SignoutRedirectCallbackComponent },
-    { path: 'unauthorized', component: UnauthorizedComponent }
+    { path: 'unauthorized', component: UnauthorizedComponent },
+    { path: '',
+    pathMatch: 'full',
+    component: HomeComponent}
 ];
 
 @NgModule({

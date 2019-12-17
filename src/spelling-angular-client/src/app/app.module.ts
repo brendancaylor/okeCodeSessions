@@ -54,7 +54,6 @@ import { HomeworkResolverService } from './core/services/homeork-resolver-servic
     UpsertHomeWorkAssignmentItemDialogComponent
   ],
   imports: [
-    BrowserModule,
     HttpClientModule,
     MatIconModule,
     FormsModule,

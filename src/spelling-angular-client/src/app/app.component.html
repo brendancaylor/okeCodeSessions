@@ -11,6 +11,7 @@
         <span class="navbar-fill">
             
             <button *ngIf="hasClaims(['AdminisiterColleges'])" mat-button routerLink="admin/manage-colleges">Colleges</button>
+            <button *ngIf="hasClaims(['AdminisiterCollegeUsers'])" mat-button routerLink="admin/usage-report">Usage Report</button>
             <button *ngIf="hasClaims(['AdminisiterCollegeUsers'])" mat-button routerLink="admin/manage-users">Users</button>
             <button *ngIf="hasClaims(['AdminisiterHomework'])" mat-button routerLink="admin/manage-homework">Manage Homework</button>
         </span>

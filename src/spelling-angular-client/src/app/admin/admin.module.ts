@@ -19,10 +19,12 @@ import { ManageCollegesComponent } from './manage-colleges/manage-colleges.compo
 import { ManageHomeworkComponent } from './manage-homework/manage-homework.component';
 import { CollegeYearclassComponent } from './college-yearclass/college-yearclass.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { UsageReportComponent } from './usage-report/usage-report.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
-    BrowserModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -42,7 +44,8 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
     ManageCollegesComponent,
     ManageHomeworkComponent,
     CollegeYearclassComponent,
-    ManageUsersComponent
+    ManageUsersComponent,
+    UsageReportComponent
   ],
   providers: [],
   entryComponents: [

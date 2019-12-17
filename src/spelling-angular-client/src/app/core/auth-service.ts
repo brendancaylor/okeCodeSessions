@@ -26,7 +26,6 @@ export class AuthService {
       automaticSilentRenew: true,
       silent_redirect_uri: `${Constants.clientRoot}assets/silent-callback.html`
     };
-
     this._userManager = new UserManager(stsSettings);
     this._userManager.events.addAccessTokenExpired(_ => {
       this._loginChangedSubject.next(false);
@@ -46,13 +45,13 @@ export class AuthService {
   }
 
   isLoggedIn(): Promise<boolean> {
-    return this._userManager.getUser().then(user => {
+    return this._userManager.getUser().then(async user => {
       const userCurrent = !!user && !user.expired;
       if (this._user !== user) {
         this._loginChangedSubject.next(userCurrent);
       }
       if (userCurrent && !this.authContext) {
-        this.loadSecurityContext();
+        await this.loadSecurityContext();
       }
       this._user = user;
       return userCurrent;
@@ -87,14 +86,9 @@ export class AuthService {
     });
   }
 
-  loadSecurityContext() {
-    this._userClient.getCurrentUserClaims()
-      .subscribe(
-        result => {
-          this.authContext = new AuthContext();
-          this.authContext.claims = result.claims;
-        },
-        error => console.error(error)
-      );
+  async loadSecurityContext() {
+    const result = await this._userClient.getCurrentUserClaims().toPromise();
+    this.authContext = new AuthContext();
+    this.authContext.claims = result.claims;
   }
 }
