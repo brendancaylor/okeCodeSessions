@@ -1,8 +1,11 @@
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 body {
-    width: 90%;
-    margin-left: 5%;
     font-family: 'Lato';
+}
+
+footer {
+
+  position: fixed;
 }
 
 a:active, a:hover {

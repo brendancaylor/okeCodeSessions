@@ -1,0 +1,17 @@
+<svg width="180" height="100" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="102" width="182" y="-1" x="-1"/>
+  <g display="none" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%" id="svg_1"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 2</title>
+  <text stroke="null" transform="matrix(2.8307842189545345,0,0,2.8307842189545345,-106.0880222389687,-385.4437697269752) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_4" y="161.89324" x="42.47985" stroke-opacity="null" stroke-width="0" fill="#ffffff">s  ell</text>
+  <path stroke="#000" stroke-width="2" id="svg_3" d="m64.26199,63.02071l10.67553,-8.00665l-10.67553,-8.00665l0,16.0133zm3.55851,-25.7992c-9.82149,0 -17.79255,7.97106 -17.79255,17.79255s7.97106,17.79255 17.79255,17.79255s17.79255,-7.97106 17.79255,-17.79255s-7.97106,-17.79255 -17.79255,-17.79255zm0,32.0266c-7.84652,0 -14.23404,-6.38753 -14.23404,-14.23404s6.38753,-14.23404 14.23404,-14.23404s14.23404,6.38753 14.23404,14.23404s-6.38753,14.23404 -14.23404,14.23404z"/>
+  <text stroke="null" transform="matrix(2.7120095721562025,0,0,2.5281213149023296,-95.80762414136416,-334.9059518162114) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="22" id="svg_6" y="169.42357" x="52.05481" fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#000000">l</text>
+ </g>
+</svg>

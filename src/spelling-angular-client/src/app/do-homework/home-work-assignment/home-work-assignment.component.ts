@@ -82,12 +82,13 @@ export class HomeWorkAssignmentComponent implements OnInit {
     } else if (speechType === SpeechType.Sentence) {
       blobUrl = URL.createObjectURL(homeworkItem.sentenceAsMp3);
     }
-    const audio = new Audio();
+    const audio: HTMLAudioElement = document.getElementById('audioHidden') as HTMLAudioElement;
     audio.src = blobUrl;
     audio.load();
     audio.play();
-    audio.onended = () => {
-        this.soundIsBeingPlayed = false;
+    const self = this;
+    audio.onended = function() {
+        self.soundIsBeingPlayed = false;
         document.getElementById(homeworkItem.id).focus();
       };
   }
@@ -141,6 +142,9 @@ export class HomeWorkAssignmentComponent implements OnInit {
       homeworkItem.correctTry = false;
       homeworkItem.score --;
       this.playIncorrect();
+      setTimeout(() => {
+        document.getElementById(homeworkItem.id).focus();
+      }, 1000);
     }
   }
 

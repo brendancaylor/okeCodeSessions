@@ -35,4 +35,14 @@ export class AppComponent implements OnInit {
   hasClaims(claims: string[]) {
     return this._authService.authContext && this._authService.authContext.hasClaims(...claims);
   }
+
+  closeMenu(): void {
+    document.getElementById('mySidebar').style.display = 'none';
+    document.getElementById('myOverlay').style.display = 'none';
+  }
+
+  openMenu(): void {
+    document.getElementById('mySidebar').style.display = 'block';
+    document.getElementById('myOverlay').style.display = 'block';
+  }
 }

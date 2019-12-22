@@ -1,3 +1,8 @@
+<div style="margin: 30px 0 0 0;">
+
+<audio id="audioHidden" style="display: none;">
+</audio>
+
 <div *ngIf="this.viewmodel && !isSubmitted">
 
     <p style="float: right;">
@@ -27,8 +32,13 @@
 
         <mat-form-field *ngIf="!homeworkItem.correctTry" style="width: 300px;">
 
-            <input id="{{homeworkItem.id}}" autocomplete="off" matInput [(ngModel)]="homeworkItem.attempt"
-                placeholder="Type the word you hear" cdkFocusInitial required (keyup.enter)="try(homeworkItem)">
+            <input
+                id="{{homeworkItem.id}}"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                matInput
+                [(ngModel)]="homeworkItem.attempt"
+                placeholder="Type the word you hear"
+                cdkFocusInitial required (keyup.enter)="try(homeworkItem)">
 
         </mat-form-field>
 
@@ -83,4 +93,4 @@
     </h3>
 </div>
 
-
+</div>
