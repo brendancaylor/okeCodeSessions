@@ -1,7 +1,12 @@
 <div style="margin: 30px 0 0 0;">
 
-<audio id="audioHidden" style="display: none;">
-</audio>
+
+<div id="audioDiv">
+    <audio id="audioVisable">
+        <source id="audioSource" type="audio/mpeg" />
+    </audio>
+</div>
+
 
 <div *ngIf="this.viewmodel && !isSubmitted">
 

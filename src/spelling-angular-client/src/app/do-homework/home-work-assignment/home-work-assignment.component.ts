@@ -75,15 +75,33 @@ export class HomeWorkAssignmentComponent implements OnInit {
   }
 
   playSound(homeworkItem: HomeworkItemViewmodel, speechType: SpeechType): void {
+
+    // tslint:disable-next-line: max-line-length
+    // const url = 'https://bili-spell-api.azurewebsites.net/api/Speach?homeWorkAssignmentItemId=dee401cc-692f-444f-b725-319edf0ee2a5&speechType=0';
+    // const audioDiv = document.getElementById('audioDiv');
+    // const newAudio = new Audio();
+    // const srcElement = document.createElement('source');
+    // srcElement.setAttribute('src', url);
+    // srcElement.setAttribute('type', 'audio/mpeg');
+    // newAudio.append(srcElement);
+    // newAudio.autoplay = true;
+
+    // audioDiv.appendChild(newAudio);
+    // return;
+
     this.soundIsBeingPlayed = true;
     let blobUrl = '';
     if (speechType === SpeechType.Word) {
       blobUrl = URL.createObjectURL(homeworkItem.wordAsMp3);
+      // blobContent = homeworkItem.wordAsMp3;
     } else if (speechType === SpeechType.Sentence) {
       blobUrl = URL.createObjectURL(homeworkItem.sentenceAsMp3);
+      // blobContent = homeworkItem.wordAsMp3;
     }
-    const audio: HTMLAudioElement = document.getElementById('audioHidden') as HTMLAudioElement;
-    audio.src = blobUrl;
+
+    const audio: HTMLAudioElement = document.getElementById('audioVisable') as HTMLAudioElement;
+    const audioSource: HTMLSourceElement = document.getElementById('audioSource') as HTMLSourceElement;
+    audioSource.src = blobUrl;
     audio.load();
     audio.play();
     const self = this;
