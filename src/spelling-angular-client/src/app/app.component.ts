@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './core/auth-service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { AuthService } from './core/auth-service';
 export class AppComponent implements OnInit {
   isLoggedIn = false;
 
-  constructor(private _authService: AuthService) {
+  constructor(private _authService: AuthService,
+    private router: Router) {
     this._authService.loginChanged.subscribe(loggedIn => {
       this.isLoggedIn = loggedIn;
       if (!this.isLoggedIn && this._authService.authContext) {
@@ -22,6 +24,14 @@ export class AppComponent implements OnInit {
     this._authService.isLoggedIn().then(loggedIn => {
       this.isLoggedIn = loggedIn;
     });
+
+    this.router.events.subscribe((evt) => {
+      if (!(evt instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0);
+    });
+
   }
 
   login() {

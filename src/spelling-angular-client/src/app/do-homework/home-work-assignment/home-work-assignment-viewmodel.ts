@@ -1,5 +1,41 @@
 import * as moment from 'moment';
 
+interface CharacterPair {
+    key: string;
+    value: string;
+}
+
+export class CharacterConstants {
+
+    public static characterPairs: Array<CharacterPair> = [
+        {key: 'ç', value: 'c'},
+        {key: 'â', value: 'a'},
+        {key: 'ê', value: 'e'},
+        {key: 'î', value: 'i'},
+        {key: 'ô', value: 'o'},
+        {key: 'û', value: 'u'},
+        {key: 'à', value: 'a'},
+        {key: 'è', value: 'e'},
+        {key: 'ù', value: 'u'},
+        {key: 'ë', value: 'e'},
+        {key: 'ï', value: 'i'},
+        {key: 'ü', value: 'u'},
+
+        {key: 'ä', value: 'a'},
+        {key: 'ö', value: 'o'},
+        {key: 'ü', value: 'u'},
+        {key: 'ß', value: 's'},
+
+        {key: 'á', value: 'a'},
+        {key: 'é', value: 'e'},
+        {key: 'í', value: 'i'},
+        {key: 'ó', value: 'o'},
+        {key: 'ú', value: 'u'},
+        {key: 'ñ', value: 'n'},
+        {key: 'ü', value: 'u'}
+    ];
+}
+
 export class HomeWorkAssignmentViewmodel {
 
     id = '';
@@ -52,8 +88,36 @@ export class HomeworkItemViewmodel {
     correctTry?: boolean | undefined;
 
     get isCorrect(): boolean {
-        return this.word.toLowerCase() === this.attempt.toLowerCase();
+        const attemptReplaceSpecialCharacters = this.replaceSpecialCharacters(this.word.toLowerCase(), this.attempt.toLowerCase());
+        return this.word.toLowerCase() === attemptReplaceSpecialCharacters.toLowerCase();
     }
+
+    replaceSpecialCharacters(wordToSpell: string, attempt: string): string {
+        let attemptCorrected = '';
+        for (let i = 0; i <= this.word.length - 1; i++) {
+            const letterWord = this.word.substring(i, i + 1).toLowerCase();
+            if (i + 1 <= this.attempt.length) {
+
+                let letterAttempt = this.attempt.substring(i, i + 1).toLowerCase();
+
+                const hasSpecialCharacter = CharacterConstants.characterPairs.find(
+                    (characterPair) => {
+                        return characterPair.key.toLowerCase() === letterWord.toLowerCase()
+                        && characterPair.key.toLowerCase() === letterWord.toLowerCase();
+                    }
+                );
+
+                if (hasSpecialCharacter) {
+                    letterAttempt = hasSpecialCharacter.key;
+                }
+
+                attemptCorrected += letterAttempt;
+            }
+        }
+        return attemptCorrected;
+    }
+
+
 
     get hint(): string {
         let result = '';
@@ -62,7 +126,19 @@ export class HomeworkItemViewmodel {
         for (let i = 0; i <= this.word.length - 1; i++) {
             const letterWord = this.word.substring(i, i + 1).toLowerCase();
             if (i + 1 <= this.attempt.length) {
-                const letterAttempt = this.attempt.substring(i, i + 1).toLowerCase();
+                let letterAttempt = this.attempt.substring(i, i + 1).toLowerCase();
+
+                const hasSpecialCharacter = CharacterConstants.characterPairs.find(
+                    (characterPair) => {
+                        return characterPair.key.toLowerCase() === letterWord.toLowerCase()
+                        && characterPair.key.toLowerCase() === letterWord.toLowerCase();
+                    }
+                );
+
+                if (hasSpecialCharacter) {
+                    letterAttempt = hasSpecialCharacter.key;
+                }
+
                 if (letterWord === letterAttempt) {
                     result += letterWord;
                 } else if (numberOfSneakPeaksUsed < numberOfSneakPeaks) {

@@ -45,6 +45,7 @@ namespace IdentityServer
 
             Configuration.GetSection("IdentityApiConfirguration").Bind(_identityApiConfirguration);
             services.Configure<IdentityApiConfirguration>(this.Configuration.GetSection("IdentityApiConfirguration"));
+            services.Configure<SendGridConfiguration>(this.Configuration.GetSection("SendGridConfiguration"));
 
             services.Configure<IIdentityApiConfirguration>(
                 Configuration.GetSection("IdentityApiConfirguration")

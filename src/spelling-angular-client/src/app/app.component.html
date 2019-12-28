@@ -52,8 +52,8 @@
             class="w3-bar-item w3-button w3-hover-white">
             Manage Homework
         </a>
-        <a (click)="closeMenu()" routerLink="/contact-us" class="w3-bar-item w3-button w3-hover-white">Privacy</a>
         <a (click)="closeMenu()" routerLink="/contact-us" class="w3-bar-item w3-button w3-hover-white">Contact us</a>
+        <a (click)="closeMenu()" routerLink="/privacy" class="w3-bar-item w3-button w3-hover-white">Privacy</a>
         <a *ngIf="!isLoggedIn" (click)="login()" class="w3-bar-item w3-button w3-hover-white">Login</a>
         <a *ngIf="isLoggedIn" (click)="logout()" class="w3-bar-item w3-button w3-hover-white">Logout</a>
     </div>

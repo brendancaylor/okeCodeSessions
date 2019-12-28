@@ -9,12 +9,12 @@ namespace Infrastructure.Services
 {
     public class EmailSender : IEmailSender
     {
-        public EmailSender(IOptions<IdentityApiConfirguration> options)
+        public EmailSender(IOptions<SendGridConfiguration> options)
         {
             Options = options.Value;
         }
 
-        public IIdentityApiConfirguration Options { get; } //set only via Secret Manager
+        public ISendGridConfiguration Options { get; } //set only via Secret Manager
 
         public Task SendEmailAsync(string email, string subject, string message)
         {

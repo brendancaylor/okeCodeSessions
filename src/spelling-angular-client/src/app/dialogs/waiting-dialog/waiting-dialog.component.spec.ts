@@ -1,8 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { WaitingDialogComponent } from './waiting-dialog.component';
 
-import { UsageReportComponent } from './usage-report.component';
-import { UserClient } from 'src/app/core/services/clients';
-import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatDialogModule,
@@ -11,25 +9,20 @@ import {
   MatSelectModule,
   MatTableModule,
   MatToolbarModule,
-  MatDialog,
-  MatListModule,
 } from '@angular/material';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CoreModule } from 'src/app/core/core.module';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 
-describe('UsageReportComponent', () => {
-  let component: UsageReportComponent;
-  let fixture: ComponentFixture<UsageReportComponent>;
+describe('WaitingDialogComponent', () => {
+  let component: WaitingDialogComponent;
+  let fixture: ComponentFixture<WaitingDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        BrowserAnimationsModule,
         BrowserModule,
-        HttpClientTestingModule,
-        FormsModule,
         MatFormFieldModule,
         MatDialogModule,
         MatButtonModule,
@@ -37,18 +30,15 @@ describe('UsageReportComponent', () => {
         MatTableModule,
         MatInputModule,
         MatSelectModule,
-        MatListModule,
         CoreModule,
-        RouterTestingModule
       ],
-      declarations: [ UsageReportComponent ],
-      providers: [UserClient]
+      declarations: [ WaitingDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsageReportComponent);
+    fixture = TestBed.createComponent(WaitingDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

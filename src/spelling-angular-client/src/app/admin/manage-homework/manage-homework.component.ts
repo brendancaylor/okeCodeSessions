@@ -24,6 +24,7 @@ import {
 import {
   UpsertHomeWorkAssignmentItemDialogComponent
 } from 'src/app/dialogs/upsert-home-work-assignment-item/upsert-home-work-assignment-item-dialog.component';
+import { WaitingDialogComponent } from 'src/app/dialogs/waiting-dialog/waiting-dialog.component';
 
 @Component({
   selector: 'app-manage-homework',
@@ -275,17 +276,34 @@ export class ManageHomeworkComponent implements OnInit {
   }
 
   private doHomeWorkAssignmentItemUpdate(dto: HomeWorkAssignmentItemUpdateDto): void {
+
+    const dialogRef = this.dialog.open(WaitingDialogComponent, {
+      width: '348px',
+      disableClose: true
+    });
+
     this._homeworkClient.updateHomeWorkAssignmentItem(dto)
     .subscribe(
       (savedHomeWorkAssignmentItem) => {
         this.editedHomeWorkAssignmentItem.rowVersion = savedHomeWorkAssignmentItem.rowVersion;
         this.editedHomeWorkAssignmentItem.word = dto.word;
         this.editedHomeWorkAssignmentItem.sentence = dto.sentence;
+        dialogRef.close();
+       },
+       (error) => {
+         
+         dialogRef.close();
        }
     );
   }
 
   private doHomeWorkAssignmentItemAdd(dto: HomeWorkAssignmentItemAddDto): void {
+
+    const dialogRef = this.dialog.open(WaitingDialogComponent, {
+      width: '348px',
+      disableClose: true
+    });
+
     this._homeworkClient.addHomeWorkAssignmentItem(dto)
         .subscribe(
           (savedHomeWorkAssignmentItem) => {
@@ -295,6 +313,7 @@ export class ManageHomeworkComponent implements OnInit {
             newItem.sentence = dto.sentence;
             newItem.word = dto.word;
             this.selectedHomeWorkAssignment.homeWorkAssignmentItems.push(newItem);
+            dialogRef.close();
           }
         );
   }

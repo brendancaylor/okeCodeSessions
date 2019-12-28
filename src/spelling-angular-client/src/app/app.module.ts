@@ -37,6 +37,8 @@ import {
 
 import {MomentDateModule, MatMomentDateModule} from '@angular/material-moment-adapter';
 import { HomeworkResolverService } from './core/services/homeork-resolver-service';
+import { PrivacyComponent } from './home/privacy/privacy.component';
+import { WaitingDialogComponent } from './dialogs/waiting-dialog/waiting-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { HomeworkResolverService } from './core/services/homeork-resolver-servic
     UpsertUserDialogComponent,
     UpsertYearClassDialogComponent,
     UpsertHomeWorkAssignmentDialogComponent,
-    UpsertHomeWorkAssignmentItemDialogComponent
+    UpsertHomeWorkAssignmentItemDialogComponent,
+    PrivacyComponent,
+    WaitingDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -83,7 +87,8 @@ import { HomeworkResolverService } from './core/services/homeork-resolver-servic
     UpsertUserDialogComponent,
     UpsertYearClassDialogComponent,
     UpsertHomeWorkAssignmentDialogComponent,
-    UpsertHomeWorkAssignmentItemDialogComponent
+    UpsertHomeWorkAssignmentItemDialogComponent,
+    WaitingDialogComponent
   ]
 })
 export class AppModule { }

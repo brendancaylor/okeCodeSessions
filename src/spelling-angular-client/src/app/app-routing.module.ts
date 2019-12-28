@@ -7,6 +7,7 @@ import { SignoutRedirectCallbackComponent } from './home/signout-redirect-callba
 import { UnauthorizedComponent } from './home/unauthorized.component';
 import { HomeWorkAssignmentComponent } from './do-homework/home-work-assignment/home-work-assignment.component';
 import { HomeworkResolverService } from './core/services/homeork-resolver-service';
+import { PrivacyComponent } from './home/privacy/privacy.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
           loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
     },
     { path: 'contact-us', component: ContactUsComponent },
+    { path: 'privacy', component: PrivacyComponent },
     { path: 'homework', component: HomeWorkAssignmentComponent },
     { path: 'homework/:homeworkId', component: HomeWorkAssignmentComponent, resolve: {homeworkData: HomeworkResolverService} },
     { path: 'signin-callback', component: SigninRedirectCallbackComponent },

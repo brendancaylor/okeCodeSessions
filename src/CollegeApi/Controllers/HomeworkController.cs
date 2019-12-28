@@ -111,7 +111,7 @@ namespace College.Api.Controllers
             }
 
             domainObject.AddGoogleSpeechApiRequest();
-
+            domainObject.GoogleSpeechApiRequests.First().Id = Guid.Empty;
             HomeWorkAssignmentItemUpdateDto.SetDomainObjectFrom(dto, domainObject);
             await _homeWorkAssignmentItemRepository.UpdateAsync(domainObject, this.AppUserId.Value);
             return SimpleUpsertDto.From(domainObject);

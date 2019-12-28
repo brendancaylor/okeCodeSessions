@@ -8,8 +8,6 @@ namespace ApplicationCore
     public class IdentityApiConfirguration : IIdentityApiConfirguration
     {
         public string SpaSpellingClientBaseUrl { get; set; }
-        public string SendGridKey { get; set; }
-        public string SendGridUser { get; set; }
         public IList<InitialUser> InitialUsers { get; set; } = new List<InitialUser>();
     }
 

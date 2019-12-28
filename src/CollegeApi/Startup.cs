@@ -8,6 +8,7 @@ using ApplicationCore.Services;
 using College.Api.Middleware;
 using IdentityServer4.AccessTokenValidation;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -69,7 +70,7 @@ namespace College.Api
                 {
                     builder.AllowAnyHeader()
                     .AllowAnyMethod()
-                    .SetIsOriginAllowed(origin => origin == _collegeApiConfirguration.SpaSpellingClientBaseUrl)
+                    .WithOrigins(_collegeApiConfirguration.SpaSpellingClientBaseUrl)
                     .AllowCredentials();
                 });
             });
@@ -98,7 +99,8 @@ namespace College.Api
             services.AddScoped<ICollegeRepository, CollegeRepository>();
             services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddScoped<IHomeWorkRepository, HomeWorkRepository>();
-
+            services.Configure<SendGridConfiguration>(this.Configuration.GetSection("SendGridConfiguration"));
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddHttpClient("identityClient", client =>
                 {
