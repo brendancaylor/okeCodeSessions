@@ -283,6 +283,8 @@ export class ManageHomeworkComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogObject => {
       const typedObject = dialogObject as HomeWorkAssignmentItemAddDto | HomeWorkAssignmentItemUpdateDto;
+      typedObject.word = typedObject.word.trim();
+      typedObject.sentence = typedObject.sentence.trim();
       if (typedObject) {
         if (typedObject instanceof HomeWorkAssignmentItemAddDto) {
           this.doHomeWorkAssignmentItemAdd(typedObject);

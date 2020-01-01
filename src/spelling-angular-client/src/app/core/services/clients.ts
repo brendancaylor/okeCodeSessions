@@ -1057,8 +1057,6 @@ export class StandardListItemDto extends BaseDto implements IStandardListItemDto
     standardListId!: string;
     sentence?: string | undefined;
     word?: string | undefined;
-    spokenWordAsMp3?: string | undefined;
-    spokenSentenceAsMp3?: string | undefined;
     wordLanguage?: string | undefined;
     sentenceLanguage?: string | undefined;
 
@@ -1072,8 +1070,6 @@ export class StandardListItemDto extends BaseDto implements IStandardListItemDto
             this.standardListId = _data["standardListId"];
             this.sentence = _data["sentence"];
             this.word = _data["word"];
-            this.spokenWordAsMp3 = _data["spokenWordAsMp3"];
-            this.spokenSentenceAsMp3 = _data["spokenSentenceAsMp3"];
             this.wordLanguage = _data["wordLanguage"];
             this.sentenceLanguage = _data["sentenceLanguage"];
         }
@@ -1091,8 +1087,6 @@ export class StandardListItemDto extends BaseDto implements IStandardListItemDto
         data["standardListId"] = this.standardListId;
         data["sentence"] = this.sentence;
         data["word"] = this.word;
-        data["spokenWordAsMp3"] = this.spokenWordAsMp3;
-        data["spokenSentenceAsMp3"] = this.spokenSentenceAsMp3;
         data["wordLanguage"] = this.wordLanguage;
         data["sentenceLanguage"] = this.sentenceLanguage;
         super.toJSON(data);
@@ -1111,8 +1105,6 @@ export interface IStandardListItemDto extends IBaseDto {
     standardListId: string;
     sentence?: string | undefined;
     word?: string | undefined;
-    spokenWordAsMp3?: string | undefined;
-    spokenSentenceAsMp3?: string | undefined;
     wordLanguage?: string | undefined;
     sentenceLanguage?: string | undefined;
 }

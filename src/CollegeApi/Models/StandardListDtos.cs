@@ -54,8 +54,6 @@ namespace College.Api.Models
         public Guid StandardListId { get; set; }
         public string Sentence { get; set; }
         public string Word { get; set; }
-        public byte[] SpokenWordAsMp3 { get; set; }
-        public byte[] SpokenSentenceAsMp3 { get; set; }
         public string WordLanguage { get; set; }
         public string SentenceLanguage { get; set; }
 
@@ -68,8 +66,6 @@ namespace College.Api.Models
             dto.Sentence = domainObject.Sentence;
             dto.WordLanguage = domainObject.WordLanguage;
             dto.SentenceLanguage = domainObject.SentenceLanguage;
-            dto.SpokenWordAsMp3 = domainObject.SpokenWordAsMp3;
-            dto.SpokenSentenceAsMp3 = domainObject.SpokenSentenceAsMp3;
             return dto;
         }
 
@@ -95,8 +91,6 @@ namespace College.Api.Models
             domainObject.Sentence = dto.Sentence;
             domainObject.WordLanguage = dto.WordLanguage;
             domainObject.SentenceLanguage = dto.SentenceLanguage;
-            domainObject.SpokenWordAsMp3 = dto.SpokenWordAsMp3;
-            domainObject.SpokenSentenceAsMp3 = dto.SpokenSentenceAsMp3;
         }
 
 
