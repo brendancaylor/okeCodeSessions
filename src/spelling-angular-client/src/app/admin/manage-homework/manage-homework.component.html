@@ -1,52 +1,77 @@
-<div *ngIf="this.collegeOptions.length > 1">
-    <h3>Colleges</h3>
-    <mat-form-field style="width: 300px;">
-        <mat-label>Select a College</mat-label>
-        <mat-select [(value)]="selectedCollege" (selectionChange)="collegeSelected()">
-            <mat-option *ngFor="let college of this.collegeOptions" [value]="college">
-                {{college.displayName}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+<mat-expansion-panel
 
-</div>
+    [expanded]="expansionPanelExpanded"
+    (opened)="expansionPanelExpanded = true"
+    (closed)="expansionPanelExpanded = false"
+    >
 
-<div *ngIf="this.selectedCollege">
+    <mat-expansion-panel-header>
+        <h3>Selection</h3>
+    </mat-expansion-panel-header>
 
-    <button title="Add Year Class" class="upsert-button" mat-mini-fab color="primary" (click)="addYearClass()">
-        <i class="material-icons">add</i>
-    </button>
-    <h3 class="left">Year classes</h3>
-
-    <div style="clear: both;" *ngIf="this.yearClassOptions.length > 0">
-
-        <div *ngIf="this.selectedYearClass" style="width: auto; float: left;">
-
-            <button title="Edit" mat-mini-fab color="primary" class="upsert-button"
-                (click)="editYearClass(this.selectedYearClass)">
-                <i class="material-icons">edit</i>
-            </button>
-
-        </div>
-        
-        <mat-form-field style="width: 300px; float: left;">
-            <mat-label>Select a Year Classes</mat-label>
-            <mat-select [(value)]="selectedYearClass" (selectionChange)="this.yearClassSelected()">
-                <mat-option *ngFor="let yearClass of this.yearClassOptions" [value]="yearClass">
-                    {{yearClass.teacherName}}, {{yearClass.yearClassName}}
+    <div *ngIf="this.collegeOptions.length > 1">
+        <h4>Colleges</h4>
+        <mat-form-field style="width: 300px;">
+            <mat-label>Select a College</mat-label>
+            <mat-select [(value)]="selectedCollege" (selectionChange)="collegeSelected()">
+                <mat-option *ngFor="let college of this.collegeOptions" [value]="college">
+                    {{college.displayName}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
 
-        
     </div>
+
+
+    <div *ngIf="this.selectedCollege">
+
+        <button title="Add Year Class" class="upsert-button" mat-mini-fab color="primary" (click)="addYearClass()">
+            <i class="material-icons">add</i>
+        </button>
+        <h4 class="left">Year classes</h4>
+
+        <div style="clear: both;" *ngIf="this.yearClassOptions.length > 0">
+
+            <div *ngIf="this.selectedYearClass" style="width: auto; float: left;">
+
+                <button title="Edit" mat-mini-fab color="primary" class="upsert-button"
+                    (click)="editYearClass(this.selectedYearClass)">
+                    <i class="material-icons">edit</i>
+                </button>
+
+            </div>
+
+            <mat-form-field style="width: 300px; float: left;">
+                <mat-label>Select a Year Classes</mat-label>
+                <mat-select [(value)]="selectedYearClass" (selectionChange)="this.yearClassSelected()">
+                    <mat-option *ngFor="let yearClass of this.yearClassOptions" [value]="yearClass">
+                        {{yearClass.teacherName}}, {{yearClass.yearClassName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+        </div>
+    </div>
+
+</mat-expansion-panel>
+
+<div *ngIf="this.selectedCollege">
 
     <div style="clear: both;" *ngIf="this.selectedYearClass">
         <button title="Add homework assignment" class="upsert-button" mat-mini-fab color="primary"
             (click)="addHomeWorkAssignment()">
             <i class="material-icons">add</i>
         </button>
-        <h3 class="left">HomeWork Assignments</h3>
+        <button title="Add homework assignments from a standard list" class="upsert-button" mat-mini-fab color="primary"
+            (click)="addHomeWorkAssignmentsFromList()">
+            <i class="material-icons">library_books</i>
+        </button>
+        <h3 class="left">
+            {{this.selectedCollege.displayName}}
+            {{this.selectedYearClass.teacherName}}
+            {{this.selectedYearClass.yearClassName}}
+            HomeWork Assignments</h3>
     </div>
 
     <div style="clear: both;" *ngIf="homeWorkAssignments.length > 0">
@@ -55,63 +80,62 @@
 
             <div class="table-container_ mat-elevation-z8_">
 
-                <div *ngFor="let homeWorkAssignment of homeWorkAssignments"
-                [ngClass]="isHomeWorkAssignmentSelected(homeWorkAssignment.id)">
+                <div class="selectable" *ngFor="let homeWorkAssignment of homeWorkAssignments"
+                    [ngClass]="isHomeWorkAssignmentSelected(homeWorkAssignment.id)"
+                    (click)="selectHomeWorkAssignment(homeWorkAssignment)"
+                    >
 
                     <div class="grid-container">
 
                         <div>
                             <strong>{{homeWorkAssignment.dueDate.format('LL')}}</strong>
                         </div>
-                        
-                        <div>
 
-                            <div style="float: right;" class="action-button-wrapper">
-                                
-                                <button title="Copy homework Link" mat-mini-fab color="primary" class="list-action"
-                                    (click)="copyLinkHomeWorkAssignment(homeWorkAssignment)">
-                                    <i class="material-icons">file_copy</i>
-                                </button>
+                        <div style="float: right;" class="action-button-wrapper">
 
-                                <button title="Edit" mat-mini-fab color="primary" class="list-action"
-                                    (click)="editHomeWorkAssignment(homeWorkAssignment)">
-                                    <i class="material-icons">edit</i>
-                                </button>
+                            <button title="Copy homework Link" mat-mini-fab color="primary" class="list-action"
+                                (click)="copyLinkHomeWorkAssignment(homeWorkAssignment)">
+                                <i class="material-icons">file_copy</i>
+                            </button>
 
-        
-                                <button title="Edit Words" mat-mini-fab color="primary" class="list-action"
-                                    (click)="viewWords(homeWorkAssignment)">
-                                    <i class="material-icons">assignment</i>
-                                </button>
-        
-                                <button title="Submitted homework" mat-mini-fab color="primary" class="list-action"
-                                    (click)="viewSubmissions(homeWorkAssignment)">
-                                    <i class="material-icons">face</i>
-                                </button>
-                            </div>
+                            <button title="Edit" mat-mini-fab color="primary" class="list-action"
+                                (click)="editHomeWorkAssignment(homeWorkAssignment)">
+                                <i class="material-icons">edit</i>
+                            </button>
 
+
+                            <button title="Edit Words" mat-mini-fab color="primary" class="list-action"
+                                (click)="viewWords($event)">
+                                <i class="material-icons">assignment</i>
+                            </button>
+
+                            <button title="Submitted homework" mat-mini-fab color="primary" class="list-action"
+                                (click)="viewSubmissions($event)">
+                                <i class="material-icons">face</i>
+                            </button>
                         </div>
+
 
                     </div>
 
                 </div>
-                
+
             </div>
 
-            <div *ngIf="selectedHomeWorkAssignment">
+            <div class="table-container-scroll_" *ngIf="selectedHomeWorkAssignment">
 
                 <div *ngIf="showWords">
-                    
+
                     <button title="Add word" class="upsert-button" mat-mini-fab color="primary"
-                        (click)="addHomeWorkAssignmentItem()"    
-                    >
+                        (click)="addHomeWorkAssignmentItem()">
                         <i class="material-icons">add</i>
                     </button>
 
                     <h3 class="left">Words for homework due {{selectedHomeWorkAssignment.dueDate.format('LL')}}</h3>
 
-                    <div style="clear: both;" *ngFor="let homeWorkAssignmentItem of selectedHomeWorkAssignment.homeWorkAssignmentItems">
-                        
+                    <div style="clear: both;"
+                        *ngFor="let homeWorkAssignmentItem of selectedHomeWorkAssignment.homeWorkAssignmentItems">
+
                         <p>
                             <strong>{{homeWorkAssignmentItem.word}}</strong>
                             "{{homeWorkAssignmentItem.sentence}}"
@@ -119,25 +143,24 @@
                             <span class="action-button-wrapper">
 
                                 <button title="Edit" mat-mini-fab color="primary" class="list-action"
-                                    (click)="editHomeWorkAssignmentItem(homeWorkAssignmentItem)"
-                                >
+                                    (click)="editHomeWorkAssignmentItem(homeWorkAssignmentItem)">
                                     <i class="material-icons">edit</i>
                                 </button>
-        
+
                                 <button title="Delete" mat-mini-fab color="primary" class="list-action"
                                     (click)="deleteHomeWorkAssignmentItem(homeWorkAssignmentItem)">
                                     <i class="material-icons">delete</i>
                                 </button>
                             </span>
                         </p>
-                        
+
                         <hr />
                     </div>
-                    
+
                 </div>
 
                 <div *ngIf="showSubmittedWork">
-                    
+
                     <h3 class="left">Submitted homework for {{selectedHomeWorkAssignment.dueDate.format('LL')}}</h3>
 
                     <div style="clear: both;" *ngFor="let submission of selectedHomeWorkAssignment.submittedHomeWorks">
@@ -150,4 +173,5 @@
         </div>
 
     </div>
+
 </div>

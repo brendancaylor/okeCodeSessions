@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Projections;
 using College.Api.Models;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.TextToSpeech.V1;
@@ -27,22 +28,26 @@ namespace College.Api.Controllers
         private readonly IAsyncRepository<HomeWorkAssignment> _homeWorkAssignmentRepository;
         private readonly IAsyncRepository<HomeWorkAssignmentItem> _homeWorkAssignmentItemRepository;
         private readonly IAsyncRepository<SubmittedHomeWork> _submittedHomeWorkRepository;
+        private readonly IStandardListRepository _standardListRepository;
+
         public HomeworkController(
             IHomeWorkRepository homeWorkRepository,
             IAsyncRepository<HomeWorkAssignment> homeWorkAssignmentRepository,
             IAsyncRepository<HomeWorkAssignmentItem> homeWorkAssignmentItemRepository,
-            IAsyncRepository<SubmittedHomeWork> submittedHomeWorkRepository)
+            IAsyncRepository<SubmittedHomeWork> submittedHomeWorkRepository,
+            IStandardListRepository standardListRepository)
         {
             _homeWorkRepository = homeWorkRepository;
             _homeWorkAssignmentRepository = homeWorkAssignmentRepository;
             _homeWorkAssignmentItemRepository = homeWorkAssignmentItemRepository;
             _submittedHomeWorkRepository = submittedHomeWorkRepository;
+            _standardListRepository = standardListRepository;
         }
 
         [HttpGet("get-home-work-assignment")]
         public async Task<HomeWorkAssignmentDto> GetHomeWorkAssignmentAsync([FromQuery] Guid homeWorkAssignmentId)
         {
-            var homeWorkAssignment = await _homeWorkRepository.GetHomeWorkAssignmentWithChildren(homeWorkAssignmentId);
+            var homeWorkAssignment = await _homeWorkRepository.GetHomeWorkAssignmentWithChildrenAsync(homeWorkAssignmentId);
             var dto = HomeWorkAssignmentDto.From(homeWorkAssignment);
             return dto;
         }
@@ -51,7 +56,28 @@ namespace College.Api.Controllers
         public async Task<ActionResult<List<HomeWorkAssignmentDto>>> GetHomeWorkAssignmentsAsync([FromQuery] Guid yearClassId)
         {
             var data = await _homeWorkAssignmentRepository.ListAsync(o => o.YearClassId == yearClassId);
-            return data.Select(s => HomeWorkAssignmentDto.From(s)).ToList();
+            return data.OrderByDescending(o => o.DueDate).Select(s => HomeWorkAssignmentDto.From(s)).ToList();
+        }
+
+        [HttpGet("get-standard-list/{standardListId}")]
+        public async Task<ActionResult<StandardListDto>> GetStandardListAsync([FromRoute] Guid standardListId)
+        {
+            var domainObject = await _standardListRepository.GetStandardListWithChildrenAsync(standardListId);
+            return StandardListDto.FromNoSound(domainObject);
+        }
+
+        [HttpGet("get-standard-lists")]
+        public async Task<List<LookupDto>> GetStandardListsAsync()
+        {
+            var data = await _standardListRepository.ListAllAsync();
+            return data.OrderBy(o => o.StandardListName).Select(s => LookupDto.From(s)).ToList();
+        }
+
+        [HttpPost("add-homeWork-assignments-from-list")]
+        [Authorize(Roles = "AdminisiterHomework")]
+        public async Task AddHomeWorkAssignmentsFromListAsync([FromBody] AddHomeworkFromList dto)
+        {
+            await _homeWorkRepository.AddHomeworkFromListAsync(dto, this.AppUserId.Value);
         }
 
         [HttpPost("add-homeWork-assignment")]

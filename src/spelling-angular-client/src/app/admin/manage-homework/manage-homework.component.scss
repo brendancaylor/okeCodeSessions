@@ -20,3 +20,17 @@ h3.left {
   .home-work-assignmen-selected {
       background-color: #e7e5e5;
   }
+
+
+  .table-container-scroll {
+    max-height: calc(100vh - 300px);
+    overflow: scroll;
+  }
+
+  .action-button-wrapper {
+    display: none;
+  }
+
+  .home-work-assignmen-selected .action-button-wrapper {
+    display: block;
+  }

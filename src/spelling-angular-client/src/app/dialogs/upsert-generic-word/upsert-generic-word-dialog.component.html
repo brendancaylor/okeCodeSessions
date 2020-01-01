@@ -1,11 +1,11 @@
 <form class="generic-form-full">
 
-    <div [formGroup]="this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm">
+    <div [formGroup]="this.upsertGenericWordViewmodel.upsertGenericWordForm">
 
         <mat-form-field class="generic-full-width">
             <input matInput placeholder="Word" formControlName="word">
             <mat-error
-                *ngIf="this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm.get('word').hasError('required')">
+                *ngIf="this.upsertGenericWordViewmodel.upsertGenericWordForm.get('word').hasError('required')">
                 Word is <strong>required</strong>
             </mat-error>
         </mat-form-field>
@@ -13,7 +13,7 @@
         <mat-form-field class="generic-full-width">
             <input matInput placeholder="Sentence" formControlName="sentence">
             <mat-error
-                *ngIf="this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm.get('sentence').hasError('required')">
+                *ngIf="this.upsertGenericWordViewmodel.upsertGenericWordForm.get('sentence').hasError('required')">
                 Sentence is <strong>required</strong>
             </mat-error>
         </mat-form-field>
@@ -26,7 +26,7 @@
                 </mat-option>
             </mat-select>
 
-            <mat-error *ngIf="this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm.get('wordLanguage').hasError('required')">
+            <mat-error *ngIf="this.upsertGenericWordViewmodel.upsertGenericWordForm.get('wordLanguage').hasError('required')">
                 Word Language is <strong>required</strong>
             </mat-error>
 
@@ -40,7 +40,7 @@
                 </mat-option>
             </mat-select>
 
-            <mat-error *ngIf="this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm.get('sentenceLanguage').hasError('required')">
+            <mat-error *ngIf="this.upsertGenericWordViewmodel.upsertGenericWordForm.get('sentenceLanguage').hasError('required')">
                 Sentence Language is <strong>required</strong>
             </mat-error>
 
@@ -52,7 +52,7 @@
         <button mat-button (click)="cancel()" color="accent">Cancel</button>
         <span style="flex: 1 1 auto"></span>
         <button mat-button (click)="edit()" color="primary"
-            [disabled]="!this.homeWorkAssignmentItemViewmodel.homeWorkAssignmentItemForm.valid">Save</button>
+            [disabled]="!this.upsertGenericWordViewmodel.upsertGenericWordForm.valid">Save</button>
     </div>
 
 </form>

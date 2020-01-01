@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Entities;
+using ApplicationCore.Projections;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,7 @@ namespace ApplicationCore.Interfaces
 {
     public interface IHomeWorkRepository : IAsyncRepository<HomeWorkAssignment>
     {
-        Task<HomeWorkAssignment> GetHomeWorkAssignmentWithChildren(Guid homeWorkAssignmentId);
+        Task<HomeWorkAssignment> GetHomeWorkAssignmentWithChildrenAsync(Guid homeWorkAssignmentId);
+        Task AddHomeworkFromListAsync(AddHomeworkFromList addHomeworkFromList, Guid appUserId);
     }
 }

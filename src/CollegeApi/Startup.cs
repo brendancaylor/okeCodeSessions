@@ -99,13 +99,22 @@ namespace College.Api
             services.AddScoped<ICollegeRepository, CollegeRepository>();
             services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddScoped<IHomeWorkRepository, HomeWorkRepository>();
+            services.AddScoped<IStandardListRepository, StandardListRepository>();
             services.Configure<SendGridConfiguration>(this.Configuration.GetSection("SendGridConfiguration"));
+            services.Configure<OxfordDictionaryConfiguration>(this.Configuration.GetSection("OxfordDictionaryConfiguration"));
             services.AddTransient<IEmailSender, EmailSender>();
-
             services.AddHttpClient("identityClient", client =>
                 {
                     client.BaseAddress = new Uri(_collegeApiConfirguration.IdentityBaseUrl);
                 });
+            services.AddHttpClient("OxfordDictionaryService", client =>
+            {
+                var oxfordDictionaryConfiguration = new OxfordDictionaryConfiguration();
+                Configuration.GetSection("OxfordDictionaryConfiguration").Bind(oxfordDictionaryConfiguration);
+                client.BaseAddress = new Uri(oxfordDictionaryConfiguration.BaseUrl);
+            });
+
+            services.AddScoped<IOxfordDictionaryService, OxfordDictionaryService>();
 
         }
 

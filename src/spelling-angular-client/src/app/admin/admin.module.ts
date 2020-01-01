@@ -9,6 +9,10 @@ import {
   MatTableModule,
   MatToolbarModule,
   MatListModule,
+  MatDatepickerModule,
+  MAT_DATE_LOCALE,
+  MatExpansionModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,6 +25,11 @@ import { CollegeYearclassComponent } from './college-yearclass/college-yearclass
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { UsageReportComponent } from './usage-report/usage-report.component';
 import { CommonModule } from '@angular/common';
+import { ManageStandardListsComponent } from './manage-standard-lists/manage-standard-lists.component';
+import {
+  AddHomeWorkAssignmentsFromListComponent
+} from './add-home-work-assignments-from-list/add-home-work-assignments-from-list.component';
+import {MomentDateModule, MatMomentDateModule} from '@angular/material-moment-adapter';
 
 @NgModule({
   imports: [
@@ -36,6 +45,11 @@ import { CommonModule } from '@angular/common';
     MatSelectModule,
     MatListModule,
     AdminRoutingModule,
+    MomentDateModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatExpansionModule,
+    MatSnackBarModule,
     CoreModule
   ],
   exports: [],
@@ -45,9 +59,13 @@ import { CommonModule } from '@angular/common';
     ManageHomeworkComponent,
     CollegeYearclassComponent,
     ManageUsersComponent,
-    UsageReportComponent
+    UsageReportComponent,
+    ManageStandardListsComponent,
+    AddHomeWorkAssignmentsFromListComponent
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+  ],
   entryComponents: [
     DeleteDialogComponent,
   ]

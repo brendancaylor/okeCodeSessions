@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UpsertHomeWorkAssignmentItemDialogComponent } from './upsert-home-work-assignment-item-dialog.component';
+import { UpsertGenericWordDialogComponent } from './upsert-generic-word-dialog.component';
 import { FormsModule, FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
@@ -21,10 +21,10 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import {RouterTestingModule} from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('UpsertHomeWorkAssignmentItemDialogComponent', () => {
+describe('UpsertGenericWordDialogComponent', () => {
 
-  let component: UpsertHomeWorkAssignmentItemDialogComponent;
-  let fixture: ComponentFixture<UpsertHomeWorkAssignmentItemDialogComponent>;
+  let component: UpsertGenericWordDialogComponent;
+  let fixture: ComponentFixture<UpsertGenericWordDialogComponent>;
   const matDialogRefMock = jasmine.createSpy('MatDialogRef');
   const homeWorkAssignmentItemUpdateDto: HomeWorkAssignmentItemUpdateDto = new HomeWorkAssignmentItemUpdateDto({
     homeWorkAssignmentId: '',
@@ -50,7 +50,7 @@ describe('UpsertHomeWorkAssignmentItemDialogComponent', () => {
         CoreModule,
         RouterTestingModule
       ],
-      declarations: [ UpsertHomeWorkAssignmentItemDialogComponent ],
+      declarations: [ UpsertGenericWordDialogComponent ],
       providers: [
         FormBuilder,
         { provide: MatDialogRef, useValue: { } },
@@ -61,7 +61,7 @@ describe('UpsertHomeWorkAssignmentItemDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UpsertHomeWorkAssignmentItemDialogComponent);
+    fixture = TestBed.createComponent(UpsertGenericWordDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

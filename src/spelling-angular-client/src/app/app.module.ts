@@ -32,13 +32,15 @@ import {
   UpsertHomeWorkAssignmentDialogComponent
 } from './dialogs/upsert-home-work-assignment/upsert-home-work-assignment-dialog.component';
 import {
-  UpsertHomeWorkAssignmentItemDialogComponent
-} from './dialogs/upsert-home-work-assignment-item/upsert-home-work-assignment-item-dialog.component';
+  UpsertGenericWordDialogComponent
+} from './dialogs/upsert-generic-word/upsert-generic-word-dialog.component';
 
 import {MomentDateModule, MatMomentDateModule} from '@angular/material-moment-adapter';
 import { HomeworkResolverService } from './core/services/homeork-resolver-service';
 import { PrivacyComponent } from './home/privacy/privacy.component';
 import { WaitingDialogComponent } from './dialogs/waiting-dialog/waiting-dialog.component';
+import { UpsertStandardListComponent } from './dialogs/upsert-standard-list/upsert-standard-list.component';
+import { UpsertStandardListItemComponent } from './dialogs/upsert-standard-list-item/upsert-standard-list-item.component';
 
 @NgModule({
   declarations: [
@@ -53,9 +55,11 @@ import { WaitingDialogComponent } from './dialogs/waiting-dialog/waiting-dialog.
     UpsertUserDialogComponent,
     UpsertYearClassDialogComponent,
     UpsertHomeWorkAssignmentDialogComponent,
-    UpsertHomeWorkAssignmentItemDialogComponent,
+    UpsertGenericWordDialogComponent,
     PrivacyComponent,
-    WaitingDialogComponent
+    WaitingDialogComponent,
+    UpsertStandardListComponent,
+    UpsertStandardListItemComponent
   ],
   imports: [
     HttpClientModule,
@@ -87,7 +91,9 @@ import { WaitingDialogComponent } from './dialogs/waiting-dialog/waiting-dialog.
     UpsertUserDialogComponent,
     UpsertYearClassDialogComponent,
     UpsertHomeWorkAssignmentDialogComponent,
-    UpsertHomeWorkAssignmentItemDialogComponent,
+    UpsertGenericWordDialogComponent,
+    UpsertStandardListComponent,
+    UpsertStandardListItemComponent,
     WaitingDialogComponent
   ]
 })

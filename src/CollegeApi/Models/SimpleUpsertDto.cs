@@ -9,6 +9,13 @@ namespace College.Api.Models
     {
         public byte[] RowVersion { get; set; }
 
+        public static SimpleUpsertDto From(ApplicationCore.Entities.BaseEntity baseClass)
+        {
+            var dto = new SimpleUpsertDto();
+            dto.Id = baseClass.Id;
+            return dto;
+        }
+
         public static SimpleUpsertDto From(ApplicationCore.Entities.BaseEntityFull baseClass)
         {
             var dto = new SimpleUpsertDto();

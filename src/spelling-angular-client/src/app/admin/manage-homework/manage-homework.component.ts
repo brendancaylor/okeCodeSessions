@@ -17,14 +17,15 @@ import { Moment } from 'moment-timezone';
 import * as moment from 'moment-timezone';
 import { UpsertYearClassDialogComponent } from 'src/app/dialogs/upsert-year-class-dialog/upsert-year-class-dialog.component';
 import { Utils } from 'src/app/core/utils';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
 import {
   UpsertHomeWorkAssignmentDialogComponent
 } from 'src/app/dialogs/upsert-home-work-assignment/upsert-home-work-assignment-dialog.component';
 import {
-  UpsertHomeWorkAssignmentItemDialogComponent
-} from 'src/app/dialogs/upsert-home-work-assignment-item/upsert-home-work-assignment-item-dialog.component';
+  UpsertGenericWordDialogComponent
+} from 'src/app/dialogs/upsert-generic-word/upsert-generic-word-dialog.component';
 import { WaitingDialogComponent } from 'src/app/dialogs/waiting-dialog/waiting-dialog.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-manage-homework',
@@ -45,15 +46,15 @@ export class ManageHomeworkComponent implements OnInit {
   selectedHomeWorkAssignment: HomeWorkAssignmentDto;
 
   editedHomeWorkAssignmentItem: HomeWorkAssignmentItemDto;
-  selectedHomeWorkAssignmentItem: HomeWorkAssignmentItemDto;
-
 
   showWords = false;
   showSubmittedWork = false;
-
+  expansionPanelExpanded = true;
   constructor(
     private _yearClassClient: YearClassClient,
     private _homeworkClient: HomeworkClient,
+    private _snackBar: MatSnackBar,
+    private router: Router,
     public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -140,6 +141,7 @@ export class ManageHomeworkComponent implements OnInit {
       (data) => {
         this.homeWorkAssignments = data;
         this.selectedHomeWorkAssignment = null;
+        this.expansionPanelExpanded = false;
       }
     );
   }
@@ -158,6 +160,9 @@ export class ManageHomeworkComponent implements OnInit {
 
   copyLinkHomeWorkAssignment(homeWorkAssignment: HomeWorkAssignmentDto): void {
     navigator.clipboard.writeText(window.location.origin + '/homework/' + homeWorkAssignment.id);
+    this._snackBar.open('Homework link copied to clipboard.', 'close', {
+      duration: 2000,
+    });
   }
 
 
@@ -206,16 +211,25 @@ export class ManageHomeworkComponent implements OnInit {
     }
   }
 
-  viewWords(homeWorkAssignment: HomeWorkAssignmentDto): void {
-    this.showWords = true;
-    this.showSubmittedWork = false;
+  selectHomeWorkAssignment(homeWorkAssignment: HomeWorkAssignmentDto): void {
     this.getSelectedHomeWorkAssignment(homeWorkAssignment.id);
+    this.viewWords(null);
   }
 
-  viewSubmissions(homeWorkAssignment: HomeWorkAssignmentDto): void {
+  viewWords(event): void {
+    this.showWords = true;
+    this.showSubmittedWork = false;
+    if (event) {
+      event.stopPropagation();
+    }
+  }
+
+  viewSubmissions(event): void {
     this.showWords = false;
     this.showSubmittedWork = true;
-    this.getSelectedHomeWorkAssignment(homeWorkAssignment.id);
+    if (event) {
+      event.stopPropagation();
+    }
   }
 
   private getSelectedHomeWorkAssignment(id: string): void {
@@ -228,6 +242,10 @@ export class ManageHomeworkComponent implements OnInit {
         this.selectedHomeWorkAssignment = data;
       }
     );
+  }
+
+  addHomeWorkAssignmentsFromList(): void {
+    this.router.navigate([`/admin/homeWork-assignments-from-list/${this.selectedYearClass.id}`]);
   }
 
   addHomeWorkAssignmentItem(): void {
@@ -258,7 +276,7 @@ export class ManageHomeworkComponent implements OnInit {
   private setupHomeWorkAssignmentItemDialog(
     homeWorkAssignmentItemDto: HomeWorkAssignmentItemAddDto | HomeWorkAssignmentItemUpdateDto): void {
     homeWorkAssignmentItemDto.homeWorkAssignmentId = this.selectedHomeWorkAssignment.id;
-    const dialogRef = this.dialog.open(UpsertHomeWorkAssignmentItemDialogComponent, {
+    const dialogRef = this.dialog.open(UpsertGenericWordDialogComponent, {
       width: '348px',
       data: homeWorkAssignmentItemDto
     });
@@ -291,7 +309,6 @@ export class ManageHomeworkComponent implements OnInit {
         dialogRef.close();
        },
        (error) => {
-         
          dialogRef.close();
        }
     );

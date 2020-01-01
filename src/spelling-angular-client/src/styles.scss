@@ -62,3 +62,11 @@ a:active, a:hover {
 .generic-full-width {
   width: 100%;
 }
+
+.selectable {
+  cursor: pointer;
+}
+
+.selectable:hover {
+  background-color: #f2f2f2;
+}

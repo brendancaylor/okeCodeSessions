@@ -1,0 +1,76 @@
+<button title="Add a standard list" class="upsert-button" mat-mini-fab color="primary" (click)="addStandardList()">
+    <i class="material-icons">add</i>
+</button>
+
+<h3 class="left">Standard Lists</h3>
+
+<div style="clear: both;" *ngIf="this.standardListOptions.length > 0">
+
+    <div *ngIf="this.selectedStandardList" style="width: auto; float: left;">
+
+        <button title="Edit" mat-mini-fab color="primary" class="upsert-button"
+            (click)="editStandardList(this.selectedStandardList)">
+            <i class="material-icons">edit</i>
+        </button>
+
+    </div>
+
+    <mat-form-field style="width: 300px; float: left;">
+        <mat-label>Select a standard list</mat-label>
+        <mat-select [(value)]="selectedStandardList" (selectionChange)="this.standardListSelected()">
+            <mat-option *ngFor="let standardList of this.standardListOptions" [value]="standardList">
+                {{standardList.standardListName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+</div>
+
+<div *ngIf="this.selectedStandardList" style="clear: both;">
+
+        <button mat-button class="cntct-demo" (click)="fileInput.click()" color="primary">
+            <i class="material-icons">attach_file</i>
+            Upload words and definitions and replace
+            <input #fileInput type="file" (change)="fileChangeWordItems($event)" style="display: none;" />
+        </button>
+
+        <button mat-button class="cntct-demo" (click)="fileInputWordsOnly.click()" color="primary">
+            <i class="material-icons">attach_file</i>
+            Upload words only and replace
+            <input #fileInputWordsOnly type="file" (change)="fileChangeWordsOnly($event)" style="display: none;" />
+        </button>
+        
+    <button title="Add a word" class="upsert-button" mat-mini-fab color="primary" (click)="addStandardListItem()">
+        <i class="material-icons">add</i>
+    </button>
+
+    <div class="wrapper">
+
+        <div *ngFor="let standardListItem of this.selectedStandardList.standardListItems">
+
+            <div class="word-buttons">
+
+                <button title="Edit" mat-mini-fab color="primary" class="list-action"
+                    (click)="editStandardListItem(standardListItem)">
+                    <i class="material-icons">edit</i>
+                </button>
+
+                <button title="Delete" mat-mini-fab color="primary" class="list-action"
+                    (click)="deleteStandardListItem(standardListItem)">
+                    <i class="material-icons">delete</i>
+                </button>
+
+            </div>
+
+            {{standardListItem.word}}
+            <br />
+            <small>
+                {{standardListItem.sentence}}
+            </small>
+
+
+
+        </div>
+    </div>
+
+</div>

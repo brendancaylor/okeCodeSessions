@@ -6,11 +6,21 @@ import { ManageHomeworkComponent } from './manage-homework/manage-homework.compo
 import { CollegeYearclassComponent } from './college-yearclass/college-yearclass.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { UsageReportComponent } from './usage-report/usage-report.component';
+import { ManageStandardListsComponent } from './manage-standard-lists/manage-standard-lists.component';
+import {
+  AddHomeWorkAssignmentsFromListComponent
+} from './add-home-work-assignments-from-list/add-home-work-assignments-from-list.component';
 
 const routes: Routes = [
   {
     path: 'manage-colleges',
     component: ManageCollegesComponent,
+    canActivate: [ClaimsRouteGuard],
+    data: { requiredClaims: ['AdminisiterColleges'] }
+  },
+  {
+    path: 'manage-standard-lists',
+    component: ManageStandardListsComponent,
     canActivate: [ClaimsRouteGuard],
     data: { requiredClaims: ['AdminisiterColleges'] }
   },
@@ -29,6 +39,12 @@ const routes: Routes = [
   {
     path: 'manage-homework',
     component: ManageHomeworkComponent,
+    canActivate: [ClaimsRouteGuard],
+    data: { requiredClaims: ['AdminisiterHomework'] }
+  },
+  {
+    path: 'homeWork-assignments-from-list/:yearClassId',
+    component: AddHomeWorkAssignmentsFromListComponent,
     canActivate: [ClaimsRouteGuard],
     data: { requiredClaims: ['AdminisiterHomework'] }
   },

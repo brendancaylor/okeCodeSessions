@@ -54,6 +54,14 @@ namespace College.Api.Controllers
             }
         }
 
+        [HttpGet("get-year-class")]
+        [Authorize(Roles = "AdminisiterHomework")]
+        public async Task<ActionResult<YearClassDto>> GetYearClassAsync([FromQuery] Guid yearClassId)
+        {
+            var data = await _yearClassRepository.GetByIdAsync(yearClassId);
+            return YearClassDto.From(data);
+        }
+
         [HttpGet]
         [Authorize(Roles = "AdminisiterHomework")]
         public async Task<ActionResult<List<YearClassDto>>> GetYearClassesAsync([FromQuery] int academicYear, [FromQuery] Guid collegeId)

@@ -8,6 +8,8 @@ namespace ApplicationCore.Entities
     {
         public string CollegeName { get; set; }
 
+        public SubscriptionLevel SubscriptionLevel { get; set; } = 0;
+
         private readonly List<CollegeAppUser> _collegeAppUsers = new List<CollegeAppUser>();
         public IReadOnlyCollection<CollegeAppUser> CollegeAppUsers => _collegeAppUsers.AsReadOnly();
 
@@ -27,5 +29,13 @@ namespace ApplicationCore.Entities
             yearClass.CollegeId = this.Id;
             this._yearClasses.Add(yearClass);
         }
+    }
+
+    public enum SubscriptionLevel
+    {
+        Revoked,
+        Trial,
+        Standard,
+        Pro
     }
 }

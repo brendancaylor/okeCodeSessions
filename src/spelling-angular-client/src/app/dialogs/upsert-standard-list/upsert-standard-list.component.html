@@ -1,0 +1,50 @@
+<form class="generic-form-full">
+
+        <div [formGroup]="this.standardListViewmodel.standardListForm">
+    
+            <mat-form-field class="generic-full-width">
+                <input matInput placeholder="Name" formControlName="standardListName">
+                <mat-error
+                    *ngIf="this.standardListViewmodel.standardListForm.get('standardListName').hasError('required')">
+                    Name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field>
+                <mat-label>Default Word Language</mat-label>
+                <mat-select formControlName="defaultWordLanguage">
+                    <mat-option *ngFor="let language of this.languages" [value]="language.code">
+                    {{language.displayName}}
+                    </mat-option>
+                </mat-select>
+    
+                <mat-error *ngIf="this.standardListViewmodel.standardListForm.get('defaultWordLanguage').hasError('required')">
+                    Default Word Language is <strong>required</strong>
+                </mat-error>
+    
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Default Sentence Language</mat-label>
+                <mat-select formControlName="defaultSentenceLanguage">
+                    <mat-option *ngFor="let language of this.languages" [value]="language.code">
+                    {{language.displayName}}
+                    </mat-option>
+                </mat-select>
+    
+                <mat-error *ngIf="this.standardListViewmodel.standardListForm.get('defaultSentenceLanguage').hasError('required')">
+                    Default Sentence Language is <strong>required</strong>
+                </mat-error>
+    
+            </mat-form-field>
+    
+        </div>
+    
+        <div mat-dialog-actions layout="row">
+            <button mat-button (click)="cancel()" color="accent">Cancel</button>
+            <span style="flex: 1 1 auto"></span>
+            <button mat-button (click)="edit()" color="primary"
+                [disabled]="!this.standardListViewmodel.standardListForm.valid">Save</button>
+        </div>
+    
+    </form>

@@ -11,8 +11,11 @@ import {
   MatSelectModule,
   MatTableModule,
   MatToolbarModule,
+  MatExpansionModule,
   MatDialog,
   MatListModule,
+  MatSnackBarModule,
+  MatSnackBar,
 } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -40,12 +43,13 @@ describe('ManageHomeworkComponent', () => {
         MatInputModule,
         MatSelectModule,
         MatListModule,
+        MatExpansionModule,
+        MatSnackBarModule,
         CoreModule,
         RouterTestingModule
-
       ],
       declarations: [ ManageHomeworkComponent ],
-      providers: [YearClassClient, HomeworkClient, MatDialog]
+      providers: [YearClassClient, HomeworkClient, MatDialog, MatSnackBar]
     })
     .compileComponents();
   }));

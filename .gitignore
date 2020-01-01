@@ -8,3 +8,10 @@ node_modules/
 .vs/
 src/IdentityServer/tempkey.rsa
 src/CollegeApi/SpellingApp-7fc0cf8b5885.json
+bili-identity-server.PublishSettings
+bili-spell-api.PublishSettings
+src/CollegeApi/Properties/PublishProfiles/bili-spell-api - FTP.pubxml
+src/CollegeApi/Properties/PublishProfiles/bili-spell-api - ReadOnly - FTP.pubxml
+src/IdentityServer/Properties/PublishProfiles/bili-identity-server - FTP.pubxml
+src/IdentityServer/Properties/PublishProfiles/bili-identity-server - ReadOnly - FTP.pubxml
+src/IdentityServer/Properties/PublishProfiles/bili-identity-server - Web Deploy.pubxml

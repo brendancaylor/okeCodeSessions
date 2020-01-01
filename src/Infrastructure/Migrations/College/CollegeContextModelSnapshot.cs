@@ -107,6 +107,9 @@ namespace Infrastructure.Migrations
                         .IsFixedLength(true)
                         .HasMaxLength(8);
 
+                    b.Property<int>("SubscriptionLevel")
+                        .HasColumnType("int");
+
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -312,6 +315,60 @@ namespace Infrastructure.Migrations
                     b.ToTable("RoleClaim");
                 });
 
+            modelBuilder.Entity("ApplicationCore.Entities.StandardList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DefaultSentenceLanguage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DefaultWordLanguage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StandardListName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StandardList");
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.StandardListItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Sentence")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SentenceLanguage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("SpokenSentenceAsMp3")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("SpokenWordAsMp3")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<Guid>("StandardListId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Word")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WordLanguage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StandardListId");
+
+                    b.ToTable("StandardListItem");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.SubmittedHomeWork", b =>
                 {
                     b.Property<Guid>("Id")
@@ -493,6 +550,15 @@ namespace Infrastructure.Migrations
                     b.HasOne("ApplicationCore.Entities.Role", "Role")
                         .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.StandardListItem", b =>
+                {
+                    b.HasOne("ApplicationCore.Entities.StandardList", "StandardList")
+                        .WithMany("StandardListItems")
+                        .HasForeignKey("StandardListId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

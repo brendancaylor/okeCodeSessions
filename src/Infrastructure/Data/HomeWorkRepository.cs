@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Projections;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Infrastructure.Data
                 .ToListAsync();
         }
 
-        public async Task<HomeWorkAssignment> GetHomeWorkAssignmentWithChildren(Guid homeWorkAssignmentId)
+        public async Task<HomeWorkAssignment> GetHomeWorkAssignmentWithChildrenAsync(Guid homeWorkAssignmentId)
         {
             return await _dbContext
                 .HomeWorkAssignments
@@ -34,5 +35,49 @@ namespace Infrastructure.Data
                     .Include(o => o.SubmittedHomeWorks)
                 .SingleAsync(o => o.Id == homeWorkAssignmentId);
         }
+
+        public async Task AddHomeworkFromListAsync(AddHomeworkFromList addHomeworkFromList, Guid appUserId)
+        {
+            var standardList = await _dbContext.StandardLists
+                    .Include(o => o.StandardListItems)
+                .SingleAsync(o => o.Id == addHomeworkFromList.StandardListId);
+            foreach (var addHomeworkAssignment in addHomeworkFromList.AddHomeworkAssignments)
+            {
+                var homeWorkAssignment = new HomeWorkAssignment();
+                homeWorkAssignment.DueDate = addHomeworkAssignment.DueDate;
+                homeWorkAssignment.YearClassId = addHomeworkFromList.YearClassId;
+
+                foreach (var standardListItemId in addHomeworkAssignment.StandardListItemIds)
+                {
+                    var standardListItem = standardList.StandardListItems.Single(o => o.Id == standardListItemId);
+                    var homeWorkAssignmentItem = new HomeWorkAssignmentItem
+                    {
+                        Sentence = standardListItem.Sentence,
+                        SentenceLanguage = standardListItem.SentenceLanguage,
+                        SpokenSentenceAsMp3 = standardListItem.SpokenSentenceAsMp3,
+
+                        Word = standardListItem.Word,
+                        WordLanguage = standardListItem.WordLanguage,
+                        SpokenWordAsMp3 = standardListItem.SpokenWordAsMp3
+                    };
+                    homeWorkAssignmentItem.SetUserAddProperties(appUserId);
+                    homeWorkAssignmentItem.SetDateAddProperties();
+                    homeWorkAssignmentItem.Id = Guid.Empty;
+                    homeWorkAssignment.AddHomeWorkAssignmentItem(homeWorkAssignmentItem);
+                }
+                try
+                {
+                    await this.AddAsync(homeWorkAssignment, appUserId);
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+                
+            }
+
+        }
+
     }
 }

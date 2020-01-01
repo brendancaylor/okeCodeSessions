@@ -23,8 +23,11 @@ namespace Infrastructure.Data
         public DbSet<RoleClaim> RoleClaims { get; set; }
         public DbSet<SubmittedHomeWork> SubmittedHomeWorks { get; set; }
         public DbSet<YearClass> YearClasses { get; set; }
-
         public DbSet<GoogleSpeechApiRequest> GoogleSpeechApiRequests { get; set; }
+
+        public DbSet<StandardList> StandardLists { get; set; }
+
+        public DbSet<StandardListItem> StandardListItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
