@@ -70,3 +70,15 @@ a:active, a:hover {
 .selectable:hover {
   background-color: #f2f2f2;
 }
+
+.spinner-centered {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 20%;
+  padding-left: 50%;
+  z-index: 99999;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(238, 238, 238, 0.205);
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './core/auth-service';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, NavigationStart, NavigationCancel, NavigationError, RouterEvent, Event } from '@angular/router';
+import { LoadingService } from './core/services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,19 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   isLoggedIn = false;
+  loading = true;
+  constructor(
+    private _authService: AuthService,
+    private router: Router,
+    public _loadingService: LoadingService) {
 
-  constructor(private _authService: AuthService,
-    private router: Router) {
+    router.events.pipe()
+      .subscribe(
+        (e) => {
+          this.checkRouterEvent(e);
+        }
+      );
+
     this._authService.loginChanged.subscribe(loggedIn => {
       this.isLoggedIn = loggedIn;
       if (!this.isLoggedIn && this._authService.authContext) {
@@ -27,7 +38,7 @@ export class AppComponent implements OnInit {
 
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
-          return;
+        return;
       }
       window.scrollTo(0, 0);
     });
@@ -54,5 +65,17 @@ export class AppComponent implements OnInit {
   openMenu(): void {
     document.getElementById('mySidebar').style.display = 'block';
     document.getElementById('myOverlay').style.display = 'block';
+  }
+
+  checkRouterEvent(routerEvent: Event): void {
+    if (routerEvent instanceof NavigationStart) {
+      this.loading = true;
+    }
+
+    if (routerEvent instanceof NavigationEnd ||
+      routerEvent instanceof NavigationCancel ||
+      routerEvent instanceof NavigationError) {
+      this.loading = false;
+    }
   }
 }

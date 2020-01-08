@@ -26,7 +26,7 @@
     <a (click)="closeMenu()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close
         Menu</a>
     <div class="w3-container">
-            <img src="/assets/images/SpellingLogo2.svg" alt="Spelling Homework" title="SpellingLogo" class="spelling-logo">
+        <img src="/assets/images/SpellingLogo2.svg" class="spelling-logo">
             
         <!-- <h3 class="w3-padding-64"><b>Company<br>Name</b></h3> -->
     </div>
@@ -43,7 +43,7 @@
             Standard Lists
         </a>
 
-        <a (click)="closeMenu()" *ngIf="hasClaims(['AdminisiterCollegeUsers'])" routerLink="admin/usage-report"
+        <a (click)="closeMenu()" *ngIf="hasClaims(['AdminisiterColleges'])" routerLink="admin/usage-report"
             class="w3-bar-item w3-button w3-hover-white">
             Usage Report
         </a>
@@ -90,4 +90,12 @@
             build it LOVE IT
         </a>
     </p>
+</div>
+
+<div class="spinner-centered" *ngIf="loading">
+    <i class="material-icons">hourglass_empty</i>
+</div>
+
+<div class="spinner-centered" *ngIf="_loadingService.isLoading | async;">
+    <i class="material-icons">hourglass_empty</i>
 </div>

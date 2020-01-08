@@ -42,7 +42,7 @@
             </div>
 
             <mat-form-field style="width: 300px; float: left;">
-                <mat-label>Select a Year Classes</mat-label>
+                <mat-label>Select a Year Class</mat-label>
                 <mat-select [(value)]="selectedYearClass" (selectionChange)="this.yearClassSelected()">
                     <mat-option *ngFor="let yearClass of this.yearClassOptions" [value]="yearClass">
                         {{yearClass.teacherName}}, {{yearClass.yearClassName}}
@@ -71,14 +71,14 @@
             {{this.selectedCollege.displayName}}
             {{this.selectedYearClass.teacherName}}
             {{this.selectedYearClass.yearClassName}}
-            HomeWork Assignments</h3>
+            Homework Assignments</h3>
     </div>
 
     <div style="clear: both;" *ngIf="homeWorkAssignments.length > 0">
 
         <div class="grid-container">
 
-            <div class="table-container_ mat-elevation-z8_">
+            <div class="table-container-scroll mat-elevation-z8_">
 
                 <div class="selectable" *ngFor="let homeWorkAssignment of homeWorkAssignments"
                     [ngClass]="isHomeWorkAssignmentSelected(homeWorkAssignment.id)"

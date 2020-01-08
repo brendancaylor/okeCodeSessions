@@ -23,8 +23,8 @@ h3.left {
 
 
   .table-container-scroll {
-    max-height: calc(100vh - 300px);
-    overflow: scroll;
+    max-height: calc(100vh - 28rem);
+    overflow-y: auto;
   }
 
   .hwa-action-buttons {

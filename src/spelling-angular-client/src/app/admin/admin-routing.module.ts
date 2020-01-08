@@ -52,7 +52,7 @@ const routes: Routes = [
     path: 'usage-report',
     component: UsageReportComponent,
     canActivate: [ClaimsRouteGuard],
-    data: { requiredClaims: ['AdminisiterCollegeUsers'] }
+    data: { requiredClaims: ['AdminisiterColleges'] }
   }
 ];
 
