@@ -12,7 +12,8 @@ import {
   MatDatepickerModule,
   MAT_DATE_LOCALE,
   MatExpansionModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatMenuModule
 } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -50,6 +51,7 @@ import {MomentDateModule, MatMomentDateModule} from '@angular/material-moment-ad
     MatMomentDateModule,
     MatExpansionModule,
     MatSnackBarModule,
+    MatMenuModule,
     CoreModule
   ],
   exports: [],

@@ -56,7 +56,7 @@ namespace College.Api.Controllers
         public async Task<ActionResult<List<HomeWorkAssignmentDto>>> GetHomeWorkAssignmentsAsync([FromQuery] Guid yearClassId)
         {
             var data = await _homeWorkAssignmentRepository.ListAsync(o => o.YearClassId == yearClassId);
-            return data.OrderByDescending(o => o.DueDate).Select(s => HomeWorkAssignmentDto.From(s)).ToList();
+            return data.OrderBy(o => o.DueDate).Select(s => HomeWorkAssignmentDto.From(s)).ToList();
         }
 
         [HttpGet("get-standard-list/{standardListId}")]
@@ -145,10 +145,16 @@ namespace College.Api.Controllers
 
         [HttpDelete("delete-homeWork-assignment-item")]
         [Authorize(Roles = "AdminisiterHomework")]
-        public async Task DeleteHomeWorkAssignmentItemAsync([FromQuery] Guid HomeWorkAssignmentItemUpdateId)
+        public async Task DeleteHomeWorkAssignmentItemAsync([FromQuery] Guid homeWorkAssignmentItemUpdateId)
         {
-            var domainObject = await _homeWorkAssignmentItemRepository.GetByIdAsync(HomeWorkAssignmentItemUpdateId);
-            await _homeWorkAssignmentItemRepository.DeleteAsync(domainObject);
+            await _homeWorkRepository.DeleteHomeWorkAssignmentItemAsync(homeWorkAssignmentItemUpdateId);
+        }
+
+        [HttpDelete("delete-homeWork-assignment")]
+        [Authorize(Roles = "AdminisiterHomework")]
+        public async Task DeleteHomeWorkAssignmentAsync([FromQuery] Guid homeWorkAssignmentUpdateId)
+        {
+            await _homeWorkRepository.DeleteHomeWorkAssignmentAsync(homeWorkAssignmentUpdateId);
         }
 
         private byte[] GetGoogleSpeech(string speechText, string languageCode)

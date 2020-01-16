@@ -41,6 +41,7 @@ import { PrivacyComponent } from './home/privacy/privacy.component';
 import { WaitingDialogComponent } from './dialogs/waiting-dialog/waiting-dialog.component';
 import { UpsertStandardListComponent } from './dialogs/upsert-standard-list/upsert-standard-list.component';
 import { UpsertStandardListItemComponent } from './dialogs/upsert-standard-list-item/upsert-standard-list-item.component';
+import { AreYouSureDialogComponent } from './dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { UpsertStandardListItemComponent } from './dialogs/upsert-standard-list-
     PrivacyComponent,
     WaitingDialogComponent,
     UpsertStandardListComponent,
-    UpsertStandardListItemComponent
+    UpsertStandardListItemComponent,
+    AreYouSureDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -94,7 +96,8 @@ import { UpsertStandardListItemComponent } from './dialogs/upsert-standard-list-
     UpsertGenericWordDialogComponent,
     UpsertStandardListComponent,
     UpsertStandardListItemComponent,
-    WaitingDialogComponent
+    WaitingDialogComponent,
+    AreYouSureDialogComponent
   ]
 })
 export class AppModule { }

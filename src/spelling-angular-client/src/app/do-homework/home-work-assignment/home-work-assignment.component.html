@@ -37,7 +37,7 @@
             Submit your homework
         </button>
     </div>
-    
+
     <div *ngFor="let homeworkItem of this.viewmodel.homeworkItems" class="homework-item"
         [ngClass]="{ 'homework-item-not-attempted': homeworkItem.correctTry === undefined, 'homework-item-correct': homeworkItem.correctTry, 'homework-item-incorrect': homeworkItem.correctTry !== undefined && !homeworkItem.correctTry}">
 
@@ -45,11 +45,16 @@
 
             <input
                 id="{{homeworkItem.id}}"
-                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
                 matInput
                 [(ngModel)]="homeworkItem.attempt"
                 placeholder="Type the word you hear"
-                cdkFocusInitial required (keyup.enter)="try(homeworkItem)">
+                cdkFocusInitial
+                required
+                (keyup.enter)="try(homeworkItem)">
 
         </mat-form-field>
 

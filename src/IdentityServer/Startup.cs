@@ -61,7 +61,11 @@ namespace IdentityServer
                 {
                     corsBuilder.AllowAnyHeader()
                     .AllowAnyMethod()
-                    .SetIsOriginAllowed(origin => origin == _identityApiConfirguration.SpaSpellingClientBaseUrl)
+                    .WithOrigins(
+                        _identityApiConfirguration.SpaSpellingClientBaseUrl,
+                        "https://spell-it.co.uk",
+                        "https://www.spell-it.co.uk")
+                    //.SetIsOriginAllowed(origin => origin == _identityApiConfirguration.SpaSpellingClientBaseUrl)
                     .AllowCredentials();
                 });
             });
@@ -146,9 +150,9 @@ namespace IdentityServer
             var existingUser = await userManager.FindByEmailAsync(user.EmailAddress);
             if (existingUser != null && !string.IsNullOrWhiteSpace(user.Password))
             {
-                var passwordResetToken = await userManager.GeneratePasswordResetTokenAsync(existingUser);
-                await userManager.ResetPasswordAsync(existingUser, passwordResetToken, user.Password);
-                Console.WriteLine($"User {existingUser.Email} has been given a new password from configuration");
+                //var passwordResetToken = await userManager.GeneratePasswordResetTokenAsync(existingUser);
+                //await userManager.ResetPasswordAsync(existingUser, passwordResetToken, user.Password);
+                //Console.WriteLine($"User {existingUser.Email} has been given a new password from configuration");
                 return;
             }
 

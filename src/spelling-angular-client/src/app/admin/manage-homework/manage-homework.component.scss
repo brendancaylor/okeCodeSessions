@@ -7,6 +7,16 @@ h3.left {
     float: left;
   }
 
+.grid-container-left{
+  display: grid;
+  grid-template-columns: 0.8fr .2fr;
+  line-height: 40px;  
+}
+
+.grid-container-left > div {
+  margin: 10px;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -17,9 +27,17 @@ h3.left {
     margin: 10px;
 }
 
-  .home-work-assignmen-selected {
-      background-color: #e7e5e5;
-  }
+.due-date {
+  padding-left: 10px;
+}
+
+.home-work-assignmen-selected {
+  background-color: #e7e5e5;
+}
+
+.home-work-assignmen-selected:hover {
+  background-color: #f2f2f2;
+}
 
 
   .table-container-scroll {

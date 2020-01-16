@@ -26,7 +26,9 @@ namespace IdentityServer
 
         public static IEnumerable<Client> GetClients(string spaSpellingClientBaseUrl)
         {
-            return new List<Client>
+            var liveWwwUrl = "https://www.spell-it.co.uk";
+
+            var clients = new List<Client>
             {
                 new Client
                 {
@@ -38,10 +40,22 @@ namespace IdentityServer
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
 
+                    RedirectUris = {
+                        $"{spaSpellingClientBaseUrl}/signin-callback",
+                        $"{spaSpellingClientBaseUrl}/assets/silent-callback.html",
+                        $"{liveWwwUrl}/signin-callback",
+                        $"{liveWwwUrl}/assets/silent-callback.html"
+                    },
+                    
+                    PostLogoutRedirectUris = {
+                        $"{spaSpellingClientBaseUrl}/signout-callback",
+                        $"{liveWwwUrl}/signout-callback"
+                    },
 
-                    RedirectUris =           { $"{spaSpellingClientBaseUrl}/signin-callback", $"{spaSpellingClientBaseUrl}/assets/silent-callback.html" },
-                    PostLogoutRedirectUris = { $"{spaSpellingClientBaseUrl}/signout-callback" },
-                    AllowedCorsOrigins =     { spaSpellingClientBaseUrl },
+                    AllowedCorsOrigins = {
+                        spaSpellingClientBaseUrl,
+                        liveWwwUrl
+                    },
 
                     AllowedScopes =
                     {
@@ -49,10 +63,13 @@ namespace IdentityServer
                         IdentityServerConstants.StandardScopes.Profile,
                         "spelling-api"
                     },
+
                     AccessTokenLifetime = 600
+
                 }
             };
 
+            return clients;
         }
     }
 }

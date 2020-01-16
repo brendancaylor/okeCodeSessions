@@ -70,7 +70,11 @@ namespace College.Api
                 {
                     builder.AllowAnyHeader()
                     .AllowAnyMethod()
-                    .WithOrigins(_collegeApiConfirguration.SpaSpellingClientBaseUrl)
+                    .WithOrigins(
+                        _collegeApiConfirguration.SpaSpellingClientBaseUrl,
+                        "https://spell-it.co.uk",
+                        "https://www.spell-it.co.uk"
+                    )
                     .AllowCredentials();
                 });
             });

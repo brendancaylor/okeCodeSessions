@@ -16,6 +16,7 @@ import {
   MatListModule,
   MatSnackBarModule,
   MatSnackBar,
+  MatMenuModule,
 } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -42,6 +43,7 @@ describe('ManageHomeworkComponent', () => {
         MatTableModule,
         MatInputModule,
         MatSelectModule,
+        MatMenuModule,
         MatListModule,
         MatExpansionModule,
         MatSnackBarModule,

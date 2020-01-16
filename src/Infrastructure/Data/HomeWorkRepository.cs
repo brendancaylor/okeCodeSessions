@@ -79,5 +79,41 @@ namespace Infrastructure.Data
 
         }
 
+        public async Task DeleteHomeWorkAssignmentItemAsync(Guid homeWorkAssignmentItemId)
+        {
+            var homeWorkAssignmentItem = await _dbContext.HomeWorkAssignmentItems
+                    .Include(o => o.GoogleSpeechApiRequests)
+                .SingleAsync(o => o.Id == homeWorkAssignmentItemId);
+            foreach (var googleSpeechApiRequest in homeWorkAssignmentItem.GoogleSpeechApiRequests)
+            {
+                _dbContext.Entry(googleSpeechApiRequest).State = EntityState.Deleted;
+            }
+            _dbContext.Entry(homeWorkAssignmentItem).State = EntityState.Deleted;
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteHomeWorkAssignmentAsync(Guid homeWorkAssignmentId)
+        {
+            var homeWorkAssignment = await _dbContext.HomeWorkAssignments
+                .Include(o => o.SubmittedHomeWorks)
+                .Include(o => o.HomeWorkAssignmentItems)
+                    .ThenInclude(o => o.GoogleSpeechApiRequests)
+                .SingleAsync(o => o.Id == homeWorkAssignmentId);
+
+            foreach (var homeWorkAssignmentItem in homeWorkAssignment.HomeWorkAssignmentItems)
+            {
+                foreach (var googleSpeechApiRequest in homeWorkAssignmentItem.GoogleSpeechApiRequests)
+                {
+                    _dbContext.Entry(googleSpeechApiRequest).State = EntityState.Deleted;
+                }
+                _dbContext.Entry(homeWorkAssignmentItem).State = EntityState.Deleted;
+            }
+            foreach (var submittedHomeWork in homeWorkAssignment.SubmittedHomeWorks)
+            {
+                _dbContext.Entry(submittedHomeWork).State = EntityState.Deleted;
+            }
+            _dbContext.Entry(homeWorkAssignment).State = EntityState.Deleted;
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

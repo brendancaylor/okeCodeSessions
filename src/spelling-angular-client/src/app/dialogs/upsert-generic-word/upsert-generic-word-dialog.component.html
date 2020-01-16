@@ -3,7 +3,7 @@
     <div [formGroup]="this.upsertGenericWordViewmodel.upsertGenericWordForm">
 
         <mat-form-field class="generic-full-width">
-            <input matInput placeholder="Word" formControlName="word">
+            <input autocomplete="off" matInput placeholder="Word" formControlName="word">
             <mat-error
                 *ngIf="this.upsertGenericWordViewmodel.upsertGenericWordForm.get('word').hasError('required')">
                 Word is <strong>required</strong>
@@ -11,14 +11,14 @@
         </mat-form-field>
 
         <mat-form-field class="generic-full-width">
-            <input matInput placeholder="Sentence" formControlName="sentence">
+            <input autocomplete="off" matInput placeholder="Sentence" formControlName="sentence">
             <mat-error
                 *ngIf="this.upsertGenericWordViewmodel.upsertGenericWordForm.get('sentence').hasError('required')">
                 Sentence is <strong>required</strong>
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field style="width: 100%;">
             <mat-label>Word Language</mat-label>
             <mat-select formControlName="wordLanguage">
                 <mat-option *ngFor="let language of this.languages" [value]="language.code">
@@ -32,7 +32,7 @@
 
         </mat-form-field>
         
-        <mat-form-field>
+        <mat-form-field style="width: 100%;">
             <mat-label>Sentence Language</mat-label>
             <mat-select formControlName="sentenceLanguage">
                 <mat-option *ngFor="let language of this.languages" [value]="language.code">
@@ -48,11 +48,11 @@
 
     </div>
 
-    <div mat-dialog-actions layout="row">
-        <button mat-button (click)="cancel()" color="accent">Cancel</button>
-        <span style="flex: 1 1 auto"></span>
-        <button mat-button (click)="edit()" color="primary"
+    <div mat-dialog-actions>
+        <button mat-flat-button (click)="edit()" color="primary"
             [disabled]="!this.upsertGenericWordViewmodel.upsertGenericWordForm.valid">Save</button>
+        <button mat-button (click)="cancel()" color="accent">Cancel</button>
+        
     </div>
 
 </form>

@@ -16,15 +16,16 @@ export class AuthService {
 
   constructor(private _userClient: UserClient) {
 
+    const url = window.location.origin;
     const stsSettings = {
       authority: Constants.stsAuthority,
       client_id: Constants.clientId,
-      redirect_uri: `${Constants.clientRoot}signin-callback`,
+      redirect_uri: `${url}/signin-callback`,
       scope: 'openid profile spelling-api',
       response_type: 'code',
-      post_logout_redirect_uri: `${Constants.clientRoot}signout-callback`,
+      post_logout_redirect_uri: `${url}/signout-callback`,
       automaticSilentRenew: true,
-      silent_redirect_uri: `${Constants.clientRoot}assets/silent-callback.html`
+      silent_redirect_uri: `${url}/assets/silent-callback.html`
     };
     this._userManager = new UserManager(stsSettings);
     this._userManager.events.addAccessTokenExpired(_ => {

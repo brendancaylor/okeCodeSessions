@@ -11,5 +11,9 @@ namespace ApplicationCore.Interfaces
     {
         Task<HomeWorkAssignment> GetHomeWorkAssignmentWithChildrenAsync(Guid homeWorkAssignmentId);
         Task AddHomeworkFromListAsync(AddHomeworkFromList addHomeworkFromList, Guid appUserId);
+
+        Task DeleteHomeWorkAssignmentItemAsync(Guid homeWorkAssignmentItemId);
+
+        Task DeleteHomeWorkAssignmentAsync(Guid homeWorkAssignmentId);
     }
 }

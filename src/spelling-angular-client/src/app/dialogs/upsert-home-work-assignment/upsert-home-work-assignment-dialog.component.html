@@ -9,11 +9,10 @@
         </mat-form-field>
     </div>
 
-    <div mat-dialog-actions layout="row">
-        <button mat-button (click)="cancel()" color="accent">Cancel</button>
-        <span style="flex: 1 1 auto"></span>
-        <button mat-button (click)="edit()" color="primary"
+    <div mat-dialog-actions>
+        <button mat-flat-button (click)="edit()" color="primary"
             [disabled]="!this.homeWorkAssignmentViewmodel.homeWorkAssignmentForm.valid">Save</button>
+        <button mat-button (click)="cancel()" color="accent">Cancel</button>
     </div>
 
 </form>

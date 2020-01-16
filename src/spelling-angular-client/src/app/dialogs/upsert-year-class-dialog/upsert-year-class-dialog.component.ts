@@ -29,8 +29,12 @@ export class UpsertYearClassDialogComponent implements OnInit {
   }
 
   edit() {
-    const dto = this.yearClassViewmodel.getDto();
-    this._dialogRef.close(dto);
+    if (this.yearClassViewmodel.yearClassForm.valid) {
+      const dto = this.yearClassViewmodel.getDto();
+      this._dialogRef.close(dto);
+    } else {
+      this.yearClassViewmodel.yearClassForm.markAllAsTouched();
+    }
   }
 
 }

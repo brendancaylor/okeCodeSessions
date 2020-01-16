@@ -17,7 +17,7 @@ import { Moment } from 'moment-timezone';
 import * as moment from 'moment-timezone';
 import { UpsertYearClassDialogComponent } from 'src/app/dialogs/upsert-year-class-dialog/upsert-year-class-dialog.component';
 import { Utils } from 'src/app/core/utils';
-import { MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSnackBar, MatMenu } from '@angular/material';
 import {
   UpsertHomeWorkAssignmentDialogComponent
 } from 'src/app/dialogs/upsert-home-work-assignment/upsert-home-work-assignment-dialog.component';
@@ -26,6 +26,7 @@ import {
 } from 'src/app/dialogs/upsert-generic-word/upsert-generic-word-dialog.component';
 import { WaitingDialogComponent } from 'src/app/dialogs/waiting-dialog/waiting-dialog.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AreYouSureDialogComponent } from 'src/app/dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
 
 @Component({
   selector: 'app-manage-homework',
@@ -50,6 +51,33 @@ export class ManageHomeworkComponent implements OnInit {
   showWords = false;
   showSubmittedWork = false;
   expansionPanelExpanded = true;
+
+  _currentHomeWorkAssignment: HomeWorkAssignmentDto;
+  get currentHomeWorkAssignment(): HomeWorkAssignmentDto {
+    this._currentHomeWorkAssignment = null;
+    if (this.homeWorkAssignments && this.homeWorkAssignments.length > 0) {
+      const furtureAssignments = this.homeWorkAssignments
+      .filter(
+        (homeWorkAssignment) => homeWorkAssignment.dueDate > moment()
+      );
+      if (furtureAssignments && furtureAssignments.length > 0) {
+        this._currentHomeWorkAssignment = furtureAssignments[0];
+      }
+    }
+    return this._currentHomeWorkAssignment;
+  }
+
+  _remainingHomeWorkAssignments: Array<HomeWorkAssignmentDto>;
+  get remainingHomeWorkAssignments(): Array<HomeWorkAssignmentDto> {
+    if (this.currentHomeWorkAssignment) {
+      return this.homeWorkAssignments.filter(
+        (homeWorkAssignment) => this.currentHomeWorkAssignment.id !== homeWorkAssignment.id
+      );
+    } else {
+      return this.homeWorkAssignments;
+    }
+  }
+
   constructor(
     private _yearClassClient: YearClassClient,
     private _homeworkClient: HomeworkClient,
@@ -102,7 +130,8 @@ export class ManageHomeworkComponent implements OnInit {
     yearClassdto.collegeId = this.selectedCollege.id;
     const dialogRef = this.dialog.open(UpsertYearClassDialogComponent, {
       width: '348px',
-      data: yearClassdto
+      data: yearClassdto,
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(dialogObject => {
@@ -158,19 +187,58 @@ export class ManageHomeworkComponent implements OnInit {
     this.setupHomeWorkAssignmentDialog(homeWorkAssignmentToEdit);
   }
 
-  copyLinkHomeWorkAssignment(homeWorkAssignment: HomeWorkAssignmentDto): void {
-    navigator.clipboard.writeText(window.location.origin + '/homework/' + homeWorkAssignment.id);
+  deleteHomeWorkAssignment(homeWorkAssignment: HomeWorkAssignmentDto): void {
+    const dialogRef = this.dialog.open(AreYouSureDialogComponent, {
+      width: '348px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(dialogObject => {
+      if (dialogObject) {
+        this._homeworkClient.deleteHomeWorkAssignment(homeWorkAssignment.id).subscribe(
+          () => {
+            const index = this.homeWorkAssignments.indexOf(homeWorkAssignment);
+            this.homeWorkAssignments.splice(index, 1);
+          }
+        );
+      }
+    }
+    );
+  }
+
+  getLink(homeWorkAssignment: HomeWorkAssignmentDto) {
+    return window.location.origin + '/homework/' + homeWorkAssignment.id;
+  }
+
+  copyText(val: string) {
+
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(val);
+    } else {
+      const selBox = document.createElement('textarea');
+      selBox.style.position = 'fixed';
+      selBox.style.left = '0';
+      selBox.style.top = '0';
+      selBox.style.opacity = '0';
+      selBox.value = val;
+      document.body.appendChild(selBox);
+      selBox.focus();
+      selBox.select();
+      document.execCommand('copy');
+      document.body.removeChild(selBox);
+    }
+
     this._snackBar.open('Homework link copied to clipboard.', 'close', {
       duration: 2000,
     });
   }
 
-
   private setupHomeWorkAssignmentDialog(homeWorkAssignmentDto: HomeWorkAssignmentAddDto | HomeWorkAssignmentUpdateDto): void {
     homeWorkAssignmentDto.yearClassId = this.selectedYearClass.id;
     const dialogRef = this.dialog.open(UpsertHomeWorkAssignmentDialogComponent, {
       width: '348px',
-      data: homeWorkAssignmentDto
+      data: homeWorkAssignmentDto,
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(dialogObject => {
@@ -213,23 +281,20 @@ export class ManageHomeworkComponent implements OnInit {
 
   selectHomeWorkAssignment(homeWorkAssignment: HomeWorkAssignmentDto): void {
     this.getSelectedHomeWorkAssignment(homeWorkAssignment.id);
-    this.viewWords(null);
+    this.viewWords();
   }
 
-  viewWords(event): void {
+  viewWords(): void {
     this.showWords = true;
     this.showSubmittedWork = false;
-    if (event) {
-      event.stopPropagation();
-    }
+    // if (event) {
+    //   event.stopPropagation();
+    // }
   }
 
-  viewSubmissions(event): void {
+  viewSubmissions(): void {
     this.showWords = false;
     this.showSubmittedWork = true;
-    if (event) {
-      event.stopPropagation();
-    }
   }
 
   private getSelectedHomeWorkAssignment(id: string): void {
@@ -278,7 +343,8 @@ export class ManageHomeworkComponent implements OnInit {
     homeWorkAssignmentItemDto.homeWorkAssignmentId = this.selectedHomeWorkAssignment.id;
     const dialogRef = this.dialog.open(UpsertGenericWordDialogComponent, {
       width: '348px',
-      data: homeWorkAssignmentItemDto
+      data: homeWorkAssignmentItemDto,
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(dialogObject => {
