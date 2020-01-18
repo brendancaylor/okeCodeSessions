@@ -43,6 +43,15 @@ export class HomeWorkAssignmentViewmodel {
     studentName = '';
     dueDate: moment.Moment = moment();
     yearClassDisplay = '';
+    scorePositions: Array<number> = [];
+    scoreIncludedPositions: Array<number> = [];
+
+    get isTop(): boolean {
+        if (this.scorePositions.length === 0) {
+            return true;
+        }
+        return this.totalScore >= this.scorePositions[this.scorePositions.length - 1];
+    }
 
     get totalScore(): number {
         return this.homeworkItems.reduce((a, b) => a + b.score, 0);
@@ -89,7 +98,7 @@ export class HomeworkItemViewmodel {
 
     get isCorrect(): boolean {
         const attemptReplaceSpecialCharacters = this.replaceSpecialCharacters(this.word.toLowerCase(), this.attempt.toLowerCase());
-        return this.word.toLowerCase() === attemptReplaceSpecialCharacters.toLowerCase();
+        return this.word.toLowerCase() === attemptReplaceSpecialCharacters.toLowerCase() && this.word.length === this.attempt.length;
     }
 
     replaceSpecialCharacters(wordToSpell: string, attempt: string): string {
@@ -116,8 +125,6 @@ export class HomeworkItemViewmodel {
         }
         return attemptCorrected;
     }
-
-
 
     get hint(): string {
         let result = '';

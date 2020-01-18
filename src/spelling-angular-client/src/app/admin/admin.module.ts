@@ -13,7 +13,10 @@ import {
   MAT_DATE_LOCALE,
   MatExpansionModule,
   MatSnackBarModule,
-  MatMenuModule
+  MatMenuModule,
+  MatButtonToggleModule,
+  MatIconModule,
+  MatBadgeModule
 } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -52,6 +55,9 @@ import {MomentDateModule, MatMomentDateModule} from '@angular/material-moment-ad
     MatExpansionModule,
     MatSnackBarModule,
     MatMenuModule,
+    MatButtonToggleModule,
+    MatIconModule,
+    MatBadgeModule,
     CoreModule
   ],
   exports: [],

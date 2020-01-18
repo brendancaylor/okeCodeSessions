@@ -1,11 +1,6 @@
 h3.left {
     float: left;
   }
-  
-  .upsert-button {
-    margin: 20px 20px 20px 0;
-    float: left;
-  }
 
 .grid-container-left{
   display: grid;
@@ -29,6 +24,7 @@ h3.left {
 
 .due-date {
   padding-left: 10px;
+  line-height: 1rem;
 }
 
 .home-work-assignmen-selected {

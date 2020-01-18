@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeWorkAssignmentDto, SpeachClient, SpeechType, HomeworkClient, SubmittedHomeWorkAddDto } from 'src/app/core/services/clients';
+import {
+  HomeWorkAssignmentDto,
+  SpeachClient,
+  SpeechType,
+  HomeworkClient,
+  SubmittedHomeWorkAddDto,
+  HomeWorkAssignmentItemDto
+} from 'src/app/core/services/clients';
 import { HomeWorkAssignmentViewmodel, HomeworkItemViewmodel } from './home-work-assignment-viewmodel';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatBottomSheet } from '@angular/material';
+import { HomeWorkHelpComponent } from './home-work-help.component';
 
 @Component({
   selector: 'app-home-work-assignment',
@@ -20,7 +29,8 @@ export class HomeWorkAssignmentComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private router: Router,
     private _speachClient: SpeachClient,
-    private _homeworkClient: HomeworkClient
+    private _homeworkClient: HomeworkClient,
+    private _bottomSheet: MatBottomSheet
     ) { }
 
   ngOnInit() {
@@ -37,30 +47,64 @@ export class HomeWorkAssignmentComponent implements OnInit {
           this.viewmodel.id = dto.id;
           this.viewmodel.dueDate = dto.dueDate;
           this.viewmodel.yearClassDisplay = dto.yearClassDisplay;
-          this.reset();
+          dto.submittedHomeWorks.forEach(
+            (submittedHomeWork) => {
+
+              if (!this.viewmodel
+                .scorePositions
+                .some(
+                  (scorePosition) => {
+                  return scorePosition === submittedHomeWork.score;
+                })
+              ) {
+                this.viewmodel.scorePositions.push(submittedHomeWork.score);
+              }
+            }
+          );
+          this.sortPositions();
+          this.loadViewmodelHomeworkItems();
+          this.wedgeScore();
         } else {
           this.router.navigate(['/']);
         }
     });
   }
 
-  reset(): void {
+  sortPositions(): void {
+    this.viewmodel.scorePositions.sort((a, b) => a < b ? -1 : 1);
+  }
+
+  loadViewmodelHomeworkItems(): void {
     this.viewmodel.homeworkItems = this.originalData.homeWorkAssignmentItems.map(
-      (homeWorkAssignmentItem) => {
+      (originalDataHomeWorkAssignmentItem) => {
         const homeworkItem: HomeworkItemViewmodel = new HomeworkItemViewmodel();
-        homeworkItem.id = homeWorkAssignmentItem.id;
-        homeworkItem.sentence = homeWorkAssignmentItem.sentence;
-        homeworkItem.word = homeWorkAssignmentItem.word;
+        homeworkItem.id = originalDataHomeWorkAssignmentItem.id;
+        homeworkItem.sentence = originalDataHomeWorkAssignmentItem.sentence;
+        homeworkItem.word = originalDataHomeWorkAssignmentItem.word;
         this.loadSound(homeworkItem);
         return homeworkItem;
       }
     );
   }
 
+  restartHomework(): void {
+    this.viewmodel.homeworkItems.forEach(
+      (homeworkItem) => {
+        homeworkItem.snapshotHint = '';
+        homeworkItem.attempt = '';
+        homeworkItem.score = 10;
+        homeworkItem.correctTry = undefined;
+      }
+    );
+    this.wedgeScore();
+  }
+
   private loadSound(homeworkItem: HomeworkItemViewmodel) {
+    console.log(homeworkItem.id);
     this._speachClient.getSpeach(homeworkItem.id, SpeechType.Word)
     .subscribe(
       (blob) => {
+        console.log('sound:' + homeworkItem.id);
         homeworkItem.wordAsMp3 = blob;
       }
     );
@@ -150,7 +194,7 @@ export class HomeWorkAssignmentComponent implements OnInit {
         setTimeout(
           () => {
             this.playSound(lastItem, SpeechType.Word);
-          }, 2000
+          }, 1500
         );
       } else if (this.viewmodel.studentName.length < 1) {
         document.getElementById('studentName').focus();
@@ -162,9 +206,50 @@ export class HomeWorkAssignmentComponent implements OnInit {
       this.playIncorrect();
       setTimeout(() => {
         document.getElementById(homeworkItem.id).focus();
-      }, 1000);
+      }, 500);
     }
+    this.wedgeScore();
   }
+
+  wedgeScore(): void {
+
+    this.viewmodel.scoreIncludedPositions = this.viewmodel.scorePositions.map((score) => score);
+    let isPlaced = false;
+    const indexOfTotalScore = this.viewmodel.scoreIncludedPositions.indexOf(this.viewmodel.totalScore);
+    if (indexOfTotalScore !== -1) {
+      // this.viewmodel.scoreIncludedPositions.splice(indexOfTotalScore, 0, this.viewmodel.totalScore);
+      return;
+    }
+
+    if (this.viewmodel.scoreIncludedPositions.length === 0) {
+      this.viewmodel.scoreIncludedPositions.push(this.viewmodel.totalScore);
+        return;
+    }
+
+    if (this.viewmodel.scoreIncludedPositions.length > 0
+      && this.viewmodel.totalScore < this.viewmodel.scoreIncludedPositions[0]) {
+        this.viewmodel.scoreIncludedPositions.unshift(this.viewmodel.totalScore);
+        return;
+    }
+
+    if (this.viewmodel.scoreIncludedPositions.length > 0
+      && this.viewmodel.totalScore > this.viewmodel.scoreIncludedPositions[length - 1]) {
+        this.viewmodel.scoreIncludedPositions.push(this.viewmodel.totalScore);
+        return;
+    }
+
+    this.viewmodel.scoreIncludedPositions.forEach(
+      (score) => {
+        if (this.viewmodel.totalScore < score && !isPlaced) {
+          const indexOfScore = this.viewmodel.scoreIncludedPositions.indexOf(score);
+          this.viewmodel.scoreIncludedPositions.splice(indexOfScore, 0, this.viewmodel.totalScore);
+          isPlaced = true;
+          return;
+        }
+      }
+    );
+  }
+  //
 
   submittEnabled(): boolean {
     return this.viewmodel.allCorrectTry && this.viewmodel.studentName && this.viewmodel.studentName.length > 1;
@@ -181,5 +266,9 @@ export class HomeWorkAssignmentComponent implements OnInit {
         this.isSubmitted = true;
       }
     );
+  }
+
+  openHelp(): void {
+    this._bottomSheet.open(HomeWorkHelpComponent);
   }
 }

@@ -11,7 +11,8 @@ import {
   MatToolbarModule,
   MatDatepickerModule,
   MAT_DATE_LOCALE,
-  MatIconModule
+  MatIconModule,
+  MatBottomSheetModule
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,12 +37,13 @@ import {
 } from './dialogs/upsert-generic-word/upsert-generic-word-dialog.component';
 
 import {MomentDateModule, MatMomentDateModule} from '@angular/material-moment-adapter';
-import { HomeworkResolverService } from './core/services/homeork-resolver-service';
+import { HomeworkResolverService } from './core/services/homework-resolver-service';
 import { PrivacyComponent } from './home/privacy/privacy.component';
 import { WaitingDialogComponent } from './dialogs/waiting-dialog/waiting-dialog.component';
 import { UpsertStandardListComponent } from './dialogs/upsert-standard-list/upsert-standard-list.component';
 import { UpsertStandardListItemComponent } from './dialogs/upsert-standard-list-item/upsert-standard-list-item.component';
 import { AreYouSureDialogComponent } from './dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
+import { HomeWorkHelpComponent } from './do-homework/home-work-assignment/home-work-help.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { AreYouSureDialogComponent } from './dialogs/are-you-sure-dialog/are-you
     WaitingDialogComponent,
     UpsertStandardListComponent,
     UpsertStandardListItemComponent,
-    AreYouSureDialogComponent
+    AreYouSureDialogComponent,
+    HomeWorkHelpComponent,
   ],
   imports: [
     HttpClientModule,
@@ -81,7 +84,8 @@ import { AreYouSureDialogComponent } from './dialogs/are-you-sure-dialog/are-you
     AppRoutingModule,
     MomentDateModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatBottomSheetModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
@@ -97,7 +101,8 @@ import { AreYouSureDialogComponent } from './dialogs/are-you-sure-dialog/are-you
     UpsertStandardListComponent,
     UpsertStandardListItemComponent,
     WaitingDialogComponent,
-    AreYouSureDialogComponent
+    AreYouSureDialogComponent,
+    HomeWorkHelpComponent
   ]
 })
 export class AppModule { }

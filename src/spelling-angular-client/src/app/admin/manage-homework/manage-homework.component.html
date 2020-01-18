@@ -1,9 +1,5 @@
-<mat-expansion-panel
-
-    [expanded]="expansionPanelExpanded"
-    (opened)="expansionPanelExpanded = true"
-    (closed)="expansionPanelExpanded = false"
-    >
+<mat-expansion-panel [expanded]="expansionPanelExpanded" (opened)="expansionPanelExpanded = true"
+    (closed)="expansionPanelExpanded = false">
 
     <mat-expansion-panel-header>
         <h3>Selection</h3>
@@ -29,7 +25,7 @@
         </button>
         <h4 class="left">Year classes</h4>
 
-        <div style="clear: both;" *ngIf="this.yearClassOptions.length > 0">
+        <div style="clear: both; margin: 20px 0 0 0;" *ngIf="this.yearClassOptions.length > 0">
 
             <div *ngIf="this.selectedYearClass" style="width: auto; float: left;">
 
@@ -42,7 +38,7 @@
 
             <mat-form-field style="width: 300px; float: left;">
                 <mat-label>Select a Year Class</mat-label>
-                <mat-select [(value)]="selectedYearClass" (selectionChange)="this.yearClassSelected()">
+                <mat-select [(value)]="selectedYearClass" (selectionChange)="this.yearClassSelected(true)">
                     <mat-option *ngFor="let yearClass of this.yearClassOptions" [value]="yearClass">
                         {{yearClass.teacherName}}, {{yearClass.yearClassName}}
                     </mat-option>
@@ -55,7 +51,7 @@
 
 </mat-expansion-panel>
 
-<div *ngIf="this.selectedCollege">
+<div *ngIf="this.selectedCollege" style="margin: 20px 0 0 0;">
 
     <div style="clear: both;" *ngIf="this.selectedYearClass">
         <button title="Add homework assignment" class="upsert-button" mat-mini-fab color="primary"
@@ -77,86 +73,41 @@
 
         <div class="grid-container">
 
-            <div class="table-container-scroll mat-elevation-z8_">
+            <div class="table-container-scroll mat-elevation-z8_">      
 
                 <div *ngIf="currentHomeWorkAssignment">
 
                     <h3>Current Homework Assignment</h3>
 
-                    <div [ngClass]="isHomeWorkAssignmentSelected(currentHomeWorkAssignment.id)" >
+                    <div class="selectable" (click)="selectHomeWorkAssignment(currentHomeWorkAssignment)"
+                        [ngClass]="isHomeWorkAssignmentSelected(currentHomeWorkAssignment.id)">
 
                         <div class="grid-container-left">
 
-                            <div
-                            class="selectable due-date"    
-                            (click)="selectHomeWorkAssignment(currentHomeWorkAssignment)">
-                                <strong>{{currentHomeWorkAssignment.dueDate.format('LL')}}</strong>
-                            </div>
+                            <div class="due-date">
+                                <strong>
+                                    {{currentHomeWorkAssignment.dueDate.format('LL')}}
 
-                            <div style="text-align: end;" class="hwa-action-buttons action-button-wrapper">
+                                    <small style="padding-left: 30px;">
 
-                                <button
-                                    class="list-action"
-                                    mat-mini-fab
-                                    [matMenuTriggerFor]="appMenu"
-                                    color="primary"
-                                    >
-                                    <i class="material-icons">more_vert</i>
-                                </button>
+                                        <span matBadge="{{currentHomeWorkAssignment.countSubmissions}}"
+                                            matBadgeSize="small" matBadge="8" matBadgePosition="above after"
+                                            matBadgeOverlap="false">Submissions</span>
+                                    </small>
 
-                                <mat-menu #appMenu="matMenu">
+                                </strong>
 
-                                    <button
-                                        (click)="copyText(getLink(currentHomeWorkAssignment))"
-                                        mat-menu-item
-                                        color="primary"
-                                    >
-                                        <i class="material-icons">file_copy</i>
-                                        Copy homework link
-                                    </button>
+                                <br />
 
-                                    <button
-                                        (click)="editHomeWorkAssignment(currentHomeWorkAssignment)"
-                                        mat-menu-item
-                                        color="primary" class="list-action"
-                                        >
-                                        <i class="material-icons">edit</i>
-                                        Change the due date
-                                    </button>
-                                
-                                    <button 
-                                        mat-menu-item
-                                        color="primary" class="list-action"
-                                        (click)="viewWords()">
-                                        <i class="material-icons">assignment</i>
-                                        View words
-                                    </button>
+                                <small>
+                                    <span *ngIf="currentHomeWorkAssignment.firstWord">
+                                        {{currentHomeWorkAssignment.firstWord}}
+                                    </span>
+                                    <span *ngIf="currentHomeWorkAssignment.lastWord">
+                                        - {{currentHomeWorkAssignment.lastWord}}
+                                    </span>
 
-                                    <button
-                                        mat-menu-item
-                                        color="primary" class="list-action"
-                                        (click)="viewSubmissions()">
-                                        <i class="material-icons">face</i>
-                                        View submissions
-                                    </button>
-
-                                    <button
-                                        mat-menu-item
-                                        color="primary" class="list-action"
-                                        (click)="deleteHomeWorkAssignment(currentHomeWorkAssignment)">
-                                        <i class="material-icons">delete</i>
-                                        Delete
-                                    </button>
-                                    
-                                    <!-- <button
-                                        attr.data-clipboard-text="{{getLink(currentHomeWorkAssignment)}}"
-                                        id="{{currentHomeWorkAssignment.id}}" title="Copy homework Link" mat-mini-fab color="primary" class="list-action"
-                                        (click)="copyLinkHomeWorkAssignment(currentHomeWorkAssignment)">
-                                        <i class="material-icons">file_copy</i>
-                                    </button> -->
-                                    
-                                </mat-menu>
-                                
+                                </small>
                             </div>
 
                         </div>
@@ -165,87 +116,38 @@
                     <hr>
                 </div>
 
-                <h3>
+                <h3 *ngIf="remainingHomeWorkAssignments.length > 0">
                     <span *ngIf="currentHomeWorkAssignment">Other </span>
                     Homework Assignments
                 </h3>
 
-                <div *ngFor="let homeWorkAssignment of remainingHomeWorkAssignments"
+                <div class="selectable" *ngFor="let homeWorkAssignment of remainingHomeWorkAssignments"
                     [ngClass]="isHomeWorkAssignmentSelected(homeWorkAssignment.id)"
-                    >
+                    (click)="selectHomeWorkAssignment(homeWorkAssignment)">
 
                     <div class="grid-container-left">
 
-                        <div
-                            class="selectable due-date"
-                            (click)="selectHomeWorkAssignment(homeWorkAssignment)">
-                            <strong>{{homeWorkAssignment.dueDate.format('LL')}}</strong>
-                        </div>
+                        <div class="due-date">
+                            <strong>
+                                {{homeWorkAssignment.dueDate.format('LL')}}
+                                <small style="padding-left: 30px;">
 
-                        <div style="text-align: end;" class="hwa-action-buttons action-button-wrapper">
+                                    <span matBadge="{{homeWorkAssignment.countSubmissions}}" matBadgeSize="small"
+                                        matBadge="8" matBadgePosition="above after"
+                                        matBadgeOverlap="false">Submissions</span>
+                                </small>
+                            </strong>
+                            <br />
+                            <small>
 
-                            <button
-                                class="list-action"
-                                mat-mini-fab
-                                [matMenuTriggerFor]="appMenu"
-                                color="primary"
-                                >
-                                <i class="material-icons">more_vert</i>
-                            </button>
+                                <span *ngIf="homeWorkAssignment.firstWord">
+                                    {{homeWorkAssignment.firstWord}}
+                                </span>
+                                <span *ngIf="homeWorkAssignment.lastWord">
+                                    - {{homeWorkAssignment.lastWord}}
+                                </span>
 
-                            <mat-menu #appMenu="matMenu">
-
-                                <button
-                                    (click)="copyText(getLink(homeWorkAssignment))"
-                                    mat-menu-item
-                                    color="primary"
-                                >
-                                    <i class="material-icons">file_copy</i>
-                                    Copy homework link
-                                </button>
-
-                                <button
-                                    (click)="editHomeWorkAssignment(homeWorkAssignment)"
-                                    mat-menu-item
-                                    color="primary" class="list-action"
-                                    >
-                                    <i class="material-icons">edit</i>
-                                    Change the due date
-                                </button>
-                            
-                                <button 
-                                    mat-menu-item
-                                    color="primary" class="list-action"
-                                    (click)="viewWords()">
-                                    <i class="material-icons">assignment</i>
-                                    View words
-                                </button>
-
-                                <button
-                                    mat-menu-item
-                                    color="primary" class="list-action"
-                                    (click)="viewSubmissions()">
-                                    <i class="material-icons">face</i>
-                                    View submissions
-                                </button>
-
-                                <button
-                                    mat-menu-item
-                                    color="primary" class="list-action"
-                                    (click)="deleteHomeWorkAssignment(homeWorkAssignment)">
-                                    <i class="material-icons">delete</i>
-                                    Delete
-                                </button>
-                                
-                                <!-- <button
-                                    attr.data-clipboard-text="{{getLink(homeWorkAssignment)}}"
-                                    id="{{homeWorkAssignment.id}}" title="Copy homework Link" mat-mini-fab color="primary" class="list-action"
-                                    (click)="copyLinkHomeWorkAssignment(homeWorkAssignment)">
-                                    <i class="material-icons">file_copy</i>
-                                </button> -->
-                                
-                            </mat-menu>
-                            
+                            </small>
                         </div>
 
                     </div>
@@ -256,14 +158,61 @@
 
             <div class="table-container-scroll_" *ngIf="selectedHomeWorkAssignment">
 
-                <div *ngIf="showWords">
+                <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [ngModel]="viewMode" value="words">
 
-                    <button title="Add word" class="upsert-button" mat-mini-fab color="primary"
+                    <mat-button-toggle value="words" (click)="viewWords()">
+                        <i class="material-icons">assignment</i>
+                        Words
+                    </mat-button-toggle>
+
+                    <mat-button-toggle value="submissions" (click)="viewSubmissions()">
+                        <i class="material-icons">face</i>
+                        Submissions
+                    </mat-button-toggle>
+
+                </mat-button-toggle-group>
+
+                <div style="float: right;" class="action-button-wrapper">
+
+                    <button mat-mini-fab class="list-action" title="Add word" color="primary"
                         (click)="addHomeWorkAssignmentItem()">
                         <i class="material-icons">add</i>
                     </button>
+                    
+                    <button mat-mini-fab class="list-action" color="primary" title="Copy homework link"
+                        (click)="copyText(getLink(selectedHomeWorkAssignment))">
+                        <i class="material-icons">file_copy</i>
+                    </button>
+
+                    <button class="list-action" mat-mini-fab [matMenuTriggerFor]="appMenu" color="primary">
+                        <i class="material-icons">more_vert</i>
+                    </button>
+
+                    <mat-menu #appMenu="matMenu">
+
+                        <button (click)="editHomeWorkAssignment(selectedHomeWorkAssignment)" mat-menu-item
+                            color="primary" class="list-action">
+                            <i class="material-icons">edit</i>
+                            Update due date
+                        </button>
+
+                        <button mat-menu-item color="primary" class="list-action"
+                            (click)="deleteHomeWorkAssignment(selectedHomeWorkAssignment)">
+                            <i class="material-icons">delete</i>
+                            Delete
+                        </button>
+
+                    </mat-menu>
+
+                </div>
+
+                <div *ngIf="viewMode === 'words'">
 
                     <h3 class="left">Words for homework due {{selectedHomeWorkAssignment.dueDate.format('LL')}}</h3>
+
+                    <div style="clear: both;" *ngIf="selectedHomeWorkAssignment.homeWorkAssignmentItems.length === 0">
+                        No words have been created yet. Please add a word for this assignment.
+                    </div>
 
                     <div style="clear: both;"
                         *ngFor="let homeWorkAssignmentItem of selectedHomeWorkAssignment.homeWorkAssignmentItems">
@@ -291,7 +240,7 @@
 
                 </div>
 
-                <div *ngIf="showSubmittedWork">
+                <div *ngIf="viewMode === 'submissions'">
 
                     <h3 class="left">Submitted homework for {{selectedHomeWorkAssignment.dueDate.format('LL')}}</h3>
 
@@ -309,4 +258,7 @@
 
     </div>
 
+    <div style="clear: both;" *ngIf="this.selectedYearClass && homeWorkAssignments.length == 0">
+            No assignments have been created for this class yet.
+    </div>
 </div>

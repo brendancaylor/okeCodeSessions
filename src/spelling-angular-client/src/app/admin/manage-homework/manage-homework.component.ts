@@ -48,9 +48,8 @@ export class ManageHomeworkComponent implements OnInit {
 
   editedHomeWorkAssignmentItem: HomeWorkAssignmentItemDto;
 
-  showWords = false;
-  showSubmittedWork = false;
   expansionPanelExpanded = true;
+  viewMode = 'words';
 
   _currentHomeWorkAssignment: HomeWorkAssignmentDto;
   get currentHomeWorkAssignment(): HomeWorkAssignmentDto {
@@ -164,13 +163,15 @@ export class ManageHomeworkComponent implements OnInit {
         );
   }
 
-  yearClassSelected(): void {
+  yearClassSelected(resetSelectedHomeWorkAssignment: boolean): void {
     this._homeworkClient.getHomeWorkAssignments(this.selectedYearClass.id)
     .subscribe(
       (data) => {
         this.homeWorkAssignments = data;
-        this.selectedHomeWorkAssignment = null;
-        this.expansionPanelExpanded = false;
+        if (resetSelectedHomeWorkAssignment) {
+          this.selectedHomeWorkAssignment = null;
+          this.expansionPanelExpanded = false;
+        }
       }
     );
   }
@@ -257,7 +258,7 @@ export class ManageHomeworkComponent implements OnInit {
     this._homeworkClient.updateHomeWorkAssignment(dto)
     .subscribe(
       (savedHomeWorkAssignment) => {
-        this.yearClassSelected();
+        this.yearClassSelected(true);
        }
     );
   }
@@ -266,7 +267,7 @@ export class ManageHomeworkComponent implements OnInit {
     this._homeworkClient.addHomeWorkAssignment(dto)
         .subscribe(
           (savedHomeWorkAssignment) => {
-            this.yearClassSelected();
+            this.yearClassSelected(true);
           }
         );
   }
@@ -285,22 +286,20 @@ export class ManageHomeworkComponent implements OnInit {
   }
 
   viewWords(): void {
-    this.showWords = true;
-    this.showSubmittedWork = false;
+    this.viewMode = 'words';
     // if (event) {
     //   event.stopPropagation();
     // }
   }
 
   viewSubmissions(): void {
-    this.showWords = false;
-    this.showSubmittedWork = true;
+    this.viewMode = 'submissions';
   }
 
   private getSelectedHomeWorkAssignment(id: string): void {
-    if (this.selectedHomeWorkAssignment && this.selectedHomeWorkAssignment.id === id) {
-      return;
-    }
+    // if (this.selectedHomeWorkAssignment && this.selectedHomeWorkAssignment.id === id) {
+    //   return;
+    // }
     this._homeworkClient.getHomeWorkAssignment(id)
     .subscribe(
       (data) => {
@@ -326,16 +325,6 @@ export class ManageHomeworkComponent implements OnInit {
     const homeWorkAssignmentItemToEdit: HomeWorkAssignmentItemUpdateDto = new HomeWorkAssignmentItemUpdateDto();
     Object.assign(homeWorkAssignmentItemToEdit, homeWorkAssignmentItem);
     this.setupHomeWorkAssignmentItemDialog(homeWorkAssignmentItemToEdit);
-  }
-
-  deleteHomeWorkAssignmentItem(homeWorkAssignmentItem: HomeWorkAssignmentItemDto): void {
-    this._homeworkClient.deleteHomeWorkAssignmentItem(homeWorkAssignmentItem.id)
-    .subscribe(
-      () => {
-        const index = this.selectedHomeWorkAssignment.homeWorkAssignmentItems.indexOf(homeWorkAssignmentItem);
-        this.selectedHomeWorkAssignment.homeWorkAssignmentItems.splice(index, 1);
-      }
-    );
   }
 
   private setupHomeWorkAssignmentItemDialog(
@@ -374,6 +363,7 @@ export class ManageHomeworkComponent implements OnInit {
         this.editedHomeWorkAssignmentItem.rowVersion = savedHomeWorkAssignmentItem.rowVersion;
         this.editedHomeWorkAssignmentItem.word = dto.word;
         this.editedHomeWorkAssignmentItem.sentence = dto.sentence;
+        this.yearClassSelected(false);
         dialogRef.close();
        },
        (error) => {
@@ -398,8 +388,20 @@ export class ManageHomeworkComponent implements OnInit {
             newItem.sentence = dto.sentence;
             newItem.word = dto.word;
             this.selectedHomeWorkAssignment.homeWorkAssignmentItems.push(newItem);
+            this.yearClassSelected(false);
             dialogRef.close();
           }
         );
+  }
+
+  deleteHomeWorkAssignmentItem(homeWorkAssignmentItem: HomeWorkAssignmentItemDto): void {
+    this._homeworkClient.deleteHomeWorkAssignmentItem(homeWorkAssignmentItem.id)
+    .subscribe(
+      () => {
+        const index = this.selectedHomeWorkAssignment.homeWorkAssignmentItems.indexOf(homeWorkAssignmentItem);
+        this.selectedHomeWorkAssignment.homeWorkAssignmentItems.splice(index, 1);
+        this.yearClassSelected(false);
+      }
+    );
   }
 }

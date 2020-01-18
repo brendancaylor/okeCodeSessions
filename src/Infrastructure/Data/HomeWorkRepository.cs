@@ -26,6 +26,17 @@ namespace Infrastructure.Data
                 .ToListAsync();
         }
 
+        public async Task<List<HomeWorkAssignment>> GetHomeWorkAssignmentsWithChildrenAsync(Guid yearClassId)
+        {
+            return await _dbContext
+                .HomeWorkAssignments
+                    .Include(o => o.YearClass)
+                    .Include(o => o.HomeWorkAssignmentItems)
+                    .Include(o => o.SubmittedHomeWorks)
+                .Where(o => o.YearClassId == yearClassId)
+                .ToListAsync();
+        }
+
         public async Task<HomeWorkAssignment> GetHomeWorkAssignmentWithChildrenAsync(Guid homeWorkAssignmentId)
         {
             return await _dbContext

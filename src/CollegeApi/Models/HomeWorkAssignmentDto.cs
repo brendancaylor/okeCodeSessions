@@ -15,7 +15,12 @@ namespace College.Api.Models
         public ICollection<HomeWorkAssignmentItemDto> HomeWorkAssignmentItems { get; set; } = new List<HomeWorkAssignmentItemDto>();
         public ICollection<SubmittedHomeWorkDto> SubmittedHomeWorks { get; set; } = new List<SubmittedHomeWorkDto>();
 
-        public static HomeWorkAssignmentDto From(HomeWorkAssignment domainObject)
+        public int CountSubmissions { get; set; }
+
+        public string firstWord { get; set; }
+        public string lastWord { get; set; }
+
+        public static HomeWorkAssignmentDto From(HomeWorkAssignment domainObject, bool fullyLoaded)
         {
             var dto = new HomeWorkAssignmentDto();
             dto.Id = domainObject.Id;
@@ -25,8 +30,21 @@ namespace College.Api.Models
             dto.DueDate = domainObject.DueDate;
             dto.YearClassDisplay = $"{domainObject.YearClass?.TeacherName} {domainObject.YearClass?.YearClassName}";
             dto.YearClassId = domainObject.YearClassId;
-            dto.HomeWorkAssignmentItems = domainObject.HomeWorkAssignmentItems.Select(s => HomeWorkAssignmentItemDto.From(s)).OrderBy(o => o.Word).ToList();
-            dto.SubmittedHomeWorks = domainObject.SubmittedHomeWorks.Select(s => SubmittedHomeWorkDto.From(s)).OrderBy(o => o.StudentName).ToList();
+            if (fullyLoaded)
+            {
+                dto.HomeWorkAssignmentItems = domainObject.HomeWorkAssignmentItems.Select(s => HomeWorkAssignmentItemDto.From(s)).OrderBy(o => o.Word).ToList();
+                dto.SubmittedHomeWorks = domainObject.SubmittedHomeWorks.Select(s => SubmittedHomeWorkDto.From(s)).OrderBy(o => o.StudentName).ToList();
+            }
+            else
+            {
+                dto.firstWord = domainObject.HomeWorkAssignmentItems.OrderBy(o => o.Word).FirstOrDefault()?.Word;
+                dto.lastWord = domainObject.HomeWorkAssignmentItems.OrderByDescending(o => o.Word).FirstOrDefault()?.Word;
+                if(dto.firstWord == dto.lastWord)
+                {
+                    dto.lastWord = null;
+                }
+                dto.CountSubmissions = domainObject.SubmittedHomeWorks.Count();
+            }
             return dto;
         }
     }
@@ -51,8 +69,8 @@ namespace College.Api.Models
             dto.Word = domainObject.Word;
             dto.SentenceLanguage = domainObject.SentenceLanguage;
             dto.WordLanguage = domainObject.WordLanguage;
-            dto.SpokenWordAsMp3 = domainObject.SpokenWordAsMp3;
-            dto.SpokenSentenceAsMp3 = domainObject.SpokenSentenceAsMp3;
+            //dto.SpokenWordAsMp3 = domainObject.SpokenWordAsMp3;
+            //dto.SpokenSentenceAsMp3 = domainObject.SpokenSentenceAsMp3;
             return dto;
         }
     }

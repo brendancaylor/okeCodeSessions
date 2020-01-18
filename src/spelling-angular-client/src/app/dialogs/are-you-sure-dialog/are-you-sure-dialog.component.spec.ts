@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AreYouSureDialogComponent } from './are-you-sure-dialog.component';
+import { MatDialogModule } from '@angular/material';
+import { CoreModule } from 'src/app/core/core.module';
+import { AppModule } from 'src/app/app.module';
 
 describe('AreYouSureDialogComponent', () => {
   let component: AreYouSureDialogComponent;
@@ -8,7 +11,11 @@ describe('AreYouSureDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AreYouSureDialogComponent ]
+      declarations: [ AreYouSureDialogComponent ],
+      imports: [
+        MatDialogModule
+      ],
+      providers: []
     })
     .compileComponents();
   }));

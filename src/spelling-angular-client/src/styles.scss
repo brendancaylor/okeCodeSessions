@@ -82,3 +82,22 @@ a:active, a:hover {
   height: 100%;
   background-color: rgba(238, 238, 238, 0.205);
 }
+
+
+.upsert-button {
+  margin: 0 10px 0 0 !important;
+  float: left;
+}
+
+.hightlight-important-box{
+  //  background-color: rgba(244, 67, 54, 0.3);
+  //  border: solid 1px #000; 
+  //  width: 75%;
+  //  padding: 10px;  
+  margin: 30px;
+  }
+  .hightlight-important-text
+  {
+      font-weight: bold;
+      font-size: 1.5rem;
+  }

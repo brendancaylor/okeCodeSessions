@@ -33,3 +33,24 @@ button, a {
 .snapshot-hint{
     font-weight: bold;
 }
+
+@keyframes highlightAni {
+    0% {
+      font-size: 1rem;
+    }
+    100% {
+        font-size: 1.5rem;
+    }
+  }
+
+
+
+.other-face {
+    cursor: pointer;
+    color: rgba(244, 67, 54, 0.2);
+}
+
+.your-face {
+    cursor: pointer;
+    color: rgba(244, 67, 54, 1);
+}

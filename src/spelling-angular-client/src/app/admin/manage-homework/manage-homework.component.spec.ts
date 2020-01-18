@@ -17,6 +17,9 @@ import {
   MatSnackBarModule,
   MatSnackBar,
   MatMenuModule,
+  MatButtonToggleModule,
+  MatIconModule,
+  MatBadgeModule,
 } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -32,8 +35,9 @@ describe('ManageHomeworkComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
+
         HttpClientTestingModule,
+        BrowserAnimationsModule,
         BrowserModule,
         FormsModule,
         MatFormFieldModule,
@@ -47,6 +51,9 @@ describe('ManageHomeworkComponent', () => {
         MatListModule,
         MatExpansionModule,
         MatSnackBarModule,
+        MatButtonToggleModule,
+        MatIconModule,
+        MatBadgeModule,
         CoreModule,
         RouterTestingModule
       ],

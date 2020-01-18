@@ -6,7 +6,7 @@ import { SigninRedirectCallbackComponent } from './home/signin-redirect-callback
 import { SignoutRedirectCallbackComponent } from './home/signout-redirect-callback.component';
 import { UnauthorizedComponent } from './home/unauthorized.component';
 import { HomeWorkAssignmentComponent } from './do-homework/home-work-assignment/home-work-assignment.component';
-import { HomeworkResolverService } from './core/services/homeork-resolver-service';
+import { HomeworkResolverService } from './core/services/homework-resolver-service';
 import { PrivacyComponent } from './home/privacy/privacy.component';
 
 

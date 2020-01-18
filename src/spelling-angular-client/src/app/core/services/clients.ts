@@ -833,6 +833,9 @@ export class HomeWorkAssignmentDto extends BaseDtoVersion implements IHomeWorkAs
     dueDate!: moment.Moment;
     homeWorkAssignmentItems?: HomeWorkAssignmentItemDto[] | undefined;
     submittedHomeWorks?: SubmittedHomeWorkDto[] | undefined;
+    countSubmissions!: number;
+    firstWord?: string | undefined;
+    lastWord?: string | undefined;
 
     constructor(data?: IHomeWorkAssignmentDto) {
         super(data);
@@ -854,6 +857,9 @@ export class HomeWorkAssignmentDto extends BaseDtoVersion implements IHomeWorkAs
                 for (let item of _data["submittedHomeWorks"])
                     this.submittedHomeWorks!.push(SubmittedHomeWorkDto.fromJS(item));
             }
+            this.countSubmissions = _data["countSubmissions"];
+            this.firstWord = _data["firstWord"];
+            this.lastWord = _data["lastWord"];
         }
     }
 
@@ -879,6 +885,9 @@ export class HomeWorkAssignmentDto extends BaseDtoVersion implements IHomeWorkAs
             for (let item of this.submittedHomeWorks)
                 data["submittedHomeWorks"].push(item.toJSON());
         }
+        data["countSubmissions"] = this.countSubmissions;
+        data["firstWord"] = this.firstWord;
+        data["lastWord"] = this.lastWord;
         super.toJSON(data);
         return data; 
     }
@@ -897,6 +906,9 @@ export interface IHomeWorkAssignmentDto extends IBaseDtoVersion {
     dueDate: moment.Moment;
     homeWorkAssignmentItems?: HomeWorkAssignmentItemDto[] | undefined;
     submittedHomeWorks?: SubmittedHomeWorkDto[] | undefined;
+    countSubmissions: number;
+    firstWord?: string | undefined;
+    lastWord?: string | undefined;
 }
 
 export class HomeWorkAssignmentItemDto extends BaseDtoVersion implements IHomeWorkAssignmentItemDto {

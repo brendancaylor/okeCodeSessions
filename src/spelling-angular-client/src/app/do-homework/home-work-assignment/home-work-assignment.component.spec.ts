@@ -14,6 +14,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
   MatIconModule,
+  MatBottomSheet,
 } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,6 +24,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeachClient, HomeworkClient } from 'src/app/core/services/clients';
+import { HomeWorkHelpComponent } from './home-work-help.component';
 describe('HomeWorkAssignmentComponent', () => {
   let component: HomeWorkAssignmentComponent;
   let fixture: ComponentFixture<HomeWorkAssignmentComponent>;
@@ -39,7 +41,8 @@ describe('HomeWorkAssignmentComponent', () => {
         {provide: ActivatedRoute, useValue: fakeActivatedRoute},
         {provide: Router, useValue: fakeRouter},
         SpeachClient,
-        HomeworkClient
+        HomeworkClient,
+        MatBottomSheet
       ],
       imports: [
         HttpClientTestingModule,

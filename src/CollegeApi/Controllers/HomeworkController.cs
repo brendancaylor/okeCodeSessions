@@ -48,15 +48,15 @@ namespace College.Api.Controllers
         public async Task<HomeWorkAssignmentDto> GetHomeWorkAssignmentAsync([FromQuery] Guid homeWorkAssignmentId)
         {
             var homeWorkAssignment = await _homeWorkRepository.GetHomeWorkAssignmentWithChildrenAsync(homeWorkAssignmentId);
-            var dto = HomeWorkAssignmentDto.From(homeWorkAssignment);
+            var dto = HomeWorkAssignmentDto.From(homeWorkAssignment, true);
             return dto;
         }
 
         [HttpGet("get-home-work-assignments")]
         public async Task<ActionResult<List<HomeWorkAssignmentDto>>> GetHomeWorkAssignmentsAsync([FromQuery] Guid yearClassId)
         {
-            var data = await _homeWorkAssignmentRepository.ListAsync(o => o.YearClassId == yearClassId);
-            return data.OrderBy(o => o.DueDate).Select(s => HomeWorkAssignmentDto.From(s)).ToList();
+            var data = await _homeWorkRepository.GetHomeWorkAssignmentsWithChildrenAsync(yearClassId);
+            return data.OrderBy(o => o.DueDate).Select(s => HomeWorkAssignmentDto.From(s, false)).ToList();
         }
 
         [HttpGet("get-standard-list/{standardListId}")]
