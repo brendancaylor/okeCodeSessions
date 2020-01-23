@@ -179,6 +179,12 @@ export class ManageHomeworkComponent implements OnInit {
   addHomeWorkAssignment(): void {
     const homeWorkAssignmentToAdd: HomeWorkAssignmentAddDto = new HomeWorkAssignmentAddDto();
     this.setupHomeWorkAssignmentDialog(homeWorkAssignmentToAdd);
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'HomeWorkAssignment',
+      eventLabel: 'Add HomeWorkAssignment',
+      eventAction: 'Add HomeWorkAssignment',
+      eventValue: 1
+    });
   }
 
   editHomeWorkAssignment(homeWorkAssignment: HomeWorkAssignmentDto): void {
@@ -200,6 +206,7 @@ export class ManageHomeworkComponent implements OnInit {
           () => {
             const index = this.homeWorkAssignments.indexOf(homeWorkAssignment);
             this.homeWorkAssignments.splice(index, 1);
+            this.yearClassSelected(true);
           }
         );
       }
