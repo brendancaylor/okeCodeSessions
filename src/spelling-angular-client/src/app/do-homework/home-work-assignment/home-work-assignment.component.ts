@@ -39,7 +39,7 @@ export class HomeWorkAssignmentComponent implements OnInit {
     }
 
     this.activeRoute.data.forEach(
-      (data) => {
+      (data: any) => {
         if (data.homeworkData) {
           const dto = data.homeworkData as HomeWorkAssignmentDto;
           this.originalData = dto;

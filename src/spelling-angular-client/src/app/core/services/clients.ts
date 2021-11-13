@@ -52,6 +52,7 @@ export interface ICollegeClient {
 @Injectable({
     providedIn: 'root'
 })
+
 export class CollegeClient implements ICollegeClient {
     constructor(private readonly httpClient: HttpClient) {
     }
@@ -113,6 +114,7 @@ export interface IHomeworkClient {
 @Injectable({
     providedIn: 'root'
 })
+
 export class HomeworkClient implements IHomeworkClient {
     constructor(private readonly httpClient: HttpClient) {
     }
@@ -217,6 +219,7 @@ export interface IPublicClient {
 @Injectable({
     providedIn: 'root'
 })
+
 export class PublicClient implements IPublicClient {
     constructor(private readonly httpClient: HttpClient) {
     }
@@ -235,6 +238,7 @@ export interface ISpeachClient {
 @Injectable({
     providedIn: 'root'
 })
+
 export class SpeachClient implements ISpeachClient {
     constructor(private readonly httpClient: HttpClient) {
     }
@@ -263,6 +267,7 @@ export interface IStandardListClient {
 @Injectable({
     providedIn: 'root'
 })
+
 export class StandardListClient implements IStandardListClient {
     constructor(private readonly httpClient: HttpClient) {
     }
@@ -326,6 +331,7 @@ export interface ITestClient {
 @Injectable({
     providedIn: 'root'
 })
+
 export class TestClient implements ITestClient {
     constructor(private readonly httpClient: HttpClient) {
     }
@@ -353,6 +359,7 @@ export interface IUserClient {
 @Injectable({
     providedIn: 'root'
 })
+
 export class UserClient implements IUserClient {
     constructor(private readonly httpClient: HttpClient) {
     }
@@ -414,6 +421,7 @@ export interface IYearClassClient {
 @Injectable({
     providedIn: 'root'
 })
+
 export class YearClassClient implements IYearClassClient {
     constructor(private readonly httpClient: HttpClient) {
     }

@@ -11,7 +11,7 @@ export class ClaimsRouteGuard implements CanActivate {
         if (!isLoggedIn) {
             return false;
         }
-        const requiredClaims = route.data.requiredClaims || [];
+        const requiredClaims: Array<string> = route.data.requiredClaims || [];
         const isValid =  !!this._authService.authContext &&
         this._authService.authContext.hasClaims(...requiredClaims);
         return isValid;

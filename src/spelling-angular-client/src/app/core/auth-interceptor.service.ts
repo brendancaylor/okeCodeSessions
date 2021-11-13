@@ -12,8 +12,11 @@ export class AuthInterceptorService implements HttpInterceptor {
     private _router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    //return next.handle(req);
+    
     if (req.url.startsWith(Constants.apiRoot)) {
-      return from(this._authService.getAccessToken().then(token => {
+      
+      const result = from(this._authService.getAccessToken().then(token => {
 
         if (!token) {
           return next.handle(req)
@@ -41,8 +44,16 @@ export class AuthInterceptorService implements HttpInterceptor {
         ))
         .toPromise();
       }));
+
+      if(result === undefined) {
+        return next.handle(req);
+      } else {
+        return result as Observable<HttpEvent<any>>;
+      }
+      
     } else {
       return next.handle(req);
     }
+    
   }
 }
