@@ -9,7 +9,7 @@ import {
 } from 'src/app/core/services/clients';
 import { HomeWorkAssignmentViewmodel, HomeworkItemViewmodel } from './home-work-assignment-viewmodel';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatBottomSheet } from '@angular/material';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { HomeWorkHelpComponent } from './home-work-help.component';
 
 @Component({
@@ -19,11 +19,11 @@ import { HomeWorkHelpComponent } from './home-work-help.component';
 })
 export class HomeWorkAssignmentComponent implements OnInit {
 
-  viewmodel: HomeWorkAssignmentViewmodel = null;
+  viewmodel: HomeWorkAssignmentViewmodel | null = null;
   isSubmitted = false;
   SpeechTypeEnum = SpeechType;
   soundIsBeingPlayed = false;
-  private originalData: HomeWorkAssignmentDto;
+  private originalData: HomeWorkAssignmentDto | null = null;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -47,17 +47,17 @@ export class HomeWorkAssignmentComponent implements OnInit {
           this.viewmodel.id = dto.id;
           this.viewmodel.dueDate = dto.dueDate;
           this.viewmodel.yearClassDisplay = dto.yearClassDisplay;
-          dto.submittedHomeWorks.forEach(
+          dto!.submittedHomeWorks!.forEach(
             (submittedHomeWork) => {
 
-              if (!this.viewmodel
+              if (!this.viewmodel!
                 .scorePositions
                 .some(
                   (scorePosition) => {
                   return scorePosition === submittedHomeWork.score;
                 })
               ) {
-                this.viewmodel.scorePositions.push(submittedHomeWork.score);
+                this.viewmodel!.scorePositions.push(submittedHomeWork.score);
               }
             }
           );
@@ -71,11 +71,11 @@ export class HomeWorkAssignmentComponent implements OnInit {
   }
 
   sortPositions(): void {
-    this.viewmodel.scorePositions.sort((a, b) => a < b ? -1 : 1);
+    this.viewmodel!.scorePositions.sort((a, b) => a < b ? -1 : 1);
   }
 
   loadViewmodelHomeworkItems(): void {
-    this.viewmodel.homeworkItems = this.originalData.homeWorkAssignmentItems.map(
+    this.viewmodel!.homeworkItems = this.originalData!.homeWorkAssignmentItems!.map(
       (originalDataHomeWorkAssignmentItem) => {
         const homeworkItem: HomeworkItemViewmodel = new HomeworkItemViewmodel();
         homeworkItem.id = originalDataHomeWorkAssignmentItem.id;
@@ -88,7 +88,7 @@ export class HomeWorkAssignmentComponent implements OnInit {
   }
 
   restartHomework(): void {
-    this.viewmodel.homeworkItems.forEach(
+    this.viewmodel!.homeworkItems.forEach(
       (homeworkItem) => {
         homeworkItem.snapshotHint = '';
         homeworkItem.attempt = '';
@@ -151,7 +151,10 @@ export class HomeWorkAssignmentComponent implements OnInit {
     const self = this;
     audio.onended = function() {
         self.soundIsBeingPlayed = false;
-        document.getElementById(homeworkItem.id).focus();
+        if (homeworkItem !== null) {
+          document.getElementById(homeworkItem.id)!.focus();
+        }
+        
       };
   }
 
@@ -169,8 +172,8 @@ export class HomeWorkAssignmentComponent implements OnInit {
     audio.play();
   }
 
-  getNextUnCompletedWord(): HomeworkItemViewmodel {
-    const foundItems = this.viewmodel.homeworkItems.filter(
+  getNextUnCompletedWord(): HomeworkItemViewmodel | null {
+    const foundItems = this.viewmodel!.homeworkItems.filter(
       (homeworkItem) => !homeworkItem.correctTry
     );
     if (foundItems.length > 0) {
@@ -181,7 +184,7 @@ export class HomeWorkAssignmentComponent implements OnInit {
   }
 
   try(homeworkItem: HomeworkItemViewmodel): void {
-    let indexOfItem = this.viewmodel.homeworkItems.indexOf(homeworkItem);
+    let indexOfItem = this.viewmodel!.homeworkItems.indexOf(homeworkItem);
     indexOfItem ++;
     homeworkItem.snapshotHint = homeworkItem.hint;
     if (homeworkItem.isCorrect) {
@@ -190,14 +193,14 @@ export class HomeWorkAssignmentComponent implements OnInit {
 
       const lastItem = this.getNextUnCompletedWord();
       if (lastItem) {
-        document.getElementById(lastItem.id).focus();
+        document.getElementById(lastItem.id)!.focus();
         setTimeout(
           () => {
             this.playSound(lastItem, SpeechType.Word);
           }, 1500
         );
-      } else if (this.viewmodel.studentName.length < 1) {
-        document.getElementById('studentName').focus();
+      } else if (this.viewmodel!.studentName.length < 1) {
+        document.getElementById('studentName')!.focus();
       }
 
     } else {
@@ -205,7 +208,7 @@ export class HomeWorkAssignmentComponent implements OnInit {
       homeworkItem.score --;
       this.playIncorrect();
       setTimeout(() => {
-        document.getElementById(homeworkItem.id).focus();
+        document.getElementById(homeworkItem.id)!.focus();
       }, 500);
     }
     this.wedgeScore();
@@ -213,36 +216,36 @@ export class HomeWorkAssignmentComponent implements OnInit {
 
   wedgeScore(): void {
 
-    this.viewmodel.scoreIncludedPositions = this.viewmodel.scorePositions.map((score) => score);
+    this.viewmodel!.scoreIncludedPositions = this.viewmodel!.scorePositions.map((score) => score);
     let isPlaced = false;
-    const indexOfTotalScore = this.viewmodel.scoreIncludedPositions.indexOf(this.viewmodel.totalScore);
+    const indexOfTotalScore = this.viewmodel!.scoreIncludedPositions.indexOf(this.viewmodel!.totalScore);
     if (indexOfTotalScore !== -1) {
       // this.viewmodel.scoreIncludedPositions.splice(indexOfTotalScore, 0, this.viewmodel.totalScore);
       return;
     }
 
-    if (this.viewmodel.scoreIncludedPositions.length === 0) {
-      this.viewmodel.scoreIncludedPositions.push(this.viewmodel.totalScore);
+    if (this.viewmodel!.scoreIncludedPositions.length === 0) {
+      this.viewmodel!.scoreIncludedPositions.push(this.viewmodel!.totalScore);
         return;
     }
 
-    if (this.viewmodel.scoreIncludedPositions.length > 0
-      && this.viewmodel.totalScore < this.viewmodel.scoreIncludedPositions[0]) {
-        this.viewmodel.scoreIncludedPositions.unshift(this.viewmodel.totalScore);
+    if (this.viewmodel!.scoreIncludedPositions.length > 0
+      && this.viewmodel!.totalScore < this.viewmodel!.scoreIncludedPositions[0]) {
+        this.viewmodel!.scoreIncludedPositions.unshift(this.viewmodel!.totalScore);
         return;
     }
 
-    if (this.viewmodel.scoreIncludedPositions.length > 0
-      && this.viewmodel.totalScore > this.viewmodel.scoreIncludedPositions[length - 1]) {
-        this.viewmodel.scoreIncludedPositions.push(this.viewmodel.totalScore);
+    if (this.viewmodel!.scoreIncludedPositions.length > 0
+      && this.viewmodel!.totalScore > this.viewmodel!.scoreIncludedPositions[length - 1]) {
+        this.viewmodel!.scoreIncludedPositions.push(this.viewmodel!.totalScore);
         return;
     }
 
-    this.viewmodel.scoreIncludedPositions.forEach(
+    this.viewmodel!.scoreIncludedPositions.forEach(
       (score) => {
-        if (this.viewmodel.totalScore < score && !isPlaced) {
-          const indexOfScore = this.viewmodel.scoreIncludedPositions.indexOf(score);
-          this.viewmodel.scoreIncludedPositions.splice(indexOfScore, 0, this.viewmodel.totalScore);
+        if (this.viewmodel!.totalScore < score && !isPlaced) {
+          const indexOfScore = this.viewmodel!.scoreIncludedPositions.indexOf(score);
+          this.viewmodel!.scoreIncludedPositions.splice(indexOfScore, 0, this.viewmodel!.totalScore);
           isPlaced = true;
           return;
         }
@@ -252,14 +255,14 @@ export class HomeWorkAssignmentComponent implements OnInit {
   //
 
   submittEnabled(): boolean {
-    return this.viewmodel.allCorrectTry && this.viewmodel.studentName && this.viewmodel.studentName.length > 1;
+    return this.viewmodel!.allCorrectTry && this.viewmodel!.studentName !== null && this.viewmodel!.studentName.length > 1;
   }
 
   submit() {
     const dto: SubmittedHomeWorkAddDto = new SubmittedHomeWorkAddDto();
-    dto.homeWorkAssignmentId = this.viewmodel.id;
-    dto.score = this.viewmodel.totalScore;
-    dto.studentName = this.viewmodel.studentName;
+    dto.homeWorkAssignmentId = this.viewmodel!.id;
+    dto.score = this.viewmodel!.totalScore;
+    dto.studentName = this.viewmodel!.studentName;
     this._homeworkClient.addSubmittedHomeWork(dto)
     .subscribe(
       () => {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { UpsertStandardListViewmodel } from './upsert-standard-list-viewmodel';
 import { Utils } from 'src/app/core/utils';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { StandardListDto } from 'src/app/core/services/clients';
 import { FormBuilder } from '@angular/forms';
 

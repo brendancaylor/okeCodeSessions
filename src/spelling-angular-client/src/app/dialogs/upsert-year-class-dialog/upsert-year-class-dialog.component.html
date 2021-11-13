@@ -4,14 +4,14 @@
     <div [formGroup]="this.yearClassViewmodel.yearClassForm">
         <mat-form-field class="generic-full-width">
             <input autocomplete="off" matInput placeholder="Teacher's Name" formControlName="teacherName">
-            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('teacherName').hasError('required')">
+            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('teacherName')!.hasError('required')">
                 Teacher's Name is <strong>required</strong>
             </mat-error>
         </mat-form-field>
 
         <mat-form-field class="generic-full-width">
             <input autocomplete="off" matInput placeholder="Year Class Name" formControlName="yearClassName">
-            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('yearClassName').hasError('required')">
+            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('yearClassName')!.hasError('required')">
                 Year Class Name is <strong>required</strong>
             </mat-error>
         </mat-form-field>
@@ -24,7 +24,7 @@
                 </mat-option>
             </mat-select>
 
-            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('defaultWordLanguage').hasError('required')">
+            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('defaultWordLanguage')!.hasError('required')">
                 Default Word Language is <strong>required</strong>
             </mat-error>
 
@@ -38,7 +38,7 @@
                 </mat-option>
             </mat-select>
 
-            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('defaultSentenceLanguage').hasError('required')">
+            <mat-error *ngIf="this.yearClassViewmodel.yearClassForm.get('defaultSentenceLanguage')!.hasError('required')">
                 Default Sentence Language is <strong>required</strong>
             </mat-error>
 

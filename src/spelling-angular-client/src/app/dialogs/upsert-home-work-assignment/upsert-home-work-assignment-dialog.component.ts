@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HomeWorkAssignmentViewmodel } from './home-work-assignment-viewmodel';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HomeWorkAssignmentUpdateDto, HomeWorkAssignmentAddDto } from 'src/app/core/services/clients';
 import { FormBuilder } from '@angular/forms';
 import * as moment from 'moment';

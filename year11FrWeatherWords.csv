@@ -1,0 +1,31 @@
+Word,Sentence,WordLanguage,SentenceLanguage
+mauvais,bad,fr-FR,en-GB
+clair,bright,fr-FR,en-GB
+climat,climate,fr-FR,en-GB
+nuage,cloud,fr-FR,en-GB
+nuageux,cloudy,fr-FR,en-GB
+froid,cold,fr-FR,en-GB
+sec,dry,fr-FR,en-GB
+brouillard,fog,fr-FR,en-GB
+chaleur,heat,fr-FR,en-GB
+chaud,hot,fr-FR,en-GB
+en automne,in autumn,fr-FR,en-GB
+au printemps,in spring,fr-FR,en-GB
+en été,in summer,fr-FR,en-GB
+en hiver,in winter,fr-FR,en-GB
+il gèle,it is freezing,fr-FR,en-GB
+il y a des éclairs,it is lightning,fr-FR,en-GB
+il pleut,it is raining,fr-FR,en-GB
+il neige,it is snowing,fr-FR,en-GB
+il y a du tonnerre,it is thundering,fr-FR,en-GB
+pluie,rain,fr-FR,en-GB
+saison,season,fr-FR,en-GB
+ciel,sky,fr-FR,en-GB
+neige,snow,fr-FR,en-GB
+orage,storm,fr-FR,en-GB
+soleil,sun,fr-FR,en-GB
+ensoleillé,sunny,fr-FR,en-GB
+Il fait du soleil,the sun is shining,fr-FR,en-GB
+Il fait de l'orage,thunder storm,fr-FR,en-GB
+mouillé,wet,fr-FR,en-GB
+vent,wind,fr-FR,en-GB

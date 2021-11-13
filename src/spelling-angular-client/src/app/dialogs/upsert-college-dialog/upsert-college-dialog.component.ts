@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CollegeDto } from 'src/app/core/services/clients';
 import { UpsertMode } from 'src/app/core/upsert-modes';
 
@@ -13,7 +13,7 @@ export class UpsertCollegeDialogComponent implements OnInit {
   upsertModeEnum = UpsertMode;
   upsertMode: UpsertMode = UpsertMode.Add;
   college: CollegeDto;
-  error: string;
+  error: string | null = null;
   constructor(public _dialogRef: MatDialogRef<UpsertCollegeDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: CollegeDto) {
     this.college = data;

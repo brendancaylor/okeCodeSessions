@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { UserClient, UserDto, NameOnlyUpsertDto, AddUserDto, UpdateUserDto } from 'src/app/core/services/clients';
 import { Utils } from 'src/app/core/utils';
 import { UpsertUserDialogComponent } from 'src/app/dialogs/upsert-user-dialog/upsert-user-dialog.component';
@@ -12,8 +13,8 @@ import { UpsertUserDialogComponent } from 'src/app/dialogs/upsert-user-dialog/up
 export class ManageUsersComponent implements OnInit {
   displayedColumns = ['firstName', 'lastName', 'email', 'actions'];
   dataSource = new MatTableDataSource<UserDto>();
-  editedUser: UserDto;
-  error: string;
+  editedUser: UserDto | null = null;
+  error: string | null = null;
 
   constructor(
     private _userClient: UserClient,

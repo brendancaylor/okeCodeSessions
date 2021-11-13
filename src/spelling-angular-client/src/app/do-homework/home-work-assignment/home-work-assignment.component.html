@@ -128,12 +128,12 @@
 </div>
 
 <div *ngIf="isSubmitted">
-    <h1>{{this.viewmodel.yearClassDisplay}}</h1>
-    <h2>Spelling homework due {{this.viewmodel.dueDate.format('ll')}}</h2>
+    <h1>{{this.viewmodel!.yearClassDisplay}}</h1>
+    <h2>Spelling homework due {{this.viewmodel!.dueDate.format('ll')}}</h2>
     
     <h3>
         <mat-icon class="mat-icon-massive">sentiment_satisfied_alt</mat-icon>
-        Thank you {{this.viewmodel.studentName}}. Your homework has been submitted
+        Thank you {{this.viewmodel!.studentName}}. Your homework has been submitted
     </h3>
 </div>
 

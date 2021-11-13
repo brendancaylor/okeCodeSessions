@@ -6,6 +6,7 @@ BackEnd/SecuringAngularApps.STS/tempkey.rsa
 lib/
 node_modules/
 .vs/
+packages/
 src/IdentityServer/tempkey.rsa
 src/CollegeApi/SpellingApp-7fc0cf8b5885.json
 bili-identity-server.PublishSettings
@@ -15,3 +16,7 @@ src/CollegeApi/Properties/PublishProfiles/bili-spell-api - ReadOnly - FTP.pubxml
 src/IdentityServer/Properties/PublishProfiles/bili-identity-server - FTP.pubxml
 src/IdentityServer/Properties/PublishProfiles/bili-identity-server - ReadOnly - FTP.pubxml
 src/IdentityServer/Properties/PublishProfiles/bili-identity-server - Web Deploy.pubxml
+src/CollegeApi/Properties/PublishProfiles/bili-spell-api - Web Deploy1.pubxml
+bili-spell-api_old.PublishSettings
+bili-spell.PublishSettings
+secrets.txt

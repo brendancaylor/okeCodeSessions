@@ -60,13 +60,13 @@ export class AppComponent implements OnInit {
   }
 
   closeMenu(): void {
-    document.getElementById('mySidebar').style.display = 'none';
-    document.getElementById('myOverlay').style.display = 'none';
+    document.getElementById('mySidebar')!.style.display = 'none';
+    document.getElementById('myOverlay')!.style.display = 'none';
   }
 
   openMenu(): void {
-    document.getElementById('mySidebar').style.display = 'block';
-    document.getElementById('myOverlay').style.display = 'block';
+    document.getElementById('mySidebar')!.style.display = 'block';
+    document.getElementById('myOverlay')!.style.display = 'block';
   }
 
   checkRouterEvent(routerEvent: Event): void {

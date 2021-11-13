@@ -12,7 +12,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 export class ContactUsComponent implements OnInit {
 
-    contactForm = this.fb.group({
+    public contactForm = this.fb.group({
         name: ['', Validators.required],
         email: ['', [Validators.required, Validators.email] ],
         telephone: ['', Validators.required],
@@ -25,7 +25,8 @@ export class ContactUsComponent implements OnInit {
         private fb: FormBuilder
         ) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
 
     sendEmail() {
         const dto: SendEmailRequestDto = new SendEmailRequestDto();

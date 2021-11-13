@@ -210,12 +210,12 @@
 
                     <h3 class="left">Words for homework due {{selectedHomeWorkAssignment.dueDate.format('LL')}}</h3>
 
-                    <div style="clear: both;" *ngIf="selectedHomeWorkAssignment.homeWorkAssignmentItems.length === 0">
+                    <div style="clear: both;" *ngIf="selectedHomeWorkAssignment!.homeWorkAssignmentItems!.length === 0">
                         No words have been created yet. Please add a word for this assignment.
                     </div>
 
                     <div style="clear: both;"
-                        *ngFor="let homeWorkAssignmentItem of selectedHomeWorkAssignment.homeWorkAssignmentItems">
+                        *ngFor="let homeWorkAssignmentItem of selectedHomeWorkAssignment!.homeWorkAssignmentItems!">
 
                         <p>
                             <strong>{{homeWorkAssignmentItem.word}}</strong>
@@ -244,7 +244,7 @@
 
                     <h3 class="left">Submitted homework for {{selectedHomeWorkAssignment.dueDate.format('LL')}}</h3>
 
-                    <div style="clear: both;" *ngIf="selectedHomeWorkAssignment.submittedHomeWorks.length === 0">
+                    <div style="clear: both;" *ngIf="selectedHomeWorkAssignment!.submittedHomeWorks!.length === 0">
                         There are no submissions yet.
                     </div>
                     <div style="clear: both;" *ngFor="let submission of selectedHomeWorkAssignment.submittedHomeWorks">

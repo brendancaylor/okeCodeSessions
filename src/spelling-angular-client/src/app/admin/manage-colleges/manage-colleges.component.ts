@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { CollegeClient, CollegeDto, NameOnlyUpsertDto } from 'src/app/core/services/clients';
 import { Utils } from 'src/app/core/utils';
 import { UpsertCollegeDialogComponent } from 'src/app/dialogs/upsert-college-dialog/upsert-college-dialog.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-manage-colleges',
@@ -12,8 +14,8 @@ import { UpsertCollegeDialogComponent } from 'src/app/dialogs/upsert-college-dia
 export class ManageCollegesComponent implements OnInit {
   displayedColumns = ['collegeName', 'actions'];
   dataSource = new MatTableDataSource<CollegeDto>();
-  editedCollege: CollegeDto;
-  error: string;
+  editedCollege: CollegeDto | null = null;
+  error: string | null = null;
 
   constructor(
     private _collegeClient: CollegeClient,
@@ -74,8 +76,8 @@ export class ManageCollegesComponent implements OnInit {
     this._collegeClient.updateCollege(dto)
     .subscribe(
       (savedCollege) => {
-        this.editedCollege.collegeName = college.collegeName;
-        this.editedCollege.rowVersion = savedCollege.rowVersion;
+        this.editedCollege!.collegeName = college.collegeName;
+        this.editedCollege!.rowVersion = savedCollege.rowVersion;
        }
       , error => this.error = Utils.formatError(error)
     );
@@ -89,8 +91,8 @@ export class ManageCollegesComponent implements OnInit {
                 collegeName: dto.name,
                 id: savedCollege.id,
                 rowVersion: savedCollege.rowVersion,
-                createdAt: null,
-                createdByAppUserId: null
+                createdAt: moment(),  
+                createdByAppUserId: ''
               }
             );
 

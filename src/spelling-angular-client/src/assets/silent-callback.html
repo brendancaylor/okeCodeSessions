@@ -12,19 +12,19 @@
 <body>
   <script>
 
-    // const stsSettings = {
-    //   authority: "https://localhost:44309/",
-    //   client_id: "spa-spelling-client",
-    //   scope: "openid profile spelling-api",
-    //   response_type: "code"
-    // };
-
     const stsSettings = {
-      authority: "https://bili-identity-server.azurewebsites.net/",
+      authority: "https://localhost:44309/",
       client_id: "spa-spelling-client",
       scope: "openid profile spelling-api",
       response_type: "code"
     };
+
+    // const stsSettings = {
+    //   authority: "https://bili-identity-server.azurewebsites.net/",
+    //   client_id: "spa-spelling-client",
+    //   scope: "openid profile spelling-api",
+    //   response_type: "code"
+    // };
 
     new Oidc.UserManager(stsSettings).signinSilentCallback().catch(error => {
       console.error(error);

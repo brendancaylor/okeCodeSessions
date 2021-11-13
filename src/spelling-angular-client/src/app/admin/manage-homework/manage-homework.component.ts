@@ -17,7 +17,10 @@ import { Moment } from 'moment-timezone';
 import * as moment from 'moment-timezone';
 import { UpsertYearClassDialogComponent } from 'src/app/dialogs/upsert-year-class-dialog/upsert-year-class-dialog.component';
 import { Utils } from 'src/app/core/utils';
-import { MatTableDataSource, MatDialog, MatSnackBar, MatMenu } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatMenu } from '@angular/material/menu';
 import {
   UpsertHomeWorkAssignmentDialogComponent
 } from 'src/app/dialogs/upsert-home-work-assignment/upsert-home-work-assignment-dialog.component';
@@ -36,23 +39,23 @@ import { AreYouSureDialogComponent } from 'src/app/dialogs/are-you-sure-dialog/a
 export class ManageHomeworkComponent implements OnInit {
 
   collegeOptions: Array<LookupDto> = [];
-  selectedCollege: LookupDto;
+  selectedCollege: LookupDto | null = null;
 
   yearClassOptions: Array<YearClassDto> = [];
-  selectedYearClass: YearClassDto;
-  editedYearClass: YearClassDto;
+  selectedYearClass!: YearClassDto;
+  editedYearClass!: YearClassDto;
 
   homeWorkAssignments: Array<HomeWorkAssignmentDto> = [];
-  editedHomeWorkAssignment: HomeWorkAssignmentDto;
-  selectedHomeWorkAssignment: HomeWorkAssignmentDto;
+  editedHomeWorkAssignment!: HomeWorkAssignmentDto;
+  selectedHomeWorkAssignment: HomeWorkAssignmentDto | null = null;
 
-  editedHomeWorkAssignmentItem: HomeWorkAssignmentItemDto;
+  editedHomeWorkAssignmentItem!: HomeWorkAssignmentItemDto;
 
   expansionPanelExpanded = true;
   viewMode = 'words';
 
-  _currentHomeWorkAssignment: HomeWorkAssignmentDto;
-  get currentHomeWorkAssignment(): HomeWorkAssignmentDto {
+  _currentHomeWorkAssignment: HomeWorkAssignmentDto | null = null;
+  get currentHomeWorkAssignment(): HomeWorkAssignmentDto | null {
     this._currentHomeWorkAssignment = null;
     if (this.homeWorkAssignments && this.homeWorkAssignments.length > 0) {
       const furtureAssignments = this.homeWorkAssignments
@@ -66,11 +69,11 @@ export class ManageHomeworkComponent implements OnInit {
     return this._currentHomeWorkAssignment;
   }
 
-  _remainingHomeWorkAssignments: Array<HomeWorkAssignmentDto>;
+  _remainingHomeWorkAssignments: Array<HomeWorkAssignmentDto> = [];
   get remainingHomeWorkAssignments(): Array<HomeWorkAssignmentDto> {
     if (this.currentHomeWorkAssignment) {
       return this.homeWorkAssignments.filter(
-        (homeWorkAssignment) => this.currentHomeWorkAssignment.id !== homeWorkAssignment.id
+        (homeWorkAssignment) => this.currentHomeWorkAssignment!.id !== homeWorkAssignment.id
       );
     } else {
       return this.homeWorkAssignments;
@@ -103,7 +106,7 @@ export class ManageHomeworkComponent implements OnInit {
 
   loadYearClasss(): void {
     const year = Utils.getAcademicYear();
-    this._yearClassClient.getYearClasses(year, this.selectedCollege.id)
+    this._yearClassClient.getYearClasses(year, this.selectedCollege!.id)
       .subscribe(
         (data) => {
           this.yearClassOptions = data;
@@ -126,7 +129,7 @@ export class ManageHomeworkComponent implements OnInit {
 
   private setupYearClassDialog(yearClassdto: YearClassAddDto | YearClassUpdateDto): void {
     yearClassdto.academicYear = Utils.getAcademicYear();
-    yearClassdto.collegeId = this.selectedCollege.id;
+    yearClassdto.collegeId = this.selectedCollege!.id;
     const dialogRef = this.dialog.open(UpsertYearClassDialogComponent, {
       width: '348px',
       data: yearClassdto,
@@ -336,7 +339,7 @@ export class ManageHomeworkComponent implements OnInit {
 
   private setupHomeWorkAssignmentItemDialog(
     homeWorkAssignmentItemDto: HomeWorkAssignmentItemAddDto | HomeWorkAssignmentItemUpdateDto): void {
-    homeWorkAssignmentItemDto.homeWorkAssignmentId = this.selectedHomeWorkAssignment.id;
+    homeWorkAssignmentItemDto.homeWorkAssignmentId = this.selectedHomeWorkAssignment!.id;
     const dialogRef = this.dialog.open(UpsertGenericWordDialogComponent, {
       width: '348px',
       data: homeWorkAssignmentItemDto,
@@ -345,8 +348,8 @@ export class ManageHomeworkComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogObject => {
       const typedObject = dialogObject as HomeWorkAssignmentItemAddDto | HomeWorkAssignmentItemUpdateDto;
-      typedObject.word = typedObject.word.trim();
-      typedObject.sentence = typedObject.sentence.trim();
+      typedObject.word = typedObject.word!.trim();
+      typedObject.sentence = typedObject.sentence!.trim();
       if (typedObject) {
         if (typedObject instanceof HomeWorkAssignmentItemAddDto) {
           this.doHomeWorkAssignmentItemAdd(typedObject);
@@ -394,7 +397,7 @@ export class ManageHomeworkComponent implements OnInit {
             newItem.rowVersion = savedHomeWorkAssignmentItem.rowVersion;
             newItem.sentence = dto.sentence;
             newItem.word = dto.word;
-            this.selectedHomeWorkAssignment.homeWorkAssignmentItems.push(newItem);
+            this.selectedHomeWorkAssignment!.homeWorkAssignmentItems!.push(newItem);
             this.yearClassSelected(false);
             dialogRef.close();
           }
@@ -405,8 +408,8 @@ export class ManageHomeworkComponent implements OnInit {
     this._homeworkClient.deleteHomeWorkAssignmentItem(homeWorkAssignmentItem.id)
     .subscribe(
       () => {
-        const index = this.selectedHomeWorkAssignment.homeWorkAssignmentItems.indexOf(homeWorkAssignmentItem);
-        this.selectedHomeWorkAssignment.homeWorkAssignmentItems.splice(index, 1);
+        const index = this.selectedHomeWorkAssignment!.homeWorkAssignmentItems!.indexOf(homeWorkAssignmentItem);
+        this.selectedHomeWorkAssignment!.homeWorkAssignmentItems!.splice(index, 1);
         this.yearClassSelected(false);
       }
     );

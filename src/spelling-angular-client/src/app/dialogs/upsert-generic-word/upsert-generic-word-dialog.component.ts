@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { UpsertGenericWordViewmodel } from './upsert-generic-word-viewmodel';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HomeWorkAssignmentItemUpdateDto, HomeWorkAssignmentItemAddDto, StandardListItemDto } from 'src/app/core/services/clients';
 import { FormBuilder } from '@angular/forms';
 import { Utils } from 'src/app/core/utils';

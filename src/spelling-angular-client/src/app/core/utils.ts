@@ -22,10 +22,10 @@ export class Utils {
   }
 
   public static compareCollegeName( a: CollegeDto, b: CollegeDto): number {
-    if ( a.collegeName < b.collegeName ) {
+    if ( a.collegeName! < b.collegeName! ) {
       return -1;
     }
-    if ( a.collegeName > b.collegeName ) {
+    if ( a.collegeName! > b.collegeName! ) {
       return 1;
     }
     return 0;
@@ -64,6 +64,6 @@ export class Utils {
 }
 
 export class Language {
-  displayName: string;
-  code: string;
+  displayName: string = '';
+  code: string = '';
 }

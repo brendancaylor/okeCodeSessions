@@ -15,9 +15,9 @@
                         <input matInput placeholder="Your Name" formControlName="name" required>
                     </mat-form-field>
                     
-                    <div *ngIf="this.contactForm.get('name').touched">
+                    <div *ngIf="this.contactForm.get('name')!.touched">
 
-                        <mat-error *ngIf="this.contactForm.get('name').hasError('required')">
+                        <mat-error *ngIf="this.contactForm.get('name')!.hasError('required')">
                             Name is <strong>required</strong>
                         </mat-error>
                     
@@ -30,12 +30,12 @@
                     <mat-form-field>
                         <input matInput placeholder="Your email" formControlName="email">
                     </mat-form-field>
-                    <div *ngIf="this.contactForm.get('email').touched">
-                        <mat-error *ngIf="this.contactForm.get('email').hasError('required')">
+                    <div *ngIf="this.contactForm.get('email')!.touched">
+                        <mat-error *ngIf="this.contactForm.get('email')!.hasError('required')">
                             Email is <strong>required</strong>
                         </mat-error>
 
-                        <mat-error *ngIf="this.contactForm.get('email').hasError('email')">
+                        <mat-error *ngIf="this.contactForm.get('email')!.hasError('email')">
                             Email is <strong>not a valid format</strong>
                         </mat-error>
                     </div>
@@ -49,9 +49,9 @@
                         <input matInput placeholder="Your telephone" formControlName="telephone" required>
                     </mat-form-field>
                     
-                    <div *ngIf="this.contactForm.get('telephone').touched">
+                    <div *ngIf="this.contactForm.get('telephone')!.touched">
 
-                        <mat-error *ngIf="this.contactForm.get('telephone').hasError('required')">
+                        <mat-error *ngIf="this.contactForm.get('telephone')!.hasError('required')">
                             telephone is <strong>required</strong>
                         </mat-error>
                     
@@ -65,9 +65,9 @@
                         <input matInput placeholder="Your message" formControlName="message" required>
                     </mat-form-field>
                     
-                    <div *ngIf="this.contactForm.get('message').touched">
+                    <div *ngIf="this.contactForm.get('message')!.touched">
 
-                        <mat-error *ngIf="this.contactForm.get('message').hasError('required')">
+                        <mat-error *ngIf="this.contactForm.get('message')!.hasError('required')">
                             message is <strong>required</strong>
                         </mat-error>
                     

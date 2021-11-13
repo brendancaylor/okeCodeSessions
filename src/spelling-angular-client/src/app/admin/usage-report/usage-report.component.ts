@@ -10,7 +10,7 @@ export class UsageReportComponent implements OnInit {
 
   reportData: Array<CollegeUsage> = [];
   collegeOptions: Array<LookupDto> = [];
-  selectedCollege: LookupDto;
+  selectedCollege: LookupDto | null = null;
 
   constructor(
     private _userClient: UserClient,
@@ -33,7 +33,7 @@ export class UsageReportComponent implements OnInit {
   }
 
   collegeSelected() {
-    this._userClient.getUsageReport(this.selectedCollege.id).subscribe
+    this._userClient.getUsageReport(this.selectedCollege!.id).subscribe
     (
       (data) => {
         this.reportData = data;

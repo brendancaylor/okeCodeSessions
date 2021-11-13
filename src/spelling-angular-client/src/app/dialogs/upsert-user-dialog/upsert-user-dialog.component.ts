@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { UserViewmodel } from './user-viewmodel';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UpdateUserDto, AddUserDto, UserClient, UserLookupsDto } from 'src/app/core/services/clients';
 import { FormBuilder } from '@angular/forms';
 

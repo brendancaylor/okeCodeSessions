@@ -8,11 +8,11 @@ import { UserClient } from './services/clients';
 @Injectable()
 export class AuthService {
   private _userManager: UserManager;
-  private _user: User;
+  private _user: User | null = null;
   private _loginChangedSubject = new Subject<boolean>();
 
   loginChanged = this._loginChangedSubject.asObservable();
-  authContext: AuthContext;
+  authContext: AuthContext | null = null;
 
   constructor(private _userClient: UserClient) {
 
@@ -90,6 +90,6 @@ export class AuthService {
   async loadSecurityContext() {
     const result = await this._userClient.getCurrentUserClaims().toPromise();
     this.authContext = new AuthContext();
-    this.authContext.claims = result.claims;
+    this.authContext!.claims! = result!.claims!;
   }
 }

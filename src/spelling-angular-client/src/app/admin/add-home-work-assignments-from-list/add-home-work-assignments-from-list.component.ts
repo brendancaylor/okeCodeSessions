@@ -12,7 +12,7 @@ import {
 import { HomeWorkAssignmentsViewmodel, HomeWorkAssignmentSplit } from './home-work-assignments-viewmodel';
 import { FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
-import { MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -23,12 +23,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AddHomeWorkAssignmentsFromListComponent implements OnInit {
 
   standardLists: Array<LookupDto> = [];
-  selectedStandardListLookup: LookupDto;
-  selectedStandardList: StandardListDto;
+  selectedStandardListLookup: LookupDto | null = null;
+  selectedStandardList: StandardListDto | null = null;
   SpeechTypeEnum = SpeechType;
   soundIsBeingPlayed = false;
   homeWorkAssignmentsViewmodel: HomeWorkAssignmentsViewmodel;
-  yearClass: YearClassDto;
+  yearClass: YearClassDto | null = null;
   constructor(
     private readonly route: ActivatedRoute,
     private router: Router,
@@ -55,7 +55,7 @@ export class AddHomeWorkAssignmentsFromListComponent implements OnInit {
   }
 
   standardListSelected(): void {
-    this._homeworkClient.getStandardList(this.selectedStandardListLookup.id)
+    this._homeworkClient.getStandardList(this.selectedStandardListLookup!.id)
     .subscribe(
       (data) => {
         this.selectedStandardList = data;
@@ -71,7 +71,7 @@ export class AddHomeWorkAssignmentsFromListComponent implements OnInit {
   splitAssignments(): void {
 
     this.homeWorkAssignmentsViewmodel.homeWorkAssignmentSplits = [];
-    const numberAssignments = Math.ceil(this.selectedStandardList.standardListItems.length /
+    const numberAssignments = Math.ceil(this.selectedStandardList!.standardListItems!.length /
     this.homeWorkAssignmentsViewmodel.homeWorkAssignmentForm.value.wordsPerAssignment);
 
     const dueDate = (this.homeWorkAssignmentsViewmodel.homeWorkAssignmentForm.value.dueDate as moment.Moment).clone();
@@ -85,11 +85,11 @@ export class AddHomeWorkAssignmentsFromListComponent implements OnInit {
 
       const startPage = index * this.homeWorkAssignmentsViewmodel.homeWorkAssignmentForm.value.wordsPerAssignment;
       let endPage = startPage + this.homeWorkAssignmentsViewmodel.homeWorkAssignmentForm.value.wordsPerAssignment;
-      if (endPage >= this.selectedStandardList.standardListItems.length) {
-        endPage = this.selectedStandardList.standardListItems.length;
+      if (endPage >= this.selectedStandardList!.standardListItems!.length) {
+        endPage = this.selectedStandardList!.standardListItems!.length;
       }
 
-      homeWorkAssignmentSplit.standardListItems = this.selectedStandardList.standardListItems.slice(startPage, endPage);
+      homeWorkAssignmentSplit.standardListItems = this.selectedStandardList!.standardListItems!.slice(startPage, endPage);
       this.homeWorkAssignmentsViewmodel.homeWorkAssignmentSplits.push(homeWorkAssignmentSplit);
     }
 
@@ -97,8 +97,8 @@ export class AddHomeWorkAssignmentsFromListComponent implements OnInit {
 
   save() {
     const dto: AddHomeworkFromList = new AddHomeworkFromList();
-    dto.standardListId = this.selectedStandardList.id;
-    dto.yearClassId = this.yearClass.id;
+    dto.standardListId = this.selectedStandardList!.id;
+    dto.yearClassId = this.yearClass!.id;
     dto.addHomeworkAssignments = [];
     this.homeWorkAssignmentsViewmodel.homeWorkAssignmentSplits.forEach(
       (homeWorkAssignmentSplit) => {
@@ -108,11 +108,11 @@ export class AddHomeWorkAssignmentsFromListComponent implements OnInit {
         homeworkAssignment.standardListItemIds = [];
         homeWorkAssignmentSplit.standardListItems.forEach(
           (standardListItem) => {
-            homeworkAssignment.standardListItemIds.push(standardListItem.id);
+            homeworkAssignment!.standardListItemIds!.push(standardListItem.id);
           }
         );
 
-        dto.addHomeworkAssignments.push(homeworkAssignment);
+        dto.addHomeworkAssignments!.push(homeworkAssignment);
       }
     );
 

@@ -42,7 +42,7 @@ export class HomeWorkAssignmentViewmodel {
     homeworkItems: Array<HomeworkItemViewmodel> = [];
     studentName = '';
     dueDate: moment.Moment = moment();
-    yearClassDisplay = '';
+    yearClassDisplay: string | undefined = '';
     scorePositions: Array<number> = [];
     scoreIncludedPositions: Array<number> = [];
 
@@ -85,29 +85,29 @@ export class HomeWorkAssignmentViewmodel {
 }
 
 export class HomeworkItemViewmodel {
-    id = '';
+    id: string = '';
     isSelected = false;
-    word = '';
-    attempt = '';
-    sentence = '';
-    wordAsMp3: Blob = null;
-    sentenceAsMp3: Blob = null;
-    snapshotHint = '';
+    word: string | undefined = '';
+    attempt: string | undefined = '';
+    sentence: string | undefined = '';
+    wordAsMp3: Blob | null = null;
+    sentenceAsMp3: Blob | null = null;
+    snapshotHint: string | undefined = '';
     score = 10;
     correctTry?: boolean | undefined;
 
     get isCorrect(): boolean {
-        const attemptReplaceSpecialCharacters = this.replaceSpecialCharacters(this.word.toLowerCase(), this.attempt.toLowerCase());
-        return this.word.toLowerCase() === attemptReplaceSpecialCharacters.toLowerCase() && this.word.length === this.attempt.length;
+        const attemptReplaceSpecialCharacters = this.replaceSpecialCharacters(this.word!.toLowerCase(), this.attempt!.toLowerCase());
+        return this.word!.toLowerCase() === attemptReplaceSpecialCharacters.toLowerCase() && this.word!.length === this.attempt!.length;
     }
 
     replaceSpecialCharacters(wordToSpell: string, attempt: string): string {
         let attemptCorrected = '';
-        for (let i = 0; i <= this.word.length - 1; i++) {
-            const letterWord = this.word.substring(i, i + 1).toLowerCase();
-            if (i + 1 <= this.attempt.length) {
+        for (let i = 0; i <= this.word!.length - 1; i++) {
+            const letterWord = this.word!.substring(i, i + 1).toLowerCase();
+            if (i + 1 <= this.attempt!.length) {
 
-                let letterAttempt = this.attempt.substring(i, i + 1).toLowerCase();
+                let letterAttempt = this.attempt!.substring(i, i + 1).toLowerCase();
 
                 const hasSpecialCharacter = CharacterConstants.characterPairs.find(
                     (characterPair) => {
@@ -130,10 +130,10 @@ export class HomeworkItemViewmodel {
         let result = '';
         const numberOfSneakPeaks = 1;
         let numberOfSneakPeaksUsed = 0;
-        for (let i = 0; i <= this.word.length - 1; i++) {
-            const letterWord = this.word.substring(i, i + 1).toLowerCase();
-            if (i + 1 <= this.attempt.length) {
-                let letterAttempt = this.attempt.substring(i, i + 1).toLowerCase();
+        for (let i = 0; i <= this.word!.length - 1; i++) {
+            const letterWord = this.word!.substring(i, i + 1).toLowerCase();
+            if (i + 1 <= this.attempt!.length) {
+                let letterAttempt = this.attempt!.substring(i, i + 1).toLowerCase();
 
                 const hasSpecialCharacter = CharacterConstants.characterPairs.find(
                     (characterPair) => {
